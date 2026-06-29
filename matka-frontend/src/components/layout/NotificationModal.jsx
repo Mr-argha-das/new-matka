@@ -4,10 +4,10 @@ import React from "react";
 export default function NotificationModal({ html, onClose }) {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-      <div className="backdrop-blur-2xl mx-3 border border-gray-50/20 rounded-xl shadow-xl w-full max-w-md p-6  relative">
+      <div className="bg-white backdrop-blur-2xl mx-3 border border-emerald-700/10 rounded-xl shadow-xl w-full max-w-md p-6 relative text-slate-900">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-200 hover:text-black"
+          className="absolute top-3 right-3 text-slate-500 hover:text-black"
         >
           <X />
         </button>
@@ -16,7 +16,7 @@ export default function NotificationModal({ html, onClose }) {
 
         {/* Render HTML from backend */}
         <div
-          className="text-gray-200 text-sm"
+          className="text-slate-700 text-sm"
           dangerouslySetInnerHTML={{ __html: html }}
         />
 

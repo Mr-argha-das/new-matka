@@ -11,12 +11,12 @@ export default function DashboardCard({
   return (
     <a
       href={link}
-      className="bg-white/10 rounded-xl shadow-md p-4 flex  justify-between items-center"
+      className="rounded-2xl border border-emerald-700/10 bg-white p-4 flex justify-between items-center shadow-[0_14px_34px_rgba(9,78,36,0.09)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(9,78,36,0.13)]"
     >
       <div>
-        <h3 className="text-white text-sm">{title}</h3>
-        <p className="text-2xl font-semibold mt-1 text-gray-200">{value}</p>
-        {subtext && <p className="text-xs text-gray-300">{subtext}</p>}
+        <h3 className="text-slate-600 text-sm font-semibold">{title}</h3>
+        <p className="text-2xl font-semibold mt-1 text-slate-950">{value}</p>
+        {subtext && <p className="text-xs text-slate-500">{subtext}</p>}
       </div>
       <div
         className={`w-10 h-10 flex mt-6 items-center justify-center rounded-full text-white`}

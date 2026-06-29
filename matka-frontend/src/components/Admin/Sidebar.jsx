@@ -244,7 +244,7 @@ const Sidebar = ({ open }) => {
 
   return (
     <div
-      className={`fixed lg:z-30 md:z-30 z-40 pt-16 left-0 top-0 h-full lg:bg-transparent md:bg-transparent lg:border-r md:border-r border-gray-50/10 bg-[#000]  text-white transition-all duration-300 ${
+      className={`fixed lg:z-30 md:z-30 z-40 pt-16 left-0 top-0 h-full border-r border-emerald-700/10 bg-white text-slate-800 shadow-[18px_0_50px_rgba(9,78,36,0.08)] transition-all duration-300 ${
         open ? "w-64" : "w-0 overflow-hidden"
       }`}
     >
@@ -253,7 +253,7 @@ const Sidebar = ({ open }) => {
           <div key={idx}>
             {/* Main menu item */}
             <div
-              className="flex justify-between items-center text-sm hover:bg-[#2a3047] p-2 rounded-md cursor-pointer"
+              className="flex justify-between items-center text-sm p-2 rounded-xl cursor-pointer transition hover:bg-emerald-50 hover:text-emerald-800"
               onClick={() => {
                 if (item.onClick) {
                   item.onClick();
@@ -292,7 +292,7 @@ const Sidebar = ({ open }) => {
                   <a
                     key={cIdx}
                     href={child.link}
-                    className="block text-sm text-gray-300 hover:text-white hover:bg-[#2a3047] p-2 rounded-md"
+                    className="block text-sm text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 p-2 rounded-xl transition"
                   >
                     {child.name}
                   </a>

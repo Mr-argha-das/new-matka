@@ -15,7 +15,7 @@ export default function AdminLayout() {
   }, [isLargeScreen]);
 
   return (
-    <div className="min-h-screen relative">
+    <div className="admin-shell min-h-screen relative bg-[#f6fbf7] text-slate-900">
       <Header setSidebarOpen={setSidebarOpen} />
 
       <Sidebar open={sidebarOpen} />

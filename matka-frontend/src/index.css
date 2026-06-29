@@ -363,6 +363,119 @@ button:focus-visible {
   color: #ffd48a;
 }
 
+/* Light-theme repair layer for older dark-screen Tailwind classes. */
+.theme-page main,
+.admin-shell main {
+  color: var(--theme-text);
+}
+
+.theme-page main > [class*="text-white"],
+.theme-page main section[class*="text-white"],
+.theme-page main div[class*="text-white"],
+.admin-shell main > [class*="text-white"],
+.admin-shell main section[class*="text-white"],
+.admin-shell main div[class*="text-white"] {
+  color: var(--theme-text);
+}
+
+.theme-page [class*="bg-white/5"],
+.theme-page [class*="bg-white/10"],
+.theme-page [class*="bg-white/20"],
+.theme-page [class*="bg-white/30"],
+.admin-shell [class*="bg-white/5"],
+.admin-shell [class*="bg-white/10"],
+.admin-shell [class*="bg-white/20"],
+.admin-shell [class*="bg-white/30"] {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(16, 128, 67, 0.14);
+  color: var(--theme-text);
+  box-shadow: 0 14px 34px rgba(9, 78, 36, 0.08);
+}
+
+.theme-page [class*="from-black"][class*="to-black"],
+.theme-page [class*="bg-gradient-to-b"][class*="from-black"],
+.admin-shell [class*="from-black"][class*="to-black"],
+.admin-shell [class*="bg-gradient-to-b"][class*="from-black"] {
+  background: linear-gradient(135deg, #0b7a39 0%, #16a34a 52%, #20c971 100%);
+  color: #fff;
+}
+
+.theme-page input,
+.theme-page select,
+.theme-page textarea,
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+  background-color: #fff;
+  color: #0f2819;
+  border-color: rgba(16, 128, 67, 0.2);
+}
+
+.theme-page input::placeholder,
+.theme-page textarea::placeholder,
+.admin-shell input::placeholder,
+.admin-shell textarea::placeholder {
+  color: #7b8a81;
+}
+
+.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-200"],
+.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-300"],
+.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-400"],
+.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-purple-300"],
+.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-white"],
+.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-200"],
+.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-300"],
+.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-400"],
+.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-purple-300"],
+.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-white"] {
+  color: var(--theme-text);
+}
+
+.theme-page .theme-green-bar :is(h1, h2, h3, p, span, a, button, svg),
+.theme-page [class*="bg-emerald-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.theme-page [class*="bg-green-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.theme-page [class*="bg-blue-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.theme-page [class*="bg-red-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.theme-page [class*="bg-purple-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.theme-page .theme-button,
+.admin-shell .theme-green-bar :is(h1, h2, h3, p, span, a, button, svg),
+.admin-shell [class*="bg-emerald-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.admin-shell [class*="bg-green-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.admin-shell [class*="bg-blue-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.admin-shell [class*="bg-red-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.admin-shell [class*="bg-purple-600"] :is(h1, h2, h3, p, span, a, button, svg),
+.admin-shell .theme-button {
+  color: #fff;
+}
+
+.theme-page table,
+.admin-shell table {
+  color: #263a2d;
+}
+
+.theme-page thead,
+.admin-shell thead {
+  background: #eefaf2;
+  color: #0f5130;
+}
+
+.theme-page tbody tr,
+.admin-shell tbody tr {
+  border-color: rgba(16, 128, 67, 0.1);
+}
+
+.theme-page tbody tr:hover,
+.admin-shell tbody tr:hover {
+  background: #f5fbf7;
+}
+
+.admin-shell main {
+  min-height: calc(100vh - 60px);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(34, 197, 94, 0.12), transparent 24rem),
+    linear-gradient(180deg, #ffffff 0%, #f6fbf7 100%);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
