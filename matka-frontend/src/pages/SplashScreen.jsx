@@ -19,12 +19,12 @@ export default function SplashScreen() {
   return (
     <div
       id="splash-screen"
-      className={`fixed inset-0 flex items-center justify-center bg-black transition-opacity duration-700 ${
+      className={`fixed inset-0 flex items-center justify-center bg-white transition-opacity duration-700 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
       style={{ zIndex: 9999 }}
     >
-      <img src={logo} alt="Splash Logo" className="w-32 h-32" />
+      <img src={logo} alt="sridevimatka" className="w-32 h-32 rounded-[28px]" />
     </div>
   );
 }

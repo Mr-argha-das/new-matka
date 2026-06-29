@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Wallet2Icon } from "lucide-react";
 import { API_URL } from "../../config";
+import logo from "../../assets/logo.png";
 
 // IMPORTANT: Replace with your actual base URL
 const API_BASE_URL = API_URL;
@@ -70,9 +71,9 @@ export default function AppHeader({ setSidebar }) {
           >
             <Menu size={22} />
           </button>
-          {/* <img src="/logo.png" alt="Logo" className="w-8 h-8" /> */}
+          <img src={logo} alt="sridevimatka" className="h-9 w-9 rounded-full bg-white object-cover" />
           <h1 className="text-white text-lg font-extrabold tracking-wide">
-            KalyanRatan777
+            sridevimatka
           </h1>
         </div>
         <div className="flex items-center gap-3">

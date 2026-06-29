@@ -13,7 +13,7 @@ export default function Header({ setSidebarOpen }) {
         </button>
         <h1 className="text-lg font-semibold text-white">Admin Dashboard</h1>
       </div>
-      <img src={logo} alt="Admin" className="w-10 h-10 rounded-full " />
+      <img src={logo} alt="sridevimatka" className="w-10 h-10 rounded-full " />
     </div>
   );
 }

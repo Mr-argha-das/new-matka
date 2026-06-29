@@ -11,6 +11,7 @@ import {
   Ticket,
 } from "lucide-react";
 import { API_URL } from "../config";
+import logo from "../assets/logo.png";
 import { useSearchParams } from "react-router-dom";
 
 export default function SignupPage() {
@@ -121,6 +122,13 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8">
       <div className="theme-card w-full max-w-md rounded-[32px] px-8 py-10 backdrop-blur">
+        <div className="mb-6 flex items-center justify-center">
+          <img
+            src={logo}
+            alt="sridevimatka"
+            className="h-24 w-24 rounded-[24px] object-cover shadow-[0_0_28px_rgba(22,163,74,0.18)]"
+          />
+        </div>
         <p className="text-center text-slate-500 text-sm tracking-[0.18em] uppercase">
           Create your new account
         </p>

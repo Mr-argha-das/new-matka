@@ -93,6 +93,7 @@ export default function AdminLoginPage() {
         <div className="flex items-center justify-center">
           <img
             src={logo}
+            alt="sridevimatka"
             className="h-30 rounded-full place-items-center mb-3"
           />
         </div>
