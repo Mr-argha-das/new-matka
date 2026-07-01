@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 const String appName = 'sridevimatka';
-const String siteUrl = 'https://game.sridevimatka0.live';
+const String siteUrl = 'https://game.sridevimatka9.live/';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
