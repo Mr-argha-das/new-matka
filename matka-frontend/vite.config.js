@@ -5,6 +5,10 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
 
+  server: {
+    allowedHosts: ["game.sridevimatka9.live", "localhost", "127.0.0.1"],
+  },
+
   optimizeDeps: {
     include: ["tinymce", "@tinymce/tinymce-react"],
   },
