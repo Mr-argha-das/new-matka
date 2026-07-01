@@ -61,6 +61,7 @@ export default function GameList() {
 
   useEffect(() => {
     fetchGames();
+    setOpenModal(true);
   }, []);
 
   const toggleStatus = async (id, current) => {

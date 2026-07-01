@@ -60,6 +60,7 @@ export default function GGameList() {
 
   useEffect(() => {
     fetchGames();
+    setOpenModal(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

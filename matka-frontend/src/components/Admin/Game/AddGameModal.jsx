@@ -76,8 +76,8 @@ export default function AddGameModal({ onClose, refresh }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 mt-16 flex justify-center items-center z-30">
-      <div className="backdrop-blur-2xl w-full lg:max-w-2xl md:max-w-2xl lg:h-auto md:h-auto h-full  lg:rounded-xl md:rounded-xl p-4 shadow-xl">
+    <div className="fixed inset-0 bg-black/50 flex justify-center items-start z-50 p-4 pt-24 overflow-auto">
+      <div className="w-full lg:max-w-2xl md:max-w-2xl rounded-xl p-5 bg-white border border-emerald-700/10 text-slate-900 shadow-xl">
         <div className="flex justify-between items-center mb-5 lg:mt-0 md:mt-0 ">
           <h2 className="text-xl font-bold">Add Game</h2>
           <button onClick={onClose} className="text-xl font-bold">

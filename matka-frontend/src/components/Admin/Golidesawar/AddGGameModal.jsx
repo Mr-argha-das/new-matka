@@ -61,21 +61,21 @@ export default function AddGGameModal({ onClose, refresh, previewImage }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 mt-16 flex justify-center items-start z-30 p-4 overflow-auto">
-      <div className="backdrop-blur-2xl w-full lg:max-w-2xl md:max-w-2xl rounded-xl p-5 bg-white/5 border border-white/10 shadow-xl mt-8">
+    <div className="fixed inset-0 bg-black/50 flex justify-center items-start z-50 p-4 pt-24 overflow-auto">
+      <div className="w-full lg:max-w-2xl md:max-w-2xl rounded-xl p-5 bg-white border border-emerald-700/10 text-slate-900 shadow-xl">
         <div className="flex justify-between items-center mb-5">
-          <h2 className="text-xl font-bold text-white">Add Game</h2>
-          <button onClick={onClose} className="text-white">
+          <h2 className="text-xl font-bold">Add Game</h2>
+          <button onClick={onClose}>
             <X />
           </button>
         </div>
 
-        <div className="space-y-5 text-white">
+        <div className="space-y-5">
           <div>
             <label className="font-semibold">Game Name</label>
             <input
               type="text"
-              className="w-full p-3 border border-white/10 rounded-lg mt-1 bg-transparent text-white"
+              className="w-full p-3 border rounded-lg mt-1"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
@@ -85,13 +85,13 @@ export default function AddGGameModal({ onClose, refresh, previewImage }) {
             <label className="font-semibold">Game Name Hindi</label>
             <input
               type="text"
-              className="w-full p-3 border border-white/10 rounded-lg mt-1 bg-transparent text-white"
+              className="w-full p-3 border rounded-lg mt-1"
               value={form.hindi}
               onChange={(e) => setForm({ ...form, hindi: e.target.value })}
             />
           </div>
 
-          <label className="flex items-center gap-2 text-slate-200">
+          <label className="flex items-center gap-2">
             <input
               type="checkbox"
               checked={form.is_active}
@@ -102,10 +102,10 @@ export default function AddGGameModal({ onClose, refresh, previewImage }) {
 
           <div className="grid lg:grid-cols-2 md:grid-cols-2 gap-6">
             <div>
-              <label className="font-semibold text-slate-300">Open Time</label>
+              <label className="font-semibold">Open Time</label>
               <input
                 type="time"
-                className="w-full p-3 border border-white/10 rounded-lg mt-1 bg-transparent text-white"
+                className="w-full p-3 border rounded-lg mt-1"
                 value={form.open_time}
                 onChange={(e) =>
                   setForm({ ...form, open_time: e.target.value })
@@ -114,10 +114,10 @@ export default function AddGGameModal({ onClose, refresh, previewImage }) {
             </div>
 
             <div>
-              <label className="font-semibold text-slate-300">Close Time</label>
+              <label className="font-semibold">Close Time</label>
               <input
                 type="time"
-                className="w-full p-3 border border-white/10 rounded-lg mt-1 bg-transparent text-white"
+                className="w-full p-3 border rounded-lg mt-1"
                 value={form.close_time}
                 onChange={(e) =>
                   setForm({ ...form, close_time: e.target.value })
@@ -139,7 +139,7 @@ export default function AddGGameModal({ onClose, refresh, previewImage }) {
                 setForm({
                   name: "",
                   hindi: "",
-                  marketType: "Market",
+                  marketType: "Golidesawar",
                   open_time: "",
                   close_time: "",
                   is_active: true,
