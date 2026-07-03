@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle, XCircle, Loader, ArrowLeft } from "lucide-react";
 import { API_URL } from "../config";
+import { isMarketPlayable } from "../utils/marketTime";
 
 const API_BASE = `${API_URL}`;
 
@@ -82,6 +83,7 @@ export default function MatkaGame() {
   // Market info
   const [market, setMarket] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [now, setNow] = useState(() => new Date());
 
   // Form
   const [session, setSession] = useState("open");
@@ -128,6 +130,11 @@ export default function MatkaGame() {
     fetchMarket();
   }, [fetchMarket]);
 
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 30000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   // ======================= ASSEMBLE SANGAM =======================
   const assembledDigit = () => {
     if (gameType === "half_sangam") {
@@ -156,12 +163,16 @@ export default function MatkaGame() {
   const bid_time = getISTISOString();
   // console.log(bid_time);
 
+  const marketPlayable = isMarketPlayable(market, now);
+
   // ======================= PLACE BID =======================
   const placeBid = async (e) => {
     e.preventDefault();
     setMsg(null);
 
     try {
+      if (!marketPlayable) throw new Error("Market Closed. Play is disabled after close time.");
+
       if (!points || Number(points) <= 0)
         throw new Error("Points must be greater than 0");
 
@@ -267,19 +278,27 @@ export default function MatkaGame() {
           <strong>Status:</strong>
           <span
             className={`${
-              market.status === true ? "text-green-400" : "text-red-400"
+              marketPlayable ? "text-green-400" : "text-red-400"
             }`}
           >
-            {market.status === true ? "Market Running" : "Market Closed"}
+            {marketPlayable ? "Market Running" : "Market Closed"}
           </span>
         </span>
       </p>
 
       <Message type={msg?.type} text={msg?.text} />
 
+      {!marketPlayable && (
+        <div className="mx-3 mb-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">
+          Market Closed. Play is disabled after close time.
+        </div>
+      )}
+
       <form
         onSubmit={placeBid}
-        className="bg-white/5 p-4 mx-3 mt-3 rounded-lg border border-gray-800"
+        className={`bg-white/5 p-4 mx-3 mt-3 rounded-lg border border-gray-800 ${
+          !marketPlayable ? "opacity-75" : ""
+        }`}
       >
         {/* SESSION */}
         <div className="mb-3 text-sm text-gray-300">
@@ -424,8 +443,15 @@ export default function MatkaGame() {
           />
         </div>
 
-        <button className="w-full bg-gradient-to-r from-purple-700 to-purple-900 py-3 rounded-lg font-semibold">
-          Place Bid
+        <button
+          disabled={!marketPlayable}
+          className={`w-full py-3 rounded-lg font-semibold ${
+            marketPlayable
+              ? "bg-gradient-to-r from-purple-700 to-purple-900"
+              : "bg-slate-300 text-slate-600 cursor-not-allowed"
+          }`}
+        >
+          {marketPlayable ? "Place Bid" : "Market Closed"}
         </button>
       </form>
     </div>

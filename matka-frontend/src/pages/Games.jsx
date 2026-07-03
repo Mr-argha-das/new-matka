@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 import { ArrowLeft, CardSim, Coins, Diamond, Dice1, Dice2 } from "lucide-react";
+import { isMarketPlayable } from "../utils/marketTime";
 
 export default function Games() {
   const { marketId } = useParams();
@@ -10,6 +11,7 @@ export default function Games() {
   const [market, setMarket] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [now, setNow] = useState(() => new Date());
 
   const token = localStorage.getItem("accessToken");
   const headers = { Authorization: `Bearer ${token}` };
@@ -67,6 +69,11 @@ export default function Games() {
   useEffect(() => {
     fetchMarketDetails();
   }, [fetchMarketDetails]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 30000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   // ============================
   // GAME CARDS
@@ -140,6 +147,8 @@ export default function Games() {
       </div>
     );
 
+  const marketPlayable = isMarketPlayable(market, now);
+
   return (
     <div className="max-w-md mx-auto flex flex-col font-sans text-white">
       <div className="w-full relative bg-gradient-to-b from-black to-black/0 pb-2 flex items-center justify-between">
@@ -173,25 +182,45 @@ export default function Games() {
           <strong>Status:</strong>
           <span
             className={`font-bold rounded-full text-xs ${
-              market.status === true ? "text-green-600" : "text-red-600"
+              marketPlayable ? "text-green-600" : "text-red-600"
             }`}
           >
-            {market.status === true ? "Market Running" : "Market Closed"}
+            {marketPlayable ? "Market Running" : "Market Closed"}
           </span>
         </span>
       </p>
+
+      {!marketPlayable && (
+        <div className="mx-3 mb-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">
+          Market Closed. Play is disabled after close time.
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-4 p-3 pb-20">
         {allGames.map((game, index) => (
           <a
             key={index}
-            href={`/game/${marketId}/${createSlug(game.name)}`}
-            className="flex flex-col justify-center items-center backdrop-blur-2xl rounded-xl py-6 shadow-2xl hover:bg-gray-50/5 transition-all duration-200 hover:scale-[1.03] border border-gray-50/15 "
+            href={marketPlayable ? `/game/${marketId}/${createSlug(game.name)}` : undefined}
+            aria-disabled={!marketPlayable}
+            onClick={(e) => {
+              if (!marketPlayable) e.preventDefault();
+            }}
+            className={`flex flex-col justify-center items-center backdrop-blur-2xl rounded-xl py-6 shadow-2xl transition-all duration-200 border ${
+              marketPlayable
+                ? "border-gray-50/15 hover:bg-gray-50/5 hover:scale-[1.03]"
+                : "border-red-200 bg-red-50/80 opacity-70 cursor-not-allowed"
+            }`}
           >
-            <div className="bg-[#5a0572] rounded-full p-4 mb-3 shadow-lg shadow-[#5a0572]/50">
+            <div className={`rounded-full p-4 mb-3 shadow-lg ${
+              marketPlayable
+                ? "bg-[#5a0572] shadow-[#5a0572]/50"
+                : "bg-slate-200 shadow-slate-200/50"
+            }`}>
               {game.icon}
             </div>
-            <p className="text-gray-100 text-sm font-bold text-center tracking-wider">
+            <p className={`text-sm font-bold text-center tracking-wider ${
+              marketPlayable ? "text-gray-100" : "text-slate-500"
+            }`}>
               {game.name}
             </p>
           </a>
