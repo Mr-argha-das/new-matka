@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from ...models import Bid, Wallet, Market
 from ...auth import get_current_user, require_admin
 
 router = APIRouter(prefix="/user/bid", tags=["User Bids"])
+IST = ZoneInfo("Asia/Kolkata")
 
 VALID_GAMES = [
     "single", "jodi", "single_panna", "double_panna", "triple_panna",
@@ -59,7 +61,7 @@ def validate_digit(game_type, digit):
 
 def compute_status(open_time: str, close_time: str):
     fmt = "%I:%M %p"
-    now = datetime.now()
+    now = datetime.now(IST)
 
     # parse to time
     open_t = datetime.strptime(open_time, fmt).time()
@@ -93,7 +95,7 @@ def compute_status(open_time: str, close_time: str):
     # ----------------------------------------------------
     else:
         # close is next-day
-        close_dt = close_dt + datetime.timedelta(days=1)
+        close_dt = close_dt + timedelta(days=1)
 
         # open_time <= now <= close_time(next day) → OPEN
         if open_dt <= now <= close_dt:
@@ -106,6 +108,23 @@ def compute_status(open_time: str, close_time: str):
         # AFTER midnight but before open_time → OPEN
         if midnight <= now < open_dt:
             return True
+
+
+def get_market_window(open_time: str, close_time: str):
+    fmt = "%I:%M %p"
+    now_dt = datetime.now(IST)
+    today = now_dt.date()
+
+    open_dt = datetime.combine(today, datetime.strptime(open_time, fmt).time(), tzinfo=IST)
+    close_dt = datetime.combine(today, datetime.strptime(close_time, fmt).time(), tzinfo=IST)
+
+    if close_dt <= open_dt:
+        close_dt += timedelta(days=1)
+        if now_dt < open_dt:
+            open_dt -= timedelta(days=1)
+            close_dt -= timedelta(days=1)
+
+    return now_dt, open_dt, close_dt
 
 @router.post("/place")
 def place_bid(
@@ -134,27 +153,10 @@ def place_bid(
     if not market:
         raise HTTPException(status_code=404, detail="Invalid Market ID")
 
-    # ---------------- TIME PARSE ----------------
-    def parse_time(t):
-        return datetime.strptime(t, "%I:%M %p").time()
+    if market.status is not True:
+        raise HTTPException(status_code=400, detail="Market Closed")
 
-    now_dt = datetime.now()
-    today = now_dt.date()
-
-    open_time = parse_time(market.open_time)
-    close_time = parse_time(market.close_time)
-
-    open_dt = datetime.combine(today, open_time)
-    close_dt = datetime.combine(today, close_time)
-
-    # -------- HANDLE OVERNIGHT MARKET --------
-    # Example: 10 PM to 2 AM
-    if close_dt <= open_dt:
-        close_dt += timedelta(days=1)
-
-    # If after midnight but market is overnight
-    if now_dt < open_dt and close_dt.day != open_dt.day:
-        open_dt -= timedelta(days=1)
+    now_dt, open_dt, close_dt = get_market_window(market.open_time, market.close_time)
 
     # ---------------- TIME LOGIC ----------------
 
@@ -167,7 +169,7 @@ def place_bid(
             )
 
     # Between open & close → only CLOSE allowed
-    elif open_dt <= now_dt <= close_dt:
+    elif open_dt <= now_dt < close_dt:
         if session != "close":
             raise HTTPException(
                 status_code=400,

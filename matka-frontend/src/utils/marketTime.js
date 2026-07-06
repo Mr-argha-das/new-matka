@@ -55,12 +55,16 @@ export const isWithinMarketTime = (openTime, closeTime, date = new Date()) => {
 export const isMarketPlayable = (market, date = new Date()) => {
   if (market?.status !== true) return false;
 
-  const withinTime = isWithinMarketTime(
-    market?.openTime || market?.open_time,
-    market?.closeTime || market?.close_time,
-    date
-  );
+  const openMinutes = parseMarketTime(market?.openTime || market?.open_time);
+  const closeMinutes = parseMarketTime(market?.closeTime || market?.close_time);
 
-  return withinTime ?? true;
+  if (closeMinutes === null) return true;
+
+  const nowMinutes = getISTMinutes(date);
+
+  if (openMinutes !== null && closeMinutes < openMinutes) {
+    return nowMinutes >= openMinutes || nowMinutes < closeMinutes;
+  }
+
+  return nowMinutes < closeMinutes;
 };
-

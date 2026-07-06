@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends
 import datetime
+from zoneinfo import ZoneInfo
 from ..models import Bid, Wallet, Market
 from ..auth import get_current_user, require_admin
 
 router = APIRouter(prefix="/bid")
+IST = ZoneInfo("Asia/Kolkata")
 
 VALID_GAMES = [
     "single", "jodi", "single_panna", "double_panna", "triple_panna",
@@ -59,6 +61,31 @@ def validate_digit(game_type, digit):
             raise HTTPException(400, "Full Sangam CLOSE PANNA must be 3 digits")
 
 
+def get_market_window(open_time: str, close_time: str):
+    fmt = "%I:%M %p"
+    now_dt = datetime.datetime.now(IST)
+    today = now_dt.date()
+
+    open_dt = datetime.datetime.combine(
+        today,
+        datetime.datetime.strptime(open_time, fmt).time(),
+        tzinfo=IST
+    )
+    close_dt = datetime.datetime.combine(
+        today,
+        datetime.datetime.strptime(close_time, fmt).time(),
+        tzinfo=IST
+    )
+
+    if close_dt <= open_dt:
+        close_dt += datetime.timedelta(days=1)
+        if now_dt < open_dt:
+            open_dt -= datetime.timedelta(days=1)
+            close_dt -= datetime.timedelta(days=1)
+
+    return now_dt, open_dt, close_dt
+
+
 # ------------------------------
 # PLACE BID API
 # ------------------------------
@@ -89,6 +116,20 @@ def place_bid(
     market = Market.objects(id=market_id).first()
     if not market:
         raise HTTPException(404, "Invalid Market ID")
+
+    if market.status is not True:
+        raise HTTPException(400, "Market Closed")
+
+    now_dt, open_dt, close_dt = get_market_window(market.open_time, market.close_time)
+
+    if now_dt >= close_dt:
+        raise HTTPException(400, "Market Closed")
+
+    if now_dt < open_dt and session != "open":
+        raise HTTPException(400, "Only OPEN session allowed before open time")
+
+    if open_dt <= now_dt < close_dt and session != "close":
+        raise HTTPException(400, "Only CLOSE session allowed after open time")
 
     # Validate Game Type
     if game_type not in VALID_GAMES:
