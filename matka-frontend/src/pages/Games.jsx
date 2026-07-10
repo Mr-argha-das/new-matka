@@ -78,50 +78,108 @@ export default function Games() {
   // ============================
   // GAME CARDS
   // ============================
-  const allGames = [
+  const colors = ["#ff9800", "#7ee000", "#ffd700", "#29b6e8", "#4d63ff", "#ff3f72"];
+  const withColor = (items) =>
+    items.map((item, index) => ({ ...item, color: colors[index % colors.length] }));
+
+  const allGames = withColor([
     {
       name: "Single Digit",
-      icon: <Dice1 size={30} className="text-yellow-500" />,
+      icon: <Dice1 size={30} />,
+    },
+    {
+      name: "Single Bulk Digit",
+      icon: <Dice1 size={30} />,
     },
     {
       name: "Jodi Digit",
-      icon: <Dice2 size={30} className="text-yellow-500" />,
+      icon: <Dice2 size={30} />,
+    },
+    {
+      name: "Jodi Digit Bulk",
+      icon: <Dice2 size={30} />,
     },
     {
       name: "Single Panna",
-      icon: <CardSim size={30} className="text-yellow-500" />,
+      icon: <CardSim size={30} />,
+    },
+    {
+      name: "Single Panna Bulk",
+      icon: <CardSim size={30} />,
     },
     {
       name: "Double Panna",
-      icon: <CardSim size={30} className="text-yellow-500" />,
+      icon: <CardSim size={30} />,
+    },
+    {
+      name: "Double Panna Bulk",
+      icon: <CardSim size={30} />,
     },
     {
       name: "Triple Panna",
-      icon: <Diamond size={30} className="text-yellow-500" />,
-    },
-    {
-      name: "SP, DP ,TP",
-      icon: <Coins size={30} className="text-yellow-500" />,
-    },
-    {
-      name: "Half Sangam",
-      icon: (
-        <img
-          src="https://placehold.co/60x60/fde047/1f2937?text=H"
-          className="w-14 h-14"
-        />
-      ),
+      icon: <Diamond size={30} />,
     },
     {
       name: "Full Sangam",
-      icon: (
-        <img
-          src="https://placehold.co/60x60/fde047/1f2937?text=F"
-          className="w-14 h-14"
-        />
-      ),
+      icon: <Coins size={30} />,
     },
-  ];
+    {
+      name: "Half Sangam(A)",
+      icon: <Diamond size={30} />,
+    },
+    {
+      name: "Half Sangam(B)",
+      icon: <Diamond size={30} />,
+    },
+    {
+      name: "DP Motor",
+      icon: <Coins size={30} />,
+    },
+    {
+      name: "SP Motor",
+      icon: <Coins size={30} />,
+    },
+    {
+      name: "SP DP TP",
+      icon: <Coins size={30} />,
+    },
+    {
+      name: "Two Digit Pana",
+      icon: <CardSim size={30} />,
+    },
+    {
+      name: "SP Common",
+      icon: <Coins size={30} />,
+    },
+    {
+      name: "Odd Even",
+      icon: <Dice2 size={30} />,
+    },
+    {
+      name: "DP Common",
+      icon: <Coins size={30} />,
+    },
+    {
+      name: "Red Jodi",
+      icon: <Dice2 size={30} />,
+    },
+    {
+      name: "Pana Family",
+      icon: <CardSim size={30} />,
+    },
+    {
+      name: "Digit Based Jodi",
+      icon: <Dice2 size={30} />,
+    },
+    {
+      name: "Cycle Jodi",
+      icon: <Dice2 size={30} />,
+    },
+    {
+      name: "Jodi Family",
+      icon: <Dice2 size={30} />,
+    },
+  ]);
 
   if (isLoading)
     return (
@@ -150,7 +208,7 @@ export default function Games() {
   const marketPlayable = isMarketPlayable(market, now);
 
   return (
-    <div className="max-w-md mx-auto flex flex-col font-sans text-white">
+    <div className="max-w-md mx-auto flex min-h-screen flex-col bg-[#f5f6f6] font-sans text-slate-950">
       <div className="w-full relative bg-gradient-to-b from-black to-black/0 pb-2 flex items-center justify-between">
         <button
           onClick={() => window.history.back()}
@@ -196,7 +254,7 @@ export default function Games() {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4 p-3 pb-20">
+      <div className="grid grid-cols-2 gap-4 px-4 pb-28 pt-3">
         {allGames.map((game, index) => (
           <a
             key={index}
@@ -205,21 +263,27 @@ export default function Games() {
             onClick={(e) => {
               if (!marketPlayable) e.preventDefault();
             }}
-            className={`flex flex-col justify-center items-center backdrop-blur-2xl rounded-xl py-6 shadow-2xl transition-all duration-200 border ${
+            className={`group flex min-h-[136px] flex-col items-center justify-center rounded-xl border bg-white px-3 py-4 text-center shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition-all duration-200 ${
               marketPlayable
-                ? "border-gray-50/15 hover:bg-gray-50/5 hover:scale-[1.03]"
-                : "border-red-200 bg-red-50/80 opacity-70 cursor-not-allowed"
+                ? "border-slate-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-[0_14px_30px_rgba(15,23,42,0.12)]"
+                : "border-red-200 bg-red-50 opacity-70 cursor-not-allowed"
             }`}
           >
-            <div className={`rounded-full p-4 mb-3 shadow-lg ${
-              marketPlayable
-                ? "bg-[#5a0572] shadow-[#5a0572]/50"
-                : "bg-slate-200 shadow-slate-200/50"
-            }`}>
-              {game.icon}
+            <div
+              className="mb-4 flex h-16 w-16 items-center justify-center rounded-full text-white shadow-[0_8px_18px_rgba(15,23,42,0.22)]"
+              style={{
+                backgroundColor: marketPlayable ? game.color : "#cbd5e1",
+                color: "#fff",
+              }}
+            >
+              {React.cloneElement(game.icon, { strokeWidth: 2.2 })}
             </div>
-            <p className={`text-sm font-bold text-center tracking-wider ${
-              marketPlayable ? "text-gray-100" : "text-slate-500"
+            <span
+              className="mb-3 h-1 w-24 rounded-full"
+              style={{ backgroundColor: marketPlayable ? game.color : "#cbd5e1" }}
+            />
+            <p className={`text-[15px] font-semibold leading-snug ${
+              marketPlayable ? "text-slate-950" : "text-slate-500"
             }`}>
               {game.name}
             </p>

@@ -10,18 +10,40 @@ const API_BASE = `${API_URL}`;
 
 // ======================= HELPERS =======================
 const slugToGameType = (slug = "") => {
-  const s = slug.replace(/-/g, "_");
+  const s = slug
+    .toLowerCase()
+    .replace(/[(),]/g, "")
+    .replace(/-/g, "_");
 
   if (["single_digit", "single"].includes(s)) return "single";
+  if (["single_bulk_digit", "single_digit_bulk"].includes(s))
+    return "single_bulk";
   if (["jodi_digit", "jodi"].includes(s)) return "jodi";
+  if (["jodi_digit_bulk", "jodi_bulk"].includes(s)) return "jodi_bulk";
   if (["single_panna"].includes(s)) return "single_panna";
+  if (["single_panna_bulk"].includes(s)) return "single_panna_bulk";
   if (["double_panna"].includes(s)) return "double_panna";
+  if (["double_panna_bulk"].includes(s)) return "double_panna_bulk";
   if (["triple_panna"].includes(s)) return "triple_panna";
   if (["sp"].includes(s)) return "sp";
   if (["dp"].includes(s)) return "dp";
   if (["tp"].includes(s)) return "tp";
   if (["half_sangam"].includes(s)) return "half_sangam";
+  if (["half_sangama"].includes(s)) return "half_sangam_a";
+  if (["half_sangamb"].includes(s)) return "half_sangam_b";
   if (["full_sangam"].includes(s)) return "full_sangam";
+  if (["dp_motor"].includes(s)) return "dp_motor";
+  if (["sp_motor"].includes(s)) return "sp_motor";
+  if (["sp_dp_tp"].includes(s)) return "sp_dp_tp";
+  if (["two_digit_pana"].includes(s)) return "two_digit_pana";
+  if (["sp_common"].includes(s)) return "sp_common";
+  if (["odd_even"].includes(s)) return "odd_even";
+  if (["dp_common"].includes(s)) return "dp_common";
+  if (["red_jodi"].includes(s)) return "red_jodi";
+  if (["pana_family"].includes(s)) return "pana_family";
+  if (["digit_based_jodi"].includes(s)) return "digit_based_jodi";
+  if (["cycle_jodi"].includes(s)) return "cycle_jodi";
+  if (["jodi_family"].includes(s)) return "jodi_family";
 
   return s;
 };
@@ -29,24 +51,113 @@ const slugToGameType = (slug = "") => {
 const prettyName = (slug = "") =>
   slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
+const splitEntries = (value = "") =>
+  value.trim().split(/[\s,]+/).filter(Boolean);
+
+const SINGLE_GAMES = new Set(["single", "single_bulk"]);
+const JODI_GAMES = new Set([
+  "jodi",
+  "jodi_bulk",
+  "odd_even",
+  "red_jodi",
+  "digit_based_jodi",
+  "cycle_jodi",
+  "jodi_family",
+]);
+const PANNA_GAMES = new Set([
+  "single_panna",
+  "single_panna_bulk",
+  "double_panna",
+  "double_panna_bulk",
+  "triple_panna",
+  "sp",
+  "dp",
+  "tp",
+  "dp_motor",
+  "sp_motor",
+  "sp_dp_tp",
+  "two_digit_pana",
+  "sp_common",
+  "dp_common",
+  "pana_family",
+]);
+const HALF_SANGAM_GAMES = new Set([
+  "half_sangam",
+  "half_sangam_a",
+  "half_sangam_b",
+]);
+
+const inputHelpByGame = {
+  single: { label: "Single Digit", placeholder: "Enter 0-9" },
+  single_bulk: {
+    label: "Single Bulk Digit",
+    placeholder: "0, 1, 2",
+    allowList: true,
+  },
+  jodi: { label: "Jodi Digit", placeholder: "Enter 2 digits" },
+  jodi_bulk: {
+    label: "Jodi Digit Bulk",
+    placeholder: "12, 34, 56",
+    allowList: true,
+  },
+  single_panna: { label: "Single Panna", placeholder: "Enter 3 digits" },
+  single_panna_bulk: {
+    label: "Single Panna Bulk",
+    placeholder: "123, 456, 789",
+    allowList: true,
+  },
+  double_panna: { label: "Double Panna", placeholder: "Enter 3 digits" },
+  double_panna_bulk: {
+    label: "Double Panna Bulk",
+    placeholder: "112, 224, 668",
+    allowList: true,
+  },
+  triple_panna: { label: "Triple Panna", placeholder: "Enter 3 digits" },
+  dp_motor: { label: "DP Motor", placeholder: "112, 224", allowList: true },
+  sp_motor: { label: "SP Motor", placeholder: "123, 147", allowList: true },
+  sp_dp_tp: { label: "SP DP TP", placeholder: "123, 112, 777", allowList: true },
+  two_digit_pana: {
+    label: "Two Digit Pana",
+    placeholder: "123, 456",
+    allowList: true,
+  },
+  sp_common: { label: "SP Common", placeholder: "123, 147", allowList: true },
+  odd_even: { label: "Odd Even", placeholder: "12, 34", allowList: true },
+  dp_common: { label: "DP Common", placeholder: "112, 224", allowList: true },
+  red_jodi: { label: "Red Jodi", placeholder: "05, 16", allowList: true },
+  pana_family: {
+    label: "Pana Family",
+    placeholder: "123, 456",
+    allowList: true,
+  },
+  digit_based_jodi: {
+    label: "Digit Based Jodi",
+    placeholder: "12, 23, 34",
+    allowList: true,
+  },
+  cycle_jodi: { label: "Cycle Jodi", placeholder: "12, 24, 48", allowList: true },
+  jodi_family: {
+    label: "Jodi Family",
+    placeholder: "12, 21, 34",
+    allowList: true,
+  },
+};
+
 function validateDigitFrontend(game_type, digit) {
   if (!digit) throw new Error("Digit / panna is required.");
 
-  if (game_type === "single" && !/^\d$/.test(digit))
-    throw new Error("Single must be exactly 1 digit.");
+  const entries = splitEntries(digit);
 
-  if (game_type === "jodi" && !/^\d{2}$/.test(digit))
-    throw new Error("Jodi must be exactly 2 digits.");
+  if (SINGLE_GAMES.has(game_type) && entries.some((entry) => !/^\d$/.test(entry)))
+    throw new Error("Single entries must be exactly 1 digit.");
 
-  if (
-    ["single_panna", "double_panna", "triple_panna", "sp", "dp", "tp"].includes(
-      game_type
-    ) &&
-    !/^\d{3}$/.test(digit)
-  )
-    throw new Error("Panna must be exactly 3 digits.");
+  if (JODI_GAMES.has(game_type) && entries.some((entry) => !/^\d{2}$/.test(entry)))
+    throw new Error("Jodi entries must be exactly 2 digits.");
 
-  if (game_type === "half_sangam" && !/^\d{3}-\d$/.test(digit))
+  if (PANNA_GAMES.has(game_type) && entries.some((entry) => !/^\d{3}$/.test(entry)))
+    throw new Error("Panna entries must be exactly 3 digits.");
+
+  if (HALF_SANGAM_GAMES.has(game_type) && !/^\d{3}-\d$/.test(digit))
     throw new Error("Half Sangam must be in format 123-4");
 
   if (game_type === "full_sangam" && !/^\d{3}-\d{3}$/.test(digit))
@@ -79,6 +190,10 @@ export default function MatkaGame() {
   const gameType = useMemo(() => slugToGameType(gameId), [gameId]);
   console.log(gameType);
   const displayGame = prettyName(gameId);
+  const inputHelp = inputHelpByGame[gameType] || {
+    label: "Digit / Panna",
+    placeholder: "Enter Digit",
+  };
 
   // Market info
   const [market, setMarket] = useState(null);
@@ -137,7 +252,7 @@ export default function MatkaGame() {
 
   // ======================= ASSEMBLE SANGAM =======================
   const assembledDigit = () => {
-    if (gameType === "half_sangam") {
+    if (HALF_SANGAM_GAMES.has(gameType)) {
       if (openPanna && closeDigit) return `${openPanna}-${closeDigit}`;
       if (closePanna && openDigit) return `${closePanna}-${openDigit}`;
       return digit;
@@ -201,6 +316,8 @@ export default function MatkaGame() {
         } else {
           payload.digit = finalDigit;
         }
+      } else if (HALF_SANGAM_GAMES.has(gameType)) {
+        payload.digit = finalDigit;
       } else {
         payload.digit = finalDigit;
       }
@@ -332,49 +449,53 @@ export default function MatkaGame() {
         {/* DIGIT INPUTS */}
         <div className="mb-3">
           <label className="block text-sm text-gray-300 mb-1">
-            Digit / Panna
+            {inputHelp.label}
           </label>
 
           {/* HALF SANGAM */}
-          {gameType === "half_sangam" && (
+          {HALF_SANGAM_GAMES.has(gameType) && (
             <>
-              <div className="grid grid-cols-2 gap-2 mb-2">
-                <input
-                  placeholder="Open Panna (123)"
-                  value={openPanna}
-                  onChange={(e) =>
-                    setOpenPanna(e.target.value.replace(/\D/g, "").slice(0, 3))
-                  }
-                  className="p-2 bg-black/30 rounded border text-white"
-                />
-                <input
-                  placeholder="Close Digit (4)"
-                  value={closeDigit}
-                  onChange={(e) =>
-                    setCloseDigit(e.target.value.replace(/\D/g, "").slice(0, 1))
-                  }
-                  className="p-2 bg-black/30 rounded border text-white"
-                />
-              </div>
+              {gameType !== "half_sangam_b" && (
+                <div className="grid grid-cols-2 gap-2 mb-2">
+                  <input
+                    placeholder="Open Panna (123)"
+                    value={openPanna}
+                    onChange={(e) =>
+                      setOpenPanna(e.target.value.replace(/\D/g, "").slice(0, 3))
+                    }
+                    className="p-2 bg-black/30 rounded border text-white"
+                  />
+                  <input
+                    placeholder="Close Digit (4)"
+                    value={closeDigit}
+                    onChange={(e) =>
+                      setCloseDigit(e.target.value.replace(/\D/g, "").slice(0, 1))
+                    }
+                    className="p-2 bg-black/30 rounded border text-white"
+                  />
+                </div>
+              )}
 
-              <div className="grid grid-cols-2 gap-2 mb-2">
-                <input
-                  placeholder="Close Panna (123)"
-                  value={closePanna}
-                  onChange={(e) =>
-                    setClosePanna(e.target.value.replace(/\D/g, "").slice(0, 3))
-                  }
-                  className="p-2 bg-black/30 rounded border text-white"
-                />
-                <input
-                  placeholder="Open Digit (4)"
-                  value={openDigit}
-                  onChange={(e) =>
-                    setOpenDigit(e.target.value.replace(/\D/g, "").slice(0, 1))
-                  }
-                  className="p-2 bg-black/30 rounded border text-white"
-                />
-              </div>
+              {gameType !== "half_sangam_a" && (
+                <div className="grid grid-cols-2 gap-2 mb-2">
+                  <input
+                    placeholder="Close Panna (123)"
+                    value={closePanna}
+                    onChange={(e) =>
+                      setClosePanna(e.target.value.replace(/\D/g, "").slice(0, 3))
+                    }
+                    className="p-2 bg-black/30 rounded border text-white"
+                  />
+                  <input
+                    placeholder="Open Digit (4)"
+                    value={openDigit}
+                    onChange={(e) =>
+                      setOpenDigit(e.target.value.replace(/\D/g, "").slice(0, 1))
+                    }
+                    className="p-2 bg-black/30 rounded border text-white"
+                  />
+                </div>
+              )}
 
               <input
                 placeholder="OR Combined (123-4)"
@@ -422,11 +543,18 @@ export default function MatkaGame() {
           )}
 
           {/* NORMAL GAMES */}
-          {gameType !== "half_sangam" && gameType !== "full_sangam" && (
+          {!HALF_SANGAM_GAMES.has(gameType) && gameType !== "full_sangam" && (
             <input
-              placeholder="Enter Digit"
+              placeholder={inputHelp.placeholder}
               value={digit}
-              onChange={(e) => setDigit(e.target.value.replace(/\D/g, ""))}
+              onChange={(e) =>
+                setDigit(
+                  e.target.value.replace(
+                    inputHelp.allowList ? /[^\d,\s]/g : /\D/g,
+                    ""
+                  )
+                )
+              }
               className="p-2 bg-black/30 rounded border w-full text-white"
             />
           )}

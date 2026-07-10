@@ -1,4 +1,5 @@
 from app.auth import require_admin
+from app.game_types import bid_wins, rate_key
 from app.models import Bid, DepositQR, Market, RateChart, Result, User, Withdrawal
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, Form,Query
 from fastapi.responses import FileResponse
@@ -211,6 +212,26 @@ def winning_report(
         "half_sangam": chart.half_sangam_2,
         "full_sangam": chart.full_sangam_2,
     }
+    RATE_MAP.update({
+        "single_bulk": RATE_MAP["single"],
+        "jodi_bulk": RATE_MAP["jodi"],
+        "single_panna_bulk": RATE_MAP["single_panna"],
+        "double_panna_bulk": RATE_MAP["double_panna"],
+        "half_sangam_a": RATE_MAP["half_sangam"],
+        "half_sangam_b": RATE_MAP["half_sangam"],
+        "dp_motor": RATE_MAP["double_panna"],
+        "sp_motor": RATE_MAP["single_panna"],
+        "sp_dp_tp": RATE_MAP["triple_panna"],
+        "two_digit_pana": RATE_MAP["single_panna"],
+        "sp_common": RATE_MAP["single_panna"],
+        "odd_even": RATE_MAP["jodi"],
+        "dp_common": RATE_MAP["double_panna"],
+        "red_jodi": RATE_MAP["jodi"],
+        "pana_family": RATE_MAP["single_panna"],
+        "digit_based_jodi": RATE_MAP["jodi"],
+        "cycle_jodi": RATE_MAP["jodi"],
+        "jodi_family": RATE_MAP["jodi"],
+    })
 
     results = []
 
@@ -224,48 +245,13 @@ def winning_report(
         if not result:
             continue
 
-        win = False
-
-        # SINGLE DIGIT (open session)
-        if b.game_type == "single" and b.digit == result.open_digit:
-            win = True
-
-        # JODI
-        if b.game_type == "jodi" and b.digit == (result.open_digit + result.close_digit):
-            win = True
-
-        # SINGLE PANNA
-        if b.game_type == "single_panna" and b.digit == result.open_panna:
-            win = True
-
-        # DOUBLE PANNA
-        if b.game_type == "double_panna" and b.digit == result.close_panna:
-            win = True
-
-        # TRIPLE PANNA
-        if b.game_type == "triple_panna":
-            if b.session == "open" and b.digit == result.open_panna:
-                win = True
-            if b.session == "close" and b.digit == result.close_panna:
-                win = True
-
-        # HALF SANGAM
-        if b.game_type == "half_sangam":
-            panna, digit = b.digit.split("-")
-            if panna == result.open_panna and digit == result.close_digit:
-                win = True
-
-        # FULL SANGAM
-        if b.game_type == "full_sangam":
-            op, cp = b.digit.split("-")
-            if op == result.open_panna and cp == result.close_panna:
-                win = True
+        win = bid_wins(b, result)
 
         if not win:
             continue
 
         # ---- Calculate Win Amount ----
-        rate = RATE_MAP.get(b.game_type, 0)
+        rate = RATE_MAP.get(b.game_type, RATE_MAP.get(rate_key(b.game_type), 0))
         win_amount = b.points * rate
 
         # ---- USER ----

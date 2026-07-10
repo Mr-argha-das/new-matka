@@ -1,6 +1,7 @@
 import uuid
 from app.auth import get_current_user, require_admin
 from app.models import Bid, Market, RateChart, Result, Transaction, Wallet
+from app.game_types import bid_wins, rate_key
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 # from ..auth import require_admin
@@ -58,6 +59,46 @@ def settle_results(market_id: str, result_obj: Result, session: str):
         "half_sangam": chart.half_sangam_x,
         "full_sangam": chart.full_sangam_x,
     }
+    RATE_MAP.update({
+        "single_bulk": RATE_MAP["single"],
+        "jodi_bulk": RATE_MAP["jodi"],
+        "single_panna_bulk": RATE_MAP["single_panna"],
+        "double_panna_bulk": RATE_MAP["double_panna"],
+        "half_sangam_a": RATE_MAP["half_sangam"],
+        "half_sangam_b": RATE_MAP["half_sangam"],
+        "dp_motor": RATE_MAP["double_panna"],
+        "sp_motor": RATE_MAP["single_panna"],
+        "sp_dp_tp": RATE_MAP["triple_panna"],
+        "two_digit_pana": RATE_MAP["single_panna"],
+        "sp_common": RATE_MAP["single_panna"],
+        "odd_even": RATE_MAP["jodi"],
+        "dp_common": RATE_MAP["double_panna"],
+        "red_jodi": RATE_MAP["jodi"],
+        "pana_family": RATE_MAP["single_panna"],
+        "digit_based_jodi": RATE_MAP["jodi"],
+        "cycle_jodi": RATE_MAP["jodi"],
+        "jodi_family": RATE_MAP["jodi"],
+    })
+    RATE_MAP.update({
+        "single_bulk": RATE_MAP["single"],
+        "jodi_bulk": RATE_MAP["jodi"],
+        "single_panna_bulk": RATE_MAP["single_panna"],
+        "double_panna_bulk": RATE_MAP["double_panna"],
+        "half_sangam_a": RATE_MAP["half_sangam"],
+        "half_sangam_b": RATE_MAP["half_sangam"],
+        "dp_motor": RATE_MAP["double_panna"],
+        "sp_motor": RATE_MAP["single_panna"],
+        "sp_dp_tp": RATE_MAP["triple_panna"],
+        "two_digit_pana": RATE_MAP["single_panna"],
+        "sp_common": RATE_MAP["single_panna"],
+        "odd_even": RATE_MAP["jodi"],
+        "dp_common": RATE_MAP["double_panna"],
+        "red_jodi": RATE_MAP["jodi"],
+        "pana_family": RATE_MAP["single_panna"],
+        "digit_based_jodi": RATE_MAP["jodi"],
+        "cycle_jodi": RATE_MAP["jodi"],
+        "jodi_family": RATE_MAP["jodi"],
+    })
 
     open_digit = result_obj.open_digit
     close_digit = result_obj.close_digit
@@ -71,63 +112,11 @@ def settle_results(market_id: str, result_obj: Result, session: str):
     )
 
     for bid in bids:
-        win = False
-
-        # ---------------- SINGLE ----------------
-        if bid.game_type == "single":
-            if session == "open" and bid.digit == open_digit:
-                win = True
-            elif session == "close" and bid.digit == close_digit:
-                win = True
-
-        # ---------------- JODI ----------------
-        elif bid.game_type == "jodi":
-            if open_digit != "-" and close_digit != "-":
-                if bid.digit == open_digit + close_digit:
-                    win = True
-
-        # ---------------- SINGLE PANNA ----------------
-        elif bid.game_type == "single_panna":
-            if session == "open" and bid.digit == open_panna:
-                win = True
-            elif session == "close" and bid.digit == close_panna:
-                win = True
-
-        # ---------------- DOUBLE PANNA ----------------
-        elif bid.game_type == "double_panna":
-            if session == "open" and bid.digit == open_panna:
-                win = True
-            elif session == "close" and bid.digit == close_panna:
-                win = True
-
-        # ---------------- TRIPLE PANNA ----------------
-        elif bid.game_type == "triple_panna":
-            if session == "open" and bid.digit == open_panna:
-                win = True
-            elif session == "close" and bid.digit == close_panna:
-                win = True
-
-        # ---------------- HALF SANGAM ----------------
-        elif bid.game_type == "half_sangam":
-            if open_digit != "-" and close_digit != "-":
-                panna, digitx = bid.digit.split("-")
-
-                if panna == open_panna and digitx == close_digit:
-                    win = True
-
-                if panna == close_panna and digitx == open_digit:
-                    win = True
-
-        # ---------------- FULL SANGAM ----------------
-        elif bid.game_type == "full_sangam":
-            if open_panna != "-" and close_panna != "-":
-                op, cp = bid.digit.split("-")
-                if op == open_panna and cp == close_panna:
-                    win = True
+        win = bid_wins(bid, result_obj, session=session)
 
         # ---------------- PAYOUT ----------------
         if win:
-            rate = RATE_MAP.get(bid.game_type, 0)
+            rate = RATE_MAP.get(bid.game_type, RATE_MAP.get(rate_key(bid.game_type), 0))
             amount = bid.points * rate
 
             wallet = Wallet.objects(user_id=bid.user_id).first()
@@ -308,43 +297,12 @@ def win_history(user=Depends(get_current_user)):
         if not result:
             continue
 
-        win = False
-
-        # -------- WIN LOGIC --------
-        if bid.game_type == "single" and bid.digit == result.open_digit:
-            win = True
-
-        elif bid.game_type == "jodi" and bid.digit == result.open_digit + result.close_digit:
-            win = True
-
-        elif bid.game_type == "single_panna" and bid.digit == result.open_panna:
-            win = True
-
-        elif bid.game_type == "double_panna" and bid.digit == result.close_panna:
-            win = True
-
-        elif bid.game_type == "triple_panna":
-            if bid.session == "open" and bid.digit == result.open_panna:
-                win = True
-            elif bid.session == "close" and bid.digit == result.close_panna:
-                win = True
-
-        elif bid.game_type == "half_sangam":
-            panna, digitx = bid.digit.split("-")
-            if panna == result.open_panna and digitx == result.close_digit:
-                win = True
-            elif panna == result.close_panna and digitx == result.open_digit:
-                win = True
-
-        elif bid.game_type == "full_sangam":
-            op, cp = bid.digit.split("-")
-            if op == result.open_panna and cp == result.close_panna:
-                win = True
+        win = bid_wins(bid, result)
 
         if not win:
             continue
 
-        rate = RATE_MAP.get(bid.game_type, 0)
+        rate = RATE_MAP.get(bid.game_type, RATE_MAP.get(rate_key(bid.game_type), 0))
         win_amount = bid.points * rate
 
         # Fetch exact transaction (Win type only recommended)

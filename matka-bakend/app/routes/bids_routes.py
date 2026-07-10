@@ -3,63 +3,10 @@ import datetime
 from zoneinfo import ZoneInfo
 from ..models import Bid, Wallet, Market
 from ..auth import get_current_user, require_admin
+from ..game_types import VALID_GAMES, validate_digit
 
 router = APIRouter(prefix="/bid")
 IST = ZoneInfo("Asia/Kolkata")
-
-VALID_GAMES = [
-    "single", "jodi", "single_panna", "double_panna", "triple_panna",
-    "sp", "dp", "tp", "half_sangam", "full_sangam"
-]
-
-
-# ------------------------------
-# VALIDATION HELPERS
-# ------------------------------
-
-def validate_digit(game_type, digit):
-
-    # SINGLE → Only 1 digit
-    if game_type == "single":
-        if not digit.isdigit() or len(digit) != 1:
-            raise HTTPException(400, "Single digit must be 0-9")
-
-    # JODI → Only 2 digits
-    if game_type == "jodi":
-        if not digit.isdigit() or len(digit) != 2:
-            raise HTTPException(400, "Jodi must be exactly 2 digits")
-
-    # PANNA → 3 digits
-    if game_type in ["single_panna", "double_panna", "triple_panna", "sp", "dp", "tp"]:
-        if not digit.isdigit() or len(digit) != 3:
-            raise HTTPException(400, "Panna must be 3 digits")
-
-    # HALF SANGAM → Format: 123-4 or 678-3
-    if game_type == "half_sangam":
-        if "-" not in digit:
-            raise HTTPException(400, "Half Sangam must be in format 'PANNAXX-DIGIT'")
-
-        panna, single_digit = digit.split("-")
-
-        if not panna.isdigit() or len(panna) != 3:
-            raise HTTPException(400, "Half Sangam Panna must be 3 digits")
-
-        if not single_digit.isdigit() or len(single_digit) != 1:
-            raise HTTPException(400, "Half Sangam Digit must be 1 digit")
-
-    # FULL SANGAM → Format: 123-678
-    if game_type == "full_sangam":
-        if "-" not in digit:
-            raise HTTPException(400, "Full Sangam must be 'OPENPANNA-CLOSEPANNA'")
-
-        open_panna, close_panna = digit.split("-")
-
-        if not open_panna.isdigit() or len(open_panna) != 3:
-            raise HTTPException(400, "Full Sangam OPEN PANNA must be 3 digits")
-
-        if not close_panna.isdigit() or len(close_panna) != 3:
-            raise HTTPException(400, "Full Sangam CLOSE PANNA must be 3 digits")
-
 
 def get_market_window(open_time: str, close_time: str):
     fmt = "%I:%M %p"

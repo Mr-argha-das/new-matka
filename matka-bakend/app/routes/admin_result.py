@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..models import Market, Result, Bid, Wallet, User
 from ..auth import get_current_user, require_admin
+from ..game_types import bid_wins, rate_key
 import datetime
 from pydantic import BaseModel
 
@@ -29,6 +30,26 @@ GAME_RATES = {
     "half_sangam": 1200,
     "full_sangam": 10000,
 }
+GAME_RATES.update({
+    "single_bulk": GAME_RATES["single"],
+    "jodi_bulk": GAME_RATES["jodi"],
+    "single_panna_bulk": GAME_RATES["single_panna"],
+    "double_panna_bulk": GAME_RATES["double_panna"],
+    "half_sangam_a": GAME_RATES["half_sangam"],
+    "half_sangam_b": GAME_RATES["half_sangam"],
+    "dp_motor": GAME_RATES["double_panna"],
+    "sp_motor": GAME_RATES["single_panna"],
+    "sp_dp_tp": GAME_RATES["tp"],
+    "two_digit_pana": GAME_RATES["single_panna"],
+    "sp_common": GAME_RATES["single_panna"],
+    "odd_even": GAME_RATES["jodi"],
+    "dp_common": GAME_RATES["double_panna"],
+    "red_jodi": GAME_RATES["jodi"],
+    "pana_family": GAME_RATES["single_panna"],
+    "digit_based_jodi": GAME_RATES["jodi"],
+    "cycle_jodi": GAME_RATES["jodi"],
+    "jodi_family": GAME_RATES["jodi"],
+})
 
 
 # -----------------------------------------------------
@@ -44,65 +65,13 @@ def settle_results(market_id: str, result_obj: Result):
     bids = Bid.objects(market_id=market_id)
 
     for bid in bids:
-        win = False
-
-        # --------------------
-        # SINGLE DIGIT
-        # --------------------
-        if bid.game_type == "single" and bid.digit == open_digit:
-            win = True
-
-        # --------------------
-        # JODI
-        # --------------------
-        if bid.game_type == "jodi" and bid.digit == open_digit + close_digit:
-            win = True
-
-        # --------------------
-        # PANNA (Open)
-        # --------------------
-        if bid.game_type in ["single_panna", "sp"] and bid.digit == open_panna:
-            win = True
-
-        # --------------------
-        # PANNA (Close)
-        # --------------------
-        if bid.game_type in ["double_panna", "dp"] and bid.digit == close_panna:
-            win = True
-
-        # --------------------
-        # TRIPLE PANNA
-        # --------------------
-        if bid.game_type in ["triple_panna", "tp"]:
-            if bid.session == "open" and bid.digit == open_panna:
-                win = True
-            if bid.session == "close" and bid.digit == close_panna:
-                win = True
-
-        # --------------------
-        # HALF SANGAM (Open panna + Close digit)
-        # EXAMPLE: 123-4  == open_panna-close_digit
-        # --------------------
-        if bid.game_type == "half_sangam":
-            panna, digit = bid.digit.split("-")
-
-            if panna == open_panna and digit == close_digit:
-                win = True
-
-        # --------------------
-        # FULL SANGAM (Open panna + Close panna)
-        # EXAMPLE: 123-678
-        # --------------------
-        if bid.game_type == "full_sangam":
-            op, cp = bid.digit.split("-")
-            if op == open_panna and cp == close_panna:
-                win = True
+        win = bid_wins(bid, result_obj)
 
         # -----------------------
         # If Won → Add Balance
         # -----------------------
         if win:
-            rate = GAME_RATES.get(bid.game_type, 0)
+            rate = GAME_RATES.get(bid.game_type, GAME_RATES.get(rate_key(bid.game_type), 0))
             win_amount = bid.points * rate
 
             wallet = Wallet.objects(user_id=bid.user_id).first()
