@@ -17,7 +17,8 @@ import {
   X,
   DollarSign,
   Star,
-  Play, // Replaced BiMoney with DollarSign from lucide-react
+  Play,
+  LayoutGrid, // Replaced BiMoney with DollarSign from lucide-react
 } from "lucide-react";
 import axios from "axios";
 import { API_URL } from "../../config";

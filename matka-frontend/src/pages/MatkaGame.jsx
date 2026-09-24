@@ -87,6 +87,15 @@ const HALF_SANGAM_GAMES = new Set([
   "half_sangam_b",
 ]);
 
+// Panna chart link — ONLY for Single / Double / Triple Panna games
+const PANNA_CHART_TAB = {
+  single_panna: { tab: "sp", label: "Single Panna Chart (120 Panna)" },
+  single_panna_bulk: { tab: "sp", label: "Single Panna Chart (120 Panna)" },
+  double_panna: { tab: "dp", label: "Double Panna Chart (90 Panna)" },
+  double_panna_bulk: { tab: "dp", label: "Double Panna Chart (90 Panna)" },
+  triple_panna: { tab: "tp", label: "Triple Panna Chart (10 Panna)" },
+};
+
 const inputHelpByGame = {
   single: { label: "Single Digit", placeholder: "Enter 0-9" },
   single_bulk: {
@@ -402,6 +411,19 @@ export default function MatkaGame() {
           </span>
         </span>
       </p>
+
+      {PANNA_CHART_TAB[gameType] && (
+        <a
+          href={`/panna-chart?tab=${PANNA_CHART_TAB[gameType].tab}`}
+          className="theme-pill mx-3 mb-1 flex items-center justify-between rounded-[20px] px-4 py-3"
+        >
+          <span className="flex items-center gap-2 text-sm font-bold">
+            <BookOpenText size={18} className="text-emerald-600" />
+            {PANNA_CHART_TAB[gameType].label}
+          </span>
+          <span className="text-xs font-extrabold text-emerald-600">VIEW →</span>
+        </a>
+      )}
 
       <Message type={msg?.type} text={msg?.text} />
 

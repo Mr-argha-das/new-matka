@@ -250,6 +250,7 @@ const App = () => {
             <Route path="add-points" element={<AddMoney />} />
             <Route path="/referrals" element={<ReferralPage />} />
             <Route path="charts/:marketId" element={<Charts />} />
+            <Route path="panna-chart" element={<PannaChart />} />
             <Route path="gcharts/:marketId" element={<GMarketChart />} />
             <Route path="starline" element={<StarlineMarket />} />
             <Route

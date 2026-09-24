@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
 
   server: {
-    allowedHosts: ["game.sridevimatka9.live", "localhost", "127.0.0.1"],
+    host: "0.0.0.0",
+    allowedHosts: true,
   },
 
   optimizeDeps: {
