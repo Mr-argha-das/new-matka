@@ -18,6 +18,7 @@ import WinHistory from "./pages/WinHistory";
 import MyBids from "./pages/MyBids";
 import AddMoney from "./pages/AddMoney";
 import Charts from "./pages/Charts";
+import PannaChart from "./pages/PannaChart";
 import BidHistoryPage from "./pages/BidHistory";
 
 import WithdrawRequest from "./pages/WithdrawRequest";

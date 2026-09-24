@@ -100,6 +100,7 @@ export default function SidebarMenu({ sidebar, setSidebar }) {
     { icon: <Clock size={18} />, label: "Bid History", link: "/bid-history" },
     { icon: <Trophy size={18} />, label: "Win History", link: "/win-history" },
     { icon: <Gamepad2 size={18} />, label: "Game Rate", link: "/game-rate" },
+    { icon: <LayoutGrid size={18} />, label: "Panna Chart", link: "/panna-chart" },
     { icon: <Phone size={18} />, label: "Contact Us", link: "/contact-us" },
     { icon: <Gift size={18} />, label: "Reffer & Earn", link: "/referrals" },
     {
