@@ -205,7 +205,7 @@ export default function Games() {
       </div>
     );
 
-  const marketPlayable = isMarketPlayable(market, now);
+  const marketPlayable = isMarketPlayableByTime(market, now);
 
   return (
     <div className="max-w-md mx-auto flex min-h-screen flex-col bg-[#f5f6f6] font-sans text-slate-950">

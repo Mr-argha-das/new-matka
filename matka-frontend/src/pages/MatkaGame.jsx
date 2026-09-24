@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle, XCircle, Loader, ArrowLeft } from "lucide-react";
 import { API_URL } from "../config";
-import { isMarketPlayable } from "../utils/marketTime";
+import { isMarketPlayableByTime } from "../utils/marketTime";
 
 const API_BASE = `${API_URL}`;
 
