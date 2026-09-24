@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 import { ArrowLeft, CardSim, Coins, Diamond, Dice1, Dice2 } from "lucide-react";
-import { isMarketPlayable } from "../utils/marketTime";
+import { isMarketPlayableByTime } from "../utils/marketTime";
 
 export default function Games() {
   const { marketId } = useParams();

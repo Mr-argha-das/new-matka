@@ -287,7 +287,7 @@ export default function MatkaGame() {
   const bid_time = getISTISOString();
   // console.log(bid_time);
 
-  const marketPlayable = isMarketPlayable(market, now);
+  const marketPlayable = isMarketPlayableByTime(market, now);
 
   // ======================= PLACE BID =======================
   const placeBid = async (e) => {

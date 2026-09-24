@@ -68,3 +68,24 @@ export const isMarketPlayable = (market, date = new Date()) => {
 
   return nowMinutes < closeMinutes;
 };
+
+// Play-page rule: decide ONLY from the market's OPEN/CLOSE TIME strings
+// (old "hh:MM AM/PM" format, e.g. "03:45 PM") in IST — same as the home page
+// shows. The backend status flag is ignored here because it can wrongly
+// disable Play before close time. Deactivated markets stay closed.
+export const isMarketPlayableByTime = (market, date = new Date()) => {
+  if (market?.is_active === false) return false;
+
+  const openMinutes = parseMarketTime(market?.openTime || market?.open_time);
+  const closeMinutes = parseMarketTime(market?.closeTime || market?.close_time);
+
+  if (closeMinutes === null) return true;
+
+  const nowMinutes = getISTMinutes(date);
+
+  if (openMinutes !== null && closeMinutes < openMinutes) {
+    return nowMinutes >= openMinutes || nowMinutes < closeMinutes;
+  }
+
+  return nowMinutes < closeMinutes;
+};
