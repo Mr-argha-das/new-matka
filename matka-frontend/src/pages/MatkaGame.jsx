@@ -2,9 +2,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { CheckCircle, XCircle, Loader, ArrowLeft } from "lucide-react";
+import { CheckCircle, XCircle, Loader, ArrowLeft, Search, X } from "lucide-react";
 import { API_URL } from "../config";
 import { isMarketPlayable } from "../utils/marketTime";
+import { getPannaListByGameType } from "../utils/pannaLists";
 
 const API_BASE = `${API_URL}`;
 
@@ -87,6 +88,13 @@ const HALF_SANGAM_GAMES = new Set([
   "half_sangam_b",
 ]);
 
+const BULK_GAMES = new Set([
+  "single_bulk",
+  "jodi_bulk",
+  "single_panna_bulk",
+  "double_panna_bulk",
+]);
+
 const inputHelpByGame = {
   single: { label: "Single Digit", placeholder: "Enter 0-9" },
   single_bulk: {
@@ -100,19 +108,19 @@ const inputHelpByGame = {
     placeholder: "12, 34, 56",
     allowList: true,
   },
-  single_panna: { label: "Single Panna", placeholder: "Enter 3 digits" },
+  single_panna: { label: "Single Panna", placeholder: "Enter 3 digits - e.g. 123" },
   single_panna_bulk: {
     label: "Single Panna Bulk",
     placeholder: "123, 456, 789",
     allowList: true,
   },
-  double_panna: { label: "Double Panna", placeholder: "Enter 3 digits" },
+  double_panna: { label: "Double Panna", placeholder: "Enter 3 digits - e.g. 112" },
   double_panna_bulk: {
     label: "Double Panna Bulk",
     placeholder: "112, 224, 668",
     allowList: true,
   },
-  triple_panna: { label: "Triple Panna", placeholder: "Enter 3 digits" },
+  triple_panna: { label: "Triple Panna", placeholder: "Enter 3 digits - e.g. 111" },
   dp_motor: { label: "DP Motor", placeholder: "112, 224", allowList: true },
   sp_motor: { label: "SP Motor", placeholder: "123, 147", allowList: true },
   sp_dp_tp: { label: "SP DP TP", placeholder: "123, 112, 777", allowList: true },
@@ -184,11 +192,197 @@ const Message = ({ type, text }) => {
   );
 };
 
+// ======================= PANNA SUGGESTION COMPONENT =======================
+const PannaSuggestionBox = ({ pannaMeta, digit, setDigit, gameType }) => {
+  const [search, setSearch] = useState("");
+  const [showAll, setShowAll] = useState(false);
+  
+  const isBulk = BULK_GAMES.has(gameType);
+
+  // Filter logic: search in input + local search box
+  const filteredList = useMemo(() => {
+    const all = pannaMeta.list;
+    // Use last token from digit input for auto-filter if no manual search
+    const tokens = splitEntries(digit);
+    const lastToken = tokens.length ? tokens[tokens.length - 1] : "";
+    
+    const filterText = search.trim() || lastToken;
+    
+    if (!filterText) return all;
+    
+    return all.filter((p) => p.includes(filterText));
+  }, [pannaMeta.list, digit, search]);
+
+  const displayList = showAll ? filteredList : filteredList.slice(0, 30);
+
+  const handleSelect = (panna) => {
+    if (isBulk) {
+      const entries = splitEntries(digit);
+      if (entries.includes(panna)) {
+        // Remove if already selected
+        const newEntries = entries.filter((e) => e !== panna);
+        setDigit(newEntries.join(", "));
+        return;
+      }
+      // If last token is partial (1-2 chars) and we filtered, replace it
+      const tokens = splitEntries(digit);
+      const last = tokens[tokens.length - 1] || "";
+      if (last && last.length < 3 && panna.includes(last) && !pannaMeta.list.includes(last)) {
+        tokens[tokens.length - 1] = panna;
+        setDigit(tokens.join(", "));
+      } else {
+        const newValue = tokens.length ? `${tokens.join(", ")}, ${panna}` : panna;
+        setDigit(newValue);
+      }
+    } else {
+      setDigit(panna);
+    }
+  };
+
+  const selectedEntries = useMemo(() => splitEntries(digit), [digit]);
+
+  return (
+    <div className="mt-3 rounded-xl border border-white/10 bg-black/40 backdrop-blur-md overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between px-3 py-2.5 bg-white/5 border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <div className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: pannaMeta.color }} />
+          <span className="text-sm font-semibold text-white">
+            {pannaMeta.label} Suggestions
+          </span>
+          <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/10 text-gray-300">
+            {filteredList.length}/{pannaMeta.count}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          {isBulk && selectedEntries.length > 0 && (
+            <span className="text-[11px] text-emerald-300 font-medium">
+              {selectedEntries.length} selected
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={() => setDigit("")}
+            className="text-[11px] px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-gray-300"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className="p-2.5 border-b border-white/5">
+        <div className="relative">
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder={`Search ${pannaMeta.label} e.g. 12...`}
+            value={search}
+            onChange={(e) => setSearch(e.target.value.replace(/\D/g, "").slice(0,3))}
+            className="w-full pl-9 pr-8 py-2 rounded-lg bg-black/50 border border-white/10 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-purple-500/50"
+          />
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch("")}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded hover:bg-white/10"
+            >
+              <X size={14} className="text-gray-400" />
+            </button>
+          )}
+        </div>
+        {isBulk && (
+          <p className="text-[11px] text-gray-400 mt-1.5 px-1">
+            Tip: Click panna to add. Click again to remove. Type to filter.
+          </p>
+        )}
+      </div>
+
+      {/* Selected Preview for Bulk */}
+      {isBulk && selectedEntries.length > 0 && (
+        <div className="px-3 py-2 bg-emerald-950/30 border-b border-white/5">
+          <div className="flex flex-wrap gap-1.5">
+            {selectedEntries.map((entry, idx) => (
+              <span
+                key={`${entry}-${idx}`}
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-900/50 border border-emerald-700/30 text-[11px] text-emerald-200"
+              >
+                {entry}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newEntries = selectedEntries.filter((_, i) => i !== idx);
+                    setDigit(newEntries.join(", "));
+                  }}
+                  className="ml-1 hover:text-white"
+                >
+                  <X size={10} />
+                </button>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Grid */}
+      <div className="p-2.5 max-h-[220px] overflow-y-auto custom-scrollbar">
+        {displayList.length === 0 ? (
+          <div className="text-center py-6 text-gray-400 text-sm">
+            No panna found for &quot;{search || splitEntries(digit).pop()}&quot;
+          </div>
+        ) : (
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+            {displayList.map((panna) => {
+              const isSelected = selectedEntries.includes(panna);
+              return (
+                <button
+                  key={panna}
+                  type="button"
+                  onClick={() => handleSelect(panna)}
+                  className={`relative group px-2 py-2.5 rounded-lg text-sm font-mono font-semibold transition-all duration-150 border
+                    ${
+                      isSelected
+                        ? "bg-emerald-600 border-emerald-500 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]"
+                        : "bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20 hover:scale-[1.02]"
+                    }
+                  `}
+                >
+                  {panna}
+                  {isSelected && (
+                    <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-emerald-400 text-[9px] flex items-center justify-center text-black font-bold">
+                      ✓
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="px-3 py-2 bg-white/[0.03] border-t border-white/5 flex items-center justify-between">
+        <span className="text-[11px] text-gray-400">
+          {isBulk ? "Bulk mode - select multiple" : "Single mode - click to fill"} • Source: matkabook.com
+        </span>
+        {filteredList.length > 30 && (
+          <button
+            type="button"
+            onClick={() => setShowAll(!showAll)}
+            className="text-[11px] px-2.5 py-1 rounded-full bg-purple-600/20 border border-purple-500/30 text-purple-300 hover:bg-purple-600/30"
+          >
+            {showAll ? `Show Less` : `Show All ${filteredList.length}`}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // ======================= MAIN =======================
 export default function MatkaGame() {
   const { marketId, gameId } = useParams();
   const gameType = useMemo(() => slugToGameType(gameId), [gameId]);
-  console.log(gameType);
   const displayGame = prettyName(gameId);
   const inputHelp = inputHelpByGame[gameType] || {
     label: "Digit / Panna",
@@ -221,6 +415,9 @@ export default function MatkaGame() {
     [token]
   );
 
+  // Panna suggestion meta
+  const pannaMeta = useMemo(() => getPannaListByGameType(gameType), [gameType]);
+
   // ======================= FETCH MARKET =======================
   const fetchMarket = useCallback(async () => {
     setLoading(true);
@@ -228,8 +425,6 @@ export default function MatkaGame() {
       const res = await axios.get(`${API_BASE}/api/admin/market`, {
         headers: authHeader,
       });
-
-      console.log(res);
 
       const list = res.data.data;
       const found = list.find((m) => m._id?.$oid === marketId);
@@ -266,17 +461,10 @@ export default function MatkaGame() {
 
   function getISTISOString() {
     const now = new Date();
-
-    // IST offset = +5:30 in minutes
     const istOffset = 5.5 * 60 * 60 * 1000;
-
     const istTime = new Date(now.getTime() + istOffset);
-
     return istTime.toISOString().replace("Z", "+05:30");
   }
-
-  const bid_time = getISTISOString();
-  // console.log(bid_time);
 
   const marketPlayable = isMarketPlayable(market, now);
 
@@ -299,7 +487,6 @@ export default function MatkaGame() {
         game_type: gameType,
         session,
         points: Number(points),
-        // bid_time: getISTISOString(),
       };
 
       if (gameType === "full_sangam") {
@@ -331,13 +518,7 @@ export default function MatkaGame() {
         }
       );
 
-      console.log(res);
-
       setMsg({ type: "success", text: "Bid placed successfully!" });
-
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 2000);
 
       setDigit("");
       setOpenPanna("");
@@ -363,7 +544,7 @@ export default function MatkaGame() {
     return <div className="text-center text-red-400 p-6">Market Not Found</div>;
 
   return (
-    <div className="max-w-md mx-auto min-h-screen  text-white">
+    <div className="max-w-md mx-auto min-h-screen text-white pb-10">
       <div className="w-full relative bg-gradient-to-b from-black to-black/0 py-2 flex items-center justify-between">
         <button
           onClick={() => window.history.back()}
@@ -371,8 +552,8 @@ export default function MatkaGame() {
         >
           <ArrowLeft size={22} />
         </button>
-        <h2 className="text-md z-0 w-full absolute   justify-between font-bold bg-gradient-to-b from-black to-black/0 px-4 py-2  flex justify-center items-center gap-2">
-          <span className="flex gap-2  items-center uppercase">
+        <h2 className="text-md z-0 w-full absolute justify-between font-bold bg-gradient-to-b from-black to-black/0 px-4 py-2 flex justify-center items-center gap-2">
+          <span className="flex gap-2 items-center uppercase">
             {market.name} — {displayGame}
           </span>
         </h2>
@@ -385,7 +566,6 @@ export default function MatkaGame() {
         {market.marketType !== "Starline" ? (
           <span className="flex flex-col">
             <strong>Close Time :</strong>
-
             <span>{market.close_time}</span>
           </span>
         ) : (
@@ -544,19 +724,31 @@ export default function MatkaGame() {
 
           {/* NORMAL GAMES */}
           {!HALF_SANGAM_GAMES.has(gameType) && gameType !== "full_sangam" && (
-            <input
-              placeholder={inputHelp.placeholder}
-              value={digit}
-              onChange={(e) =>
-                setDigit(
-                  e.target.value.replace(
-                    inputHelp.allowList ? /[^\d,\s]/g : /\D/g,
-                    ""
+            <>
+              <input
+                placeholder={inputHelp.placeholder}
+                value={digit}
+                onChange={(e) =>
+                  setDigit(
+                    e.target.value.replace(
+                      inputHelp.allowList ? /[^\d,\s]/g : /\D/g,
+                      ""
+                    )
                   )
-                )
-              }
-              className="p-2 bg-black/30 rounded border w-full text-white"
-            />
+                }
+                className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
+              />
+              
+              {/* PANNA SUGGESTION BOX - Only for SP/DP/TP */}
+              {pannaMeta && (
+                <PannaSuggestionBox
+                  pannaMeta={pannaMeta}
+                  digit={digit}
+                  setDigit={setDigit}
+                  gameType={gameType}
+                />
+              )}
+            </>
           )}
         </div>
 
@@ -567,7 +759,7 @@ export default function MatkaGame() {
             placeholder="Points"
             value={points}
             onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))}
-            className="p-2 bg-black/30 rounded border w-full text-white"
+            className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
           />
         </div>
 
