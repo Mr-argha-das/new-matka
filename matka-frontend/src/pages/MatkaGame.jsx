@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { CheckCircle, XCircle, Loader, ArrowLeft } from "lucide-react";
+import { CheckCircle, XCircle, Loader, ArrowLeft, BookOpenText } from "lucide-react";
 import { API_URL } from "../config";
 import { isMarketPlayableByTime } from "../utils/marketTime";
 
