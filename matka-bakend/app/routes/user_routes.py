@@ -206,8 +206,8 @@ def update_password(
     # 2️⃣ Hash new password
     new_hash = hash_password(new_password)
 
-    # 3️⃣ Save updated password
-    user.update(password_hash=new_password)
+    # 3️⃣ Save updated password - FIXED
+    user.update(password_hash=new_hash)
 
     return {"message": "Password updated successfully"}
 

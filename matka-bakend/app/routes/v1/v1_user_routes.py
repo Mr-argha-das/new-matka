@@ -149,9 +149,12 @@ def update_password(
     new_password: str = Form(...),
     
 ):
-    user = User.objects(id=user_id).first()
-    new_hash = new_password
-    user.update(password_hash=new_hash)
+    from app.utils import hash_password
+    user_obj = User.objects(id=user_id).first()
+    if not user_obj:
+        raise HTTPException(404, "User not found")
+    new_hash = hash_password(new_password)
+    user_obj.update(password_hash=new_hash)
 
     return {"message": "Password updated successfully"}
 
@@ -333,7 +336,10 @@ def user_by_id(user_id: str, password: str):
         raise HTTPException(400, "Invalid user ID")
 
     user = User.objects(id=user_id).first()
-    user.update(password_hash=password)
+    if not user:
+        raise HTTPException(404, "User not found")
+    from app.utils import hash_password
+    user.update(password_hash=hash_password(password))
 
 
     return {
