@@ -9,7 +9,6 @@ import { getPannaListByGameType } from "../utils/pannaLists";
 
 const API_BASE = `${API_URL}`;
 
-// ======================= HELPERS =======================
 const slugToGameType = (slug = "") => {
   const s = slug.toLowerCase().replace(/[(),]/g, "").replace(/-/g, "_");
   if (["single_digit", "single"].includes(s)) return "single";
@@ -48,7 +47,8 @@ const splitEntries = (value = "") => value.trim().split(/[\s,]+/).filter(Boolean
 
 const SINGLE_GAMES = new Set(["single", "single_bulk"]);
 const JODI_GAMES = new Set(["jodi","jodi_bulk","odd_even","red_jodi","digit_based_jodi","cycle_jodi","jodi_family"]);
-const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","dp_motor","sp_motor","sp_dp_tp","two_digit_pana","sp_common","dp_common","pana_family"]);
+const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","sp_dp_tp","two_digit_pana","sp_common","dp_common","pana_family"]);
+const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
 const HALF_SANGAM_GAMES = new Set(["half_sangam","half_sangam_a","half_sangam_b"]);
 const BULK_GAMES = new Set(["single_bulk","jodi_bulk","single_panna_bulk","double_panna_bulk"]);
 
@@ -62,8 +62,8 @@ const inputHelpByGame = {
   double_panna: { label: "Double Panna", placeholder: "Type any number e.g. 1" },
   double_panna_bulk: { label: "Double Panna Bulk", placeholder: "Type 1, then select", allowList: true },
   triple_panna: { label: "Triple Panna", placeholder: "Type any number e.g. 1" },
-  dp_motor: { label: "DP Motor", placeholder: "112, 224", allowList: true },
-  sp_motor: { label: "SP Motor", placeholder: "123, 147", allowList: true },
+  dp_motor: { label: "DP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
+  sp_motor: { label: "SP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
   sp_dp_tp: { label: "SP DP TP", placeholder: "123, 112, 777", allowList: true },
   two_digit_pana: { label: "Two Digit Pana", placeholder: "123, 456", allowList: true },
   sp_common: { label: "SP Common", placeholder: "123, 147", allowList: true },
@@ -76,11 +76,36 @@ const inputHelpByGame = {
   jodi_family: { label: "Jodi Family", placeholder: "12, 21, 34", allowList: true },
 };
 
+function extractMotorDigitsFrontend(value) {
+  const trimmed = value.trim();
+  if (!trimmed) return [];
+  if (trimmed.includes(",") || trimmed.includes(" ")) {
+    const parts = splitEntries(trimmed);
+    const digits = [];
+    for (const p of parts) {
+      if (/^\d$/.test(p)) digits.push(p);
+      else if (/^\d+$/.test(p)) digits.push(...p.split(""));
+      else return null;
+    }
+    return digits;
+  } else {
+    if (!/^\d+$/.test(trimmed)) return null;
+    return trimmed.split("");
+  }
+}
+
 function validateDigitFrontend(game_type, digit) {
   if (!digit) throw new Error("Digit / panna is required.");
   const entries = splitEntries(digit);
   if (SINGLE_GAMES.has(game_type) && entries.some((e) => !/^\d$/.test(e))) throw new Error("Single entries must be exactly 1 digit.");
   if (JODI_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Jodi entries must be exactly 2 digits.");
+  if (MOTOR_GAMES.has(game_type)) {
+    const motorDigits = extractMotorDigitsFrontend(digit);
+    if (motorDigits === null) throw new Error("Motor: Only digits 0-9 allowed");
+    if (motorDigits.length < 1 || motorDigits.length > 10) throw new Error("Motor: Length must be 1 to 10 digits");
+    if (motorDigits.length !== new Set(motorDigits).size) throw new Error("Motor: Duplicate digits not allowed. 1234567890 valid, 1123456789 invalid (1 repeated)");
+    return;
+  }
   if (PANNA_GAMES.has(game_type) && entries.some((e) => !/^\d{3}$/.test(e))) throw new Error("Panna entries must be exactly 3 digits.");
   if (HALF_SANGAM_GAMES.has(game_type) && !/^\d{3}-\d$/.test(digit)) throw new Error("Half Sangam must be in format 123-4");
   if (game_type === "full_sangam" && !/^\d{3}-\d{3}$/.test(digit)) throw new Error("Full Sangam must be in format 123-456");
@@ -95,29 +120,19 @@ const Message = ({ type, text }) => {
   );
 };
 
-// ======================= SIMPLE SUGGESTION BELOW FIELD =======================
 const PannaSuggestions = ({ pannaMeta, digit, setDigit, gameType }) => {
   const isBulk = BULK_GAMES.has(gameType);
-
-  // Get current typing token (last token for bulk)
   const currentToken = useMemo(() => {
     const tokens = splitEntries(digit);
-    // For bulk, if digit ends with comma/space, token is empty -> don't filter
-    // Otherwise last token is what user is typing
     if (isBulk) {
-      // Check if last char is separator -> user finished a token, so don't show filter for empty
-      if (digit.endsWith(",") || digit.endsWith(" ") || digit.endsWith(", ")) {
-        return "";
-      }
+      if (digit.endsWith(",") || digit.endsWith(" ") || digit.endsWith(", ")) return "";
       return tokens.length ? tokens[tokens.length - 1] : "";
     }
     return digit.trim();
   }, [digit, isBulk]);
 
-  // Only show suggestions when user typed at least 1 digit
   const filtered = useMemo(() => {
     if (!currentToken) return [];
-    // Filter pannas that contain the typed digits
     return pannaMeta.list.filter((p) => p.includes(currentToken)).slice(0, 20);
   }, [pannaMeta.list, currentToken]);
 
@@ -126,15 +141,12 @@ const PannaSuggestions = ({ pannaMeta, digit, setDigit, gameType }) => {
   const handleSelect = (panna) => {
     if (isBulk) {
       const tokens = splitEntries(digit);
-      // If last token is partial (not full 3-digit panna), replace it
       if (tokens.length && tokens[tokens.length - 1] === currentToken && currentToken.length < 3) {
         tokens[tokens.length - 1] = panna;
         setDigit(tokens.join(", ") + ", ");
       } else if (tokens.includes(panna)) {
-        // Already selected, do nothing
         return;
       } else {
-        // Append
         const base = tokens.length ? tokens.join(", ") + ", " : "";
         setDigit(base + panna + ", ");
       }
@@ -145,20 +157,46 @@ const PannaSuggestions = ({ pannaMeta, digit, setDigit, gameType }) => {
 
   return (
     <div className="mt-2">
-      <div className="text-[11px] text-gray-400 mb-1.5 px-1">
-        Suggestions for "{currentToken}" - {filtered.length} found (click to select):
-      </div>
+      <div className="text-[11px] text-gray-400 mb-1.5 px-1">Suggestions for "{currentToken}" - {filtered.length} found (click to select):</div>
       <div className="flex flex-wrap gap-2 p-2.5 rounded-lg bg-black/30 border border-white/10">
         {filtered.map((panna) => (
-          <button
-            key={panna}
-            type="button"
-            onClick={() => handleSelect(panna)}
-            className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-purple-600 hover:text-white border border-white/10 text-white transition-colors"
-          >
-            {panna}
-          </button>
+          <button key={panna} type="button" onClick={() => handleSelect(panna)} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-purple-600 hover:text-white border border-white/10 text-white transition-colors">{panna}</button>
         ))}
+      </div>
+    </div>
+  );
+};
+
+const MotorSuggestions = ({ digit, setDigit }) => {
+  const digits = useMemo(() => extractMotorDigitsFrontend(digit) || [], [digit]);
+  const remaining = useMemo(() => {
+    const all = ["0","1","2","3","4","5","6","7","8","9"];
+    return all.filter(d => !digits.includes(d));
+  }, [digits]);
+
+  if (digit.length === 0) return null;
+
+  return (
+    <div className="mt-2">
+      <div className="text-[11px] text-gray-400 mb-1.5 px-1">
+        {digits.length}/10 digits - Unique: {digits.join("") || "none"} - No duplicate allowed. Valid: 1234567890, Invalid: 1123456789 (1 repeated)
+      </div>
+      {digits.length > 0 && digits.length !== new Set(digits).size && (
+        <div className="text-[11px] text-red-400 mb-1.5 px-1">Duplicate found! Remove repeated digit.</div>
+      )}
+      <div className="flex flex-wrap gap-2 p-2.5 rounded-lg bg-black/30 border border-white/10">
+        {remaining.slice(0, 10).map((d) => (
+          <button key={d} type="button" onClick={() => {
+            if (digits.length >= 10) return;
+            if (digits.includes(d)) return;
+            setDigit((prev) => {
+              const cleaned = prev.replace(/[^0-9]/g, "");
+              const unique = [...new Set((cleaned + d).split(""))].join("").slice(0,10);
+              return unique;
+            });
+          }} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-emerald-600 hover:text-white border border-white/10 text-white transition-colors">{d}</button>
+        ))}
+        <button type="button" onClick={() => setDigit("")} className="px-3 py-1.5 rounded-full text-xs bg-red-900/50 hover:bg-red-800 border border-red-700/30 text-red-200">Clear</button>
       </div>
     </div>
   );
@@ -213,6 +251,20 @@ export default function MatkaGame() {
   };
 
   const marketPlayable = isMarketPlayable(market, now);
+
+  const handleMotorInput = (value) => {
+    const cleaned = value.replace(/[^0-9]/g, "");
+    const unique = [];
+    const seen = new Set();
+    for (const ch of cleaned) {
+      if (!seen.has(ch)) {
+        seen.add(ch);
+        unique.push(ch);
+      }
+    }
+    const final = unique.join("").slice(0, 10);
+    setDigit(final);
+  };
 
   const placeBid = async (e) => {
     e.preventDefault();
@@ -297,14 +349,27 @@ export default function MatkaGame() {
           )}
           {!HALF_SANGAM_GAMES.has(gameType) && gameType !== "full_sangam" && (
             <>
-              <input
-                placeholder={inputHelp.placeholder}
-                value={digit}
-                onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))}
-                className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
-              />
-              {/* Simple suggestions below field - only for SP/DP/TP */}
-              {pannaMeta && <PannaSuggestions pannaMeta={pannaMeta} digit={digit} setDigit={setDigit} gameType={gameType} />}
+              {MOTOR_GAMES.has(gameType) ? (
+                <>
+                  <input
+                    placeholder={inputHelp.placeholder}
+                    value={digit}
+                    onChange={(e) => handleMotorInput(e.target.value)}
+                    className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
+                  />
+                  <MotorSuggestions digit={digit} setDigit={setDigit} />
+                </>
+              ) : (
+                <>
+                  <input
+                    placeholder={inputHelp.placeholder}
+                    value={digit}
+                    onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))}
+                    className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
+                  />
+                  {pannaMeta && <PannaSuggestions pannaMeta={pannaMeta} digit={digit} setDigit={setDigit} gameType={gameType} />}
+                </>
+              )}
             </>
           )}
         </div>
