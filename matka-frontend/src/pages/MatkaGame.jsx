@@ -1,4 +1,4 @@
-// src/pages/MatkaGame.jsx
+// src/pages/MatkaGame.jsx - Final with SP DP TP checkbox + Motor unique + Panna suggestions
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -47,14 +47,9 @@ const splitEntries = (value = "") => value.trim().split(/[\s,]+/).filter(Boolean
 
 const SINGLE_GAMES = new Set(["single", "single_bulk"]);
 const JODI_GAMES = new Set(["jodi","jodi_bulk","odd_even","red_jodi","digit_based_jodi","cycle_jodi","jodi_family"]);
-<<<<<<< HEAD
-const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","sp_dp_tp","two_digit_pana","sp_common","dp_common","pana_family"]);
-const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
-=======
 const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","two_digit_pana","sp_common","dp_common","pana_family"]);
 const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
 const SP_DP_TP_GAMES = new Set(["sp_dp_tp"]);
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
 const HALF_SANGAM_GAMES = new Set(["half_sangam","half_sangam_a","half_sangam_b"]);
 const BULK_GAMES = new Set(["single_bulk","jodi_bulk","single_panna_bulk","double_panna_bulk"]);
 
@@ -70,11 +65,7 @@ const inputHelpByGame = {
   triple_panna: { label: "Triple Panna", placeholder: "Type any number e.g. 1" },
   dp_motor: { label: "DP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
   sp_motor: { label: "SP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
-<<<<<<< HEAD
-  sp_dp_tp: { label: "SP DP TP", placeholder: "123, 112, 777", allowList: true },
-=======
   sp_dp_tp: { label: "SP DP TP - Single Digit", placeholder: "Enter single digit 0-9", allowList: false },
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
   two_digit_pana: { label: "Two Digit Pana", placeholder: "123, 456", allowList: true },
   sp_common: { label: "SP Common", placeholder: "123, 147", allowList: true },
   odd_even: { label: "Odd Even", placeholder: "12, 34", allowList: true },
@@ -107,36 +98,20 @@ function extractMotorDigitsFrontend(value) {
 function validateDigitFrontend(game_type, digit) {
   if (!digit) throw new Error("Digit / panna is required.");
   const entries = splitEntries(digit);
-<<<<<<< HEAD
   if (SINGLE_GAMES.has(game_type) && entries.some((e) => !/^\d$/.test(e))) throw new Error("Single entries must be exactly 1 digit.");
   if (JODI_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Jodi entries must be exactly 2 digits.");
-=======
-
-  if (SINGLE_GAMES.has(game_type) && entries.some((e) => !/^\d$/.test(e))) throw new Error("Single entries must be exactly 1 digit.");
-  if (JODI_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Jodi entries must be exactly 2 digits.");
-
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
   if (MOTOR_GAMES.has(game_type)) {
     const motorDigits = extractMotorDigitsFrontend(digit);
     if (motorDigits === null) throw new Error("Motor: Only digits 0-9 allowed");
     if (motorDigits.length < 1 || motorDigits.length > 10) throw new Error("Motor: Length must be 1 to 10 digits");
-<<<<<<< HEAD
-    if (motorDigits.length !== new Set(motorDigits).size) throw new Error("Motor: Duplicate digits not allowed. 1234567890 valid, 1123456789 invalid (1 repeated)");
-    return;
-  }
-=======
     if (motorDigits.length !== new Set(motorDigits).size) throw new Error("Motor: Duplicate digits not allowed. 1234567890 valid, 1123456789 invalid");
     return;
   }
-
   if (SP_DP_TP_GAMES.has(game_type)) {
-    // New logic: single digit 0-9, with optional |sp,dp,tp
     const clean = digit.includes("|") ? digit.split("|")[0] : digit;
     if (!/^\d$/.test(clean)) throw new Error("SP DP TP: Enter only one digit 0-9");
     return;
   }
-
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
   if (PANNA_GAMES.has(game_type) && entries.some((e) => !/^\d{3}$/.test(e))) throw new Error("Panna entries must be exactly 3 digits.");
   if (HALF_SANGAM_GAMES.has(game_type) && !/^\d{3}-\d$/.test(digit)) throw new Error("Half Sangam must be in format 123-4");
   if (game_type === "full_sangam" && !/^\d{3}-\d{3}$/.test(digit)) throw new Error("Full Sangam must be in format 123-456");
@@ -161,37 +136,30 @@ const PannaSuggestions = ({ pannaMeta, digit, setDigit, gameType }) => {
     }
     return digit.trim();
   }, [digit, isBulk]);
-
   const filtered = useMemo(() => {
     if (!currentToken) return [];
     return pannaMeta.list.filter((p) => p.includes(currentToken)).slice(0, 20);
   }, [pannaMeta.list, currentToken]);
-
   if (!currentToken || filtered.length === 0) return null;
-
   const handleSelect = (panna) => {
     if (isBulk) {
       const tokens = splitEntries(digit);
       if (tokens.length && tokens[tokens.length - 1] === currentToken && currentToken.length < 3) {
         tokens[tokens.length - 1] = panna;
         setDigit(tokens.join(", ") + ", ");
-      } else if (tokens.includes(panna)) {
-        return;
-      } else {
+      } else if (tokens.includes(panna)) return;
+      else {
         const base = tokens.length ? tokens.join(", ") + ", " : "";
         setDigit(base + panna + ", ");
       }
-    } else {
-      setDigit(panna);
-    }
+    } else setDigit(panna);
   };
-
   return (
     <div className="mt-2">
-      <div className="text-[11px] text-gray-400 mb-1.5 px-1">Suggestions for "{currentToken}" - {filtered.length} found (click to select):</div>
+      <div className="text-[11px] text-gray-400 mb-1.5 px-1">Suggestions for "{currentToken}" - {filtered.length} found:</div>
       <div className="flex flex-wrap gap-2 p-2.5 rounded-lg bg-black/30 border border-white/10">
         {filtered.map((panna) => (
-          <button key={panna} type="button" onClick={() => handleSelect(panna)} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-purple-600 hover:text-white border border-white/10 text-white transition-colors">{panna}</button>
+          <button key={panna} type="button" onClick={() => handleSelect(panna)} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-purple-600 border border-white/10 text-white">{panna}</button>
         ))}
       </div>
     </div>
@@ -200,41 +168,23 @@ const PannaSuggestions = ({ pannaMeta, digit, setDigit, gameType }) => {
 
 const MotorSuggestions = ({ digit, setDigit }) => {
   const digits = useMemo(() => extractMotorDigitsFrontend(digit) || [], [digit]);
-  const remaining = useMemo(() => {
-    const all = ["0","1","2","3","4","5","6","7","8","9"];
-    return all.filter(d => !digits.includes(d));
-  }, [digits]);
-
+  const remaining = useMemo(() => ["0","1","2","3","4","5","6","7","8","9"].filter(d => !digits.includes(d)), [digits]);
   if (digit.length === 0) return null;
-
   return (
     <div className="mt-2">
-      <div className="text-[11px] text-gray-400 mb-1.5 px-1">
-<<<<<<< HEAD
-        {digits.length}/10 digits - Unique: {digits.join("") || "none"} - No duplicate allowed. Valid: 1234567890, Invalid: 1123456789 (1 repeated)
-=======
-        {digits.length}/10 digits - Unique: {digits.join("") || "none"} - No duplicate. Valid: 1234567890, Invalid: 1123456789
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
-      </div>
-      {digits.length > 0 && digits.length !== new Set(digits).size && (
-        <div className="text-[11px] text-red-400 mb-1.5 px-1">Duplicate found! Remove repeated digit.</div>
-      )}
+      <div className="text-[11px] text-gray-400 mb-1.5 px-1">{digits.length}/10 Unique: {digits.join("") || "none"} - No repeat. Valid: 1234567890, Invalid: 1123456789</div>
       <div className="flex flex-wrap gap-2 p-2.5 rounded-lg bg-black/30 border border-white/10">
-        {remaining.slice(0, 10).map((d) => (
+        {remaining.slice(0,10).map((d) => (
           <button key={d} type="button" onClick={() => {
             if (digits.length >= 10) return;
-            if (digits.includes(d)) return;
             setDigit((prev) => {
               const cleaned = prev.replace(/[^0-9]/g, "");
-              const unique = [...new Set((cleaned + d).split(""))].join("").slice(0,10);
-              return unique;
+              return [...new Set((cleaned + d).split(""))].join("").slice(0,10);
             });
-          }} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-emerald-600 hover:text-white border border-white/10 text-white transition-colors">{d}</button>
+          }} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-emerald-600 border border-white/10 text-white">{d}</button>
         ))}
-        <button type="button" onClick={() => setDigit("")} className="px-3 py-1.5 rounded-full text-xs bg-red-900/50 hover:bg-red-800 border border-red-700/30 text-red-200">Clear</button>
+        <button type="button" onClick={() => setDigit("")} className="px-3 py-1.5 rounded-full text-xs bg-red-900/50 border border-red-700/30 text-red-200">Clear</button>
       </div>
-<<<<<<< HEAD
-=======
     </div>
   );
 };
@@ -245,31 +195,22 @@ const SpDpTpSelector = ({ selected, setSelected }) => {
     { id: "dp", label: "DP", desc: "Double Pana", color: "bg-green-500" },
     { id: "tp", label: "TP", desc: "Triple Pana", color: "bg-yellow-500" },
   ];
-
-  const toggle = (id) => {
-    setSelected(prev => ({ ...prev, [id]: !prev[id] }));
-  };
-
+  const toggle = (id) => setSelected(prev => ({ ...prev, [id]: !prev[id] }));
   const selectedList = Object.keys(selected).filter(k => selected[k]);
-
   return (
     <div className="mt-3 p-3 rounded-lg bg-black/30 border border-white/10">
-      <div className="text-sm font-semibold text-white mb-2">Choose Pana Type (Checkbox - select one or multiple):</div>
+      <div className="text-sm font-semibold text-white mb-2">Choose Pana Type (Checkbox):</div>
       <div className="grid grid-cols-3 gap-2">
         {options.map(opt => (
-          <label key={opt.id} className={`relative flex flex-col items-center gap-1 p-3 rounded-lg border cursor-pointer transition-all ${selected[opt.id] ? "bg-purple-600/20 border-purple-500 text-white" : "bg-white/5 border-white/10 text-gray-300 hover:bg-white/10"}`}>
+          <label key={opt.id} className={`relative flex flex-col items-center gap-1 p-3 rounded-lg border cursor-pointer ${selected[opt.id] ? "bg-purple-600/20 border-purple-500 text-white" : "bg-white/5 border-white/10 text-gray-300"}`}>
             <input type="checkbox" checked={selected[opt.id]} onChange={() => toggle(opt.id)} className="absolute top-2 right-2 accent-purple-600" />
-            <div className={`h-8 w-8 rounded-full ${opt.color} flex items-center justify-center text-white font-bold text-sm`}>{opt.label}</div>
+            <div className={`h-8 w-8 rounded-full ${opt.color} flex items-center justify-center font-bold text-sm text-white`}>{opt.label}</div>
             <span className="text-xs font-semibold">{opt.label}</span>
             <span className="text-[10px] opacity-70">{opt.desc}</span>
-            {selected[opt.id] && <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-purple-500 text-[10px] flex items-center justify-center text-white">✓</span>}
           </label>
         ))}
       </div>
-      <div className="mt-2 text-[11px] text-gray-400">
-        Selected: {selectedList.length ? selectedList.map(s => s.toUpperCase()).join(", ") : "None (select at least one)"} - You can select SP, DP, TP together or any combination
-      </div>
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
+      <div className="mt-2 text-[11px] text-gray-400">Selected: {selectedList.length ? selectedList.join(", ").toUpperCase() : "None"} - Can select multiple</div>
     </div>
   );
 };
@@ -335,54 +276,38 @@ export default function MatkaGame() {
     const unique = [];
     const seen = new Set();
     for (const ch of cleaned) {
-      if (!seen.has(ch)) {
-        seen.add(ch);
-        unique.push(ch);
-      }
+      if (!seen.has(ch)) { seen.add(ch); unique.push(ch); }
     }
-    const final = unique.join("").slice(0, 10);
-    setDigit(final);
+    setDigit(unique.join("").slice(0,10));
   };
 
   const placeBid = async (e) => {
     e.preventDefault();
     setMsg(null);
     try {
-      if (!marketPlayable) throw new Error("Market Closed. Play is disabled after close time.");
+      if (!marketPlayable) throw new Error("Market Closed");
       if (!points || Number(points) <= 0) throw new Error("Points must be greater than 0");
-<<<<<<< HEAD
-=======
-      
       if (SP_DP_TP_GAMES.has(gameType)) {
         const selected = Object.keys(spDpTpSelected).filter(k => spDpTpSelected[k]);
-        if (selected.length === 0) throw new Error("Select at least one: SP, DP, or TP checkbox");
+        if (selected.length === 0) throw new Error("Select at least one: SP, DP, TP");
         if (!/^\d$/.test(digit)) throw new Error("SP DP TP: Enter only one digit 0-9");
       }
-
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
       const finalDigit = assembledDigit();
       validateDigitFrontend(gameType, finalDigit);
-      const payload = { market_id: marketId, game_type: gameType, session, points: Number(points) };
+      const payload = { market_id: marketId, game_type: gameType, session, points: Number(points), digit: finalDigit };
       if (gameType === "full_sangam") {
         const [o, c] = finalDigit.split("-");
-        payload.open_panna = o; payload.close_panna = c;
-      } else if (gameType === "half_sangam") {
-        if (openPanna && closeDigit) { payload.open_panna = openPanna; payload.close_digit = closeDigit; }
-        else if (closePanna && openDigit) { payload.close_panna = closePanna; payload.open_digit = openDigit; }
-        else { payload.digit = finalDigit; }
-      } else if (HALF_SANGAM_GAMES.has(gameType)) { payload.digit = finalDigit; }
-      else { payload.digit = finalDigit; }
-
+        payload.open_panna = o; payload.close_panna = c; delete payload.digit;
+      } else if (HALF_SANGAM_GAMES.has(gameType)) {
+        if (openPanna && closeDigit) { payload.open_panna = openPanna; payload.close_digit = closeDigit; delete payload.digit; }
+        else if (closePanna && openDigit) { payload.close_panna = closePanna; payload.open_digit = openDigit; delete payload.digit; }
+      }
       await axios.post(`${API_BASE}/user/bid/place`, {}, { params: payload, headers: authHeader });
       setMsg({ type: "success", text: "Bid placed successfully!" });
       setDigit(""); setOpenPanna(""); setClosePanna(""); setOpenDigit(""); setCloseDigit(""); setPoints("");
-<<<<<<< HEAD
-=======
       setSpDpTpSelected({ sp: false, dp: false, tp: false });
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
     } catch (err) {
-      const errMsg = err.response?.data?.detail || err.message || "Bid failed.";
-      setMsg({ type: "error", text: errMsg });
+      setMsg({ type: "error", text: err.response?.data?.detail || err.message || "Bid failed." });
     }
   };
 
@@ -392,49 +317,40 @@ export default function MatkaGame() {
   return (
     <div className="max-w-md mx-auto min-h-screen text-white pb-10">
       <div className="w-full relative bg-gradient-to-b from-black to-black/0 py-2 flex items-center justify-between">
-        <button onClick={() => window.history.back()} className="p-2 pl-4 z-10 rounded-full hover:bg-white/10 transition"><ArrowLeft size={22} /></button>
-        <h2 className="text-md z-0 w-full absolute font-bold bg-gradient-to-b from-black to-black/0 px-4 py-2 flex justify-center items-center gap-2"><span className="flex gap-2 items-center uppercase">{market.name} — {displayGame}</span></h2>
-        <a className="pr-4 z-10"></a>
+        <button onClick={() => window.history.back()} className="p-2 pl-4 z-10 rounded-full hover:bg-white/10"><ArrowLeft size={22} /></button>
+        <h2 className="text-md z-0 w-full absolute font-bold px-4 py-2 flex justify-center uppercase">{market.name} — {displayGame}</h2>
       </div>
       <p className="text-xs bg-white/5 flex justify-between px-3 py-3 rounded-b-lg text-gray-300 mb-4">
-        <span className="flex flex-col"><strong>Open Time :</strong> <span>{market.open_time}</span></span>
-        {market.marketType !== "Starline" ? <span className="flex flex-col"><strong>Close Time :</strong><span>{market.close_time}</span></span> : ""}
-        <span className="flex flex-col"><strong>Status:</strong><span className={`${marketPlayable ? "text-green-400" : "text-red-400"}`}>{marketPlayable ? "Market Running" : "Market Closed"}</span></span>
+        <span className="flex flex-col"><strong>Open:</strong> {market.open_time}</span>
+        <span className="flex flex-col"><strong>Close:</strong> {market.close_time}</span>
+        <span className={`font-bold ${marketPlayable ? "text-green-400" : "text-red-400"}`}>{marketPlayable ? "Running" : "Closed"}</span>
       </p>
-
       <Message type={msg?.type} text={msg?.text} />
-      {!marketPlayable && <div className="mx-3 mb-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">Market Closed. Play is disabled after close time.</div>}
-
-      <form onSubmit={placeBid} className={`bg-white/5 p-4 mx-3 mt-3 rounded-lg border border-gray-800 ${!marketPlayable ? "opacity-75" : ""}`}>
+      <form onSubmit={placeBid} className="bg-white/5 p-4 mx-3 rounded-lg border border-gray-800">
         <div className="mb-3 text-sm text-gray-300">
           <label className="mr-3"><input type="radio" value="open" checked={session === "open"} onChange={() => setSession("open")} className="accent-purple-600 mr-1" />Open</label>
-          {market.marketType !== "Starline" ? <label className="ml-3"><input type="radio" value="close" checked={session === "close"} onChange={() => setSession("close")} className="accent-purple-600 mr-1" />Close</label> : ""}
+          <label className="ml-3"><input type="radio" value="close" checked={session === "close"} onChange={() => setSession("close")} className="accent-purple-600 mr-1" />Close</label>
         </div>
-
         <div className="mb-3">
           <label className="block text-sm text-gray-300 mb-1">{inputHelp.label}</label>
           {HALF_SANGAM_GAMES.has(gameType) && (
             <>
-              {gameType !== "half_sangam_b" && (
-                <div className="grid grid-cols-2 gap-2 mb-2">
-                  <input placeholder="Open Panna (123)" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0, 3))} className="p-2 bg-black/30 rounded border text-white" />
-                  <input placeholder="Close Digit (4)" value={closeDigit} onChange={(e) => setCloseDigit(e.target.value.replace(/\D/g, "").slice(0, 1))} className="p-2 bg-black/30 rounded border text-white" />
-                </div>
-              )}
-              {gameType !== "half_sangam_a" && (
-                <div className="grid grid-cols-2 gap-2 mb-2">
-                  <input placeholder="Close Panna (123)" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0, 3))} className="p-2 bg-black/30 rounded border text-white" />
-                  <input placeholder="Open Digit (4)" value={openDigit} onChange={(e) => setOpenDigit(e.target.value.replace(/\D/g, "").slice(0, 1))} className="p-2 bg-black/30 rounded border text-white" />
-                </div>
-              )}
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
+                <input placeholder="Close Digit" value={closeDigit} onChange={(e) => setCloseDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white" />
+              </div>
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
+                <input placeholder="Open Digit" value={openDigit} onChange={(e) => setOpenDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white" />
+              </div>
               <input placeholder="OR Combined (123-4)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
             </>
           )}
           {gameType === "full_sangam" && (
             <>
               <div className="grid grid-cols-2 gap-2 mb-2">
-                <input placeholder="Open Panna (123)" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0, 3))} className="p-2 bg-black/30 rounded border text-white" />
-                <input placeholder="Close Panna (456)" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0, 3))} className="p-2 bg-black/30 rounded border text-white" />
+                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
+                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
               </div>
               <input placeholder="OR Combined (123-456)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
             </>
@@ -443,53 +359,31 @@ export default function MatkaGame() {
             <>
               {MOTOR_GAMES.has(gameType) ? (
                 <>
-<<<<<<< HEAD
-                  <input
-                    placeholder={inputHelp.placeholder}
-                    value={digit}
-                    onChange={(e) => handleMotorInput(e.target.value)}
-                    className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
-                  />
-                  <MotorSuggestions digit={digit} setDigit={setDigit} />
-                </>
-              ) : (
-                <>
-                  <input
-                    placeholder={inputHelp.placeholder}
-                    value={digit}
-                    onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))}
-                    className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
-                  />
-=======
-                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => handleMotorInput(e.target.value)} className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none" />
+                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => handleMotorInput(e.target.value)} className="p-2 bg-black/30 rounded border w-full text-white" />
                   <MotorSuggestions digit={digit} setDigit={setDigit} />
                 </>
               ) : SP_DP_TP_GAMES.has(gameType) ? (
                 <>
                   <SpDpTpSelector selected={spDpTpSelected} setSelected={setSpDpTpSelected} />
                   <div className="mt-3">
-                    <label className="block text-xs text-gray-400 mb-1">Enter Single Digit (0-9) Only:</label>
-                    <input placeholder="Enter single digit 0-9" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none text-center text-lg font-bold" />
-                    <div className="text-[11px] text-gray-400 mt-1">Only one digit allowed, e.g. 5. Select SP/DP/TP checkbox above. You can select multiple.</div>
+                    <input placeholder="Single digit 0-9 only" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white text-center text-lg font-bold" />
+                    <div className="text-[11px] text-gray-400 mt-1">Only one digit (0-9). Choose SP/DP/TP above - can select multiple like SP+DP</div>
                   </div>
                 </>
               ) : (
                 <>
-                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none" />
->>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
+                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
                   {pannaMeta && <PannaSuggestions pannaMeta={pannaMeta} digit={digit} setDigit={setDigit} gameType={gameType} />}
                 </>
               )}
             </>
           )}
         </div>
-
         <div className="mb-3">
           <label className="block text-sm text-gray-300 mb-1">Points</label>
-          <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none" />
+          <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
         </div>
-
-        <button disabled={!marketPlayable} className={`w-full py-3 rounded-lg font-semibold ${marketPlayable ? "bg-gradient-to-r from-purple-700 to-purple-900" : "bg-slate-300 text-slate-600 cursor-not-allowed"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
+        <button disabled={!marketPlayable} className={`w-full py-3 rounded-lg font-semibold ${marketPlayable ? "bg-gradient-to-r from-purple-700 to-purple-900" : "bg-slate-300 text-slate-600"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
       </form>
     </div>
   );
