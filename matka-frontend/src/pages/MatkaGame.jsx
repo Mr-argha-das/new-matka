@@ -47,8 +47,14 @@ const splitEntries = (value = "") => value.trim().split(/[\s,]+/).filter(Boolean
 
 const SINGLE_GAMES = new Set(["single", "single_bulk"]);
 const JODI_GAMES = new Set(["jodi","jodi_bulk","odd_even","red_jodi","digit_based_jodi","cycle_jodi","jodi_family"]);
+<<<<<<< HEAD
 const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","sp_dp_tp","two_digit_pana","sp_common","dp_common","pana_family"]);
 const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
+=======
+const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","two_digit_pana","sp_common","dp_common","pana_family"]);
+const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
+const SP_DP_TP_GAMES = new Set(["sp_dp_tp"]);
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
 const HALF_SANGAM_GAMES = new Set(["half_sangam","half_sangam_a","half_sangam_b"]);
 const BULK_GAMES = new Set(["single_bulk","jodi_bulk","single_panna_bulk","double_panna_bulk"]);
 
@@ -64,7 +70,11 @@ const inputHelpByGame = {
   triple_panna: { label: "Triple Panna", placeholder: "Type any number e.g. 1" },
   dp_motor: { label: "DP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
   sp_motor: { label: "SP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
+<<<<<<< HEAD
   sp_dp_tp: { label: "SP DP TP", placeholder: "123, 112, 777", allowList: true },
+=======
+  sp_dp_tp: { label: "SP DP TP - Single Digit", placeholder: "Enter single digit 0-9", allowList: false },
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
   two_digit_pana: { label: "Two Digit Pana", placeholder: "123, 456", allowList: true },
   sp_common: { label: "SP Common", placeholder: "123, 147", allowList: true },
   odd_even: { label: "Odd Even", placeholder: "12, 34", allowList: true },
@@ -97,15 +107,36 @@ function extractMotorDigitsFrontend(value) {
 function validateDigitFrontend(game_type, digit) {
   if (!digit) throw new Error("Digit / panna is required.");
   const entries = splitEntries(digit);
+<<<<<<< HEAD
   if (SINGLE_GAMES.has(game_type) && entries.some((e) => !/^\d$/.test(e))) throw new Error("Single entries must be exactly 1 digit.");
   if (JODI_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Jodi entries must be exactly 2 digits.");
+=======
+
+  if (SINGLE_GAMES.has(game_type) && entries.some((e) => !/^\d$/.test(e))) throw new Error("Single entries must be exactly 1 digit.");
+  if (JODI_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Jodi entries must be exactly 2 digits.");
+
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
   if (MOTOR_GAMES.has(game_type)) {
     const motorDigits = extractMotorDigitsFrontend(digit);
     if (motorDigits === null) throw new Error("Motor: Only digits 0-9 allowed");
     if (motorDigits.length < 1 || motorDigits.length > 10) throw new Error("Motor: Length must be 1 to 10 digits");
+<<<<<<< HEAD
     if (motorDigits.length !== new Set(motorDigits).size) throw new Error("Motor: Duplicate digits not allowed. 1234567890 valid, 1123456789 invalid (1 repeated)");
     return;
   }
+=======
+    if (motorDigits.length !== new Set(motorDigits).size) throw new Error("Motor: Duplicate digits not allowed. 1234567890 valid, 1123456789 invalid");
+    return;
+  }
+
+  if (SP_DP_TP_GAMES.has(game_type)) {
+    // New logic: single digit 0-9, with optional |sp,dp,tp
+    const clean = digit.includes("|") ? digit.split("|")[0] : digit;
+    if (!/^\d$/.test(clean)) throw new Error("SP DP TP: Enter only one digit 0-9");
+    return;
+  }
+
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
   if (PANNA_GAMES.has(game_type) && entries.some((e) => !/^\d{3}$/.test(e))) throw new Error("Panna entries must be exactly 3 digits.");
   if (HALF_SANGAM_GAMES.has(game_type) && !/^\d{3}-\d$/.test(digit)) throw new Error("Half Sangam must be in format 123-4");
   if (game_type === "full_sangam" && !/^\d{3}-\d{3}$/.test(digit)) throw new Error("Full Sangam must be in format 123-456");
@@ -179,7 +210,11 @@ const MotorSuggestions = ({ digit, setDigit }) => {
   return (
     <div className="mt-2">
       <div className="text-[11px] text-gray-400 mb-1.5 px-1">
+<<<<<<< HEAD
         {digits.length}/10 digits - Unique: {digits.join("") || "none"} - No duplicate allowed. Valid: 1234567890, Invalid: 1123456789 (1 repeated)
+=======
+        {digits.length}/10 digits - Unique: {digits.join("") || "none"} - No duplicate. Valid: 1234567890, Invalid: 1123456789
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
       </div>
       {digits.length > 0 && digits.length !== new Set(digits).size && (
         <div className="text-[11px] text-red-400 mb-1.5 px-1">Duplicate found! Remove repeated digit.</div>
@@ -198,6 +233,43 @@ const MotorSuggestions = ({ digit, setDigit }) => {
         ))}
         <button type="button" onClick={() => setDigit("")} className="px-3 py-1.5 rounded-full text-xs bg-red-900/50 hover:bg-red-800 border border-red-700/30 text-red-200">Clear</button>
       </div>
+<<<<<<< HEAD
+=======
+    </div>
+  );
+};
+
+const SpDpTpSelector = ({ selected, setSelected }) => {
+  const options = [
+    { id: "sp", label: "SP", desc: "Single Pana", color: "bg-orange-500" },
+    { id: "dp", label: "DP", desc: "Double Pana", color: "bg-green-500" },
+    { id: "tp", label: "TP", desc: "Triple Pana", color: "bg-yellow-500" },
+  ];
+
+  const toggle = (id) => {
+    setSelected(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const selectedList = Object.keys(selected).filter(k => selected[k]);
+
+  return (
+    <div className="mt-3 p-3 rounded-lg bg-black/30 border border-white/10">
+      <div className="text-sm font-semibold text-white mb-2">Choose Pana Type (Checkbox - select one or multiple):</div>
+      <div className="grid grid-cols-3 gap-2">
+        {options.map(opt => (
+          <label key={opt.id} className={`relative flex flex-col items-center gap-1 p-3 rounded-lg border cursor-pointer transition-all ${selected[opt.id] ? "bg-purple-600/20 border-purple-500 text-white" : "bg-white/5 border-white/10 text-gray-300 hover:bg-white/10"}`}>
+            <input type="checkbox" checked={selected[opt.id]} onChange={() => toggle(opt.id)} className="absolute top-2 right-2 accent-purple-600" />
+            <div className={`h-8 w-8 rounded-full ${opt.color} flex items-center justify-center text-white font-bold text-sm`}>{opt.label}</div>
+            <span className="text-xs font-semibold">{opt.label}</span>
+            <span className="text-[10px] opacity-70">{opt.desc}</span>
+            {selected[opt.id] && <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-purple-500 text-[10px] flex items-center justify-center text-white">✓</span>}
+          </label>
+        ))}
+      </div>
+      <div className="mt-2 text-[11px] text-gray-400">
+        Selected: {selectedList.length ? selectedList.map(s => s.toUpperCase()).join(", ") : "None (select at least one)"} - You can select SP, DP, TP together or any combination
+      </div>
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
     </div>
   );
 };
@@ -219,6 +291,7 @@ export default function MatkaGame() {
   const [openDigit, setOpenDigit] = useState("");
   const [closeDigit, setCloseDigit] = useState("");
   const [msg, setMsg] = useState(null);
+  const [spDpTpSelected, setSpDpTpSelected] = useState({ sp: false, dp: false, tp: false });
   const token = localStorage.getItem("accessToken");
   const authHeader = useMemo(() => ({ Authorization: `Bearer ${token}` }), [token]);
   const pannaMeta = useMemo(() => getPannaListByGameType(gameType), [gameType]);
@@ -247,6 +320,11 @@ export default function MatkaGame() {
       if (openPanna && closePanna) return `${openPanna}-${closePanna}`;
       return digit;
     }
+    if (SP_DP_TP_GAMES.has(gameType)) {
+      const selected = Object.keys(spDpTpSelected).filter(k => spDpTpSelected[k]);
+      if (selected.length === 0) return digit;
+      return `${digit}|${selected.join(",")}`;
+    }
     return digit;
   };
 
@@ -272,6 +350,16 @@ export default function MatkaGame() {
     try {
       if (!marketPlayable) throw new Error("Market Closed. Play is disabled after close time.");
       if (!points || Number(points) <= 0) throw new Error("Points must be greater than 0");
+<<<<<<< HEAD
+=======
+      
+      if (SP_DP_TP_GAMES.has(gameType)) {
+        const selected = Object.keys(spDpTpSelected).filter(k => spDpTpSelected[k]);
+        if (selected.length === 0) throw new Error("Select at least one: SP, DP, or TP checkbox");
+        if (!/^\d$/.test(digit)) throw new Error("SP DP TP: Enter only one digit 0-9");
+      }
+
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
       const finalDigit = assembledDigit();
       validateDigitFrontend(gameType, finalDigit);
       const payload = { market_id: marketId, game_type: gameType, session, points: Number(points) };
@@ -288,6 +376,10 @@ export default function MatkaGame() {
       await axios.post(`${API_BASE}/user/bid/place`, {}, { params: payload, headers: authHeader });
       setMsg({ type: "success", text: "Bid placed successfully!" });
       setDigit(""); setOpenPanna(""); setClosePanna(""); setOpenDigit(""); setCloseDigit(""); setPoints("");
+<<<<<<< HEAD
+=======
+      setSpDpTpSelected({ sp: false, dp: false, tp: false });
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
     } catch (err) {
       const errMsg = err.response?.data?.detail || err.message || "Bid failed.";
       setMsg({ type: "error", text: errMsg });
@@ -351,6 +443,7 @@ export default function MatkaGame() {
             <>
               {MOTOR_GAMES.has(gameType) ? (
                 <>
+<<<<<<< HEAD
                   <input
                     placeholder={inputHelp.placeholder}
                     value={digit}
@@ -367,6 +460,23 @@ export default function MatkaGame() {
                     onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))}
                     className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none"
                   />
+=======
+                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => handleMotorInput(e.target.value)} className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none" />
+                  <MotorSuggestions digit={digit} setDigit={setDigit} />
+                </>
+              ) : SP_DP_TP_GAMES.has(gameType) ? (
+                <>
+                  <SpDpTpSelector selected={spDpTpSelected} setSelected={setSpDpTpSelected} />
+                  <div className="mt-3">
+                    <label className="block text-xs text-gray-400 mb-1">Enter Single Digit (0-9) Only:</label>
+                    <input placeholder="Enter single digit 0-9" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none text-center text-lg font-bold" />
+                    <div className="text-[11px] text-gray-400 mt-1">Only one digit allowed, e.g. 5. Select SP/DP/TP checkbox above. You can select multiple.</div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white focus:border-purple-500/50 focus:outline-none" />
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
                   {pannaMeta && <PannaSuggestions pannaMeta={pannaMeta} digit={digit} setDigit={setDigit} gameType={gameType} />}
                 </>
               )}

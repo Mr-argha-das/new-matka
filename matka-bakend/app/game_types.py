@@ -52,7 +52,10 @@ PANNA_GAMES = {
     "sp",
     "dp",
     "tp",
+<<<<<<< HEAD
     "sp_dp_tp",
+=======
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
     "two_digit_pana",
     "sp_common",
     "dp_common",
@@ -61,6 +64,11 @@ PANNA_GAMES = {
 
 MOTOR_GAMES = {"sp_motor", "dp_motor"}
 
+<<<<<<< HEAD
+=======
+SP_DP_TP_GAMES = {"sp_dp_tp"}
+
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
 SANGAM_GAMES = {"half_sangam", "half_sangam_a", "half_sangam_b", "full_sangam"}
 
 RATE_ALIAS = {
@@ -94,6 +102,7 @@ def rate_key(game_type: str):
 
 
 def extract_motor_digits(value: str):
+<<<<<<< HEAD
     """Extract unique single digits from motor input.
     Supports both continuous like '1234567890' and comma/space separated like '1,2,3'
     Returns list of digits as strings
@@ -103,6 +112,12 @@ def extract_motor_digits(value: str):
         return []
     
     # If contains comma or space, split and treat each entry
+=======
+    """Extract unique single digits from motor input."""
+    value = value.strip()
+    if not value:
+        return []
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
     if "," in value or " " in value:
         parts = split_entries(value)
         digits = []
@@ -110,6 +125,7 @@ def extract_motor_digits(value: str):
             if len(part) == 1 and part.isdigit():
                 digits.append(part)
             elif len(part) > 1 and part.isdigit():
+<<<<<<< HEAD
                 # If someone enters '12' as separate, treat each char as digit
                 # But for motor we expect single digits, so split chars
                 digits.extend(list(part))
@@ -119,11 +135,45 @@ def extract_motor_digits(value: str):
         return digits
     else:
         # Continuous string like "1234567890" - each char is a digit
+=======
+                digits.extend(list(part))
+            else:
+                return None
+        return digits
+    else:
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
         if not value.isdigit():
             return None
         return list(value)
 
 
+<<<<<<< HEAD
+=======
+def extract_sp_dp_tp_info(value: str):
+    """Parse SP DP TP input: '5' or '5|sp,dp,tp'"""
+    value = value.strip()
+    if not value:
+        return None
+    if "|" in value:
+        parts = value.split("|", 1)
+        digit_part = parts[0].strip()
+        types_part = parts[1].strip().lower()
+        if not digit_part.isdigit() or len(digit_part) != 1:
+            return None
+        types = [t.strip() for t in types_part.split(",") if t.strip()]
+        valid_types = {"sp", "dp", "tp"}
+        if not types or any(t not in valid_types for t in types):
+            return None
+        return (digit_part, types)
+    else:
+        if value.isdigit() and len(value) == 1:
+            return (value, [])
+        if value.isdigit() and len(value) == 3:
+            return (value, [])
+        return None
+
+
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
 def validate_digit(game_type, digit):
     if not digit:
         raise HTTPException(400, "Digit is required for this game type")
@@ -144,6 +194,7 @@ def validate_digit(game_type, digit):
         motor_digits = extract_motor_digits(digit)
         if motor_digits is None:
             raise HTTPException(400, "Motor: Only digits 0-9 allowed")
+<<<<<<< HEAD
         
         if len(motor_digits) < 1 or len(motor_digits) > 10:
             raise HTTPException(400, "Motor: Length must be 1 to 10 digits")
@@ -156,6 +207,20 @@ def validate_digit(game_type, digit):
         if any(not d.isdigit() for d in motor_digits):
             raise HTTPException(400, "Motor: Only digits 0-9 allowed")
         
+=======
+        if len(motor_digits) < 1 or len(motor_digits) > 10:
+            raise HTTPException(400, "Motor: Length must be 1 to 10 digits")
+        if len(motor_digits) != len(set(motor_digits)):
+            raise HTTPException(400, "Motor: Duplicate digits not allowed. e.g. 1234567890 is valid, 1123456789 is invalid")
+        if any(not d.isdigit() for d in motor_digits):
+            raise HTTPException(400, "Motor: Only digits 0-9 allowed")
+        return
+
+    if game_type in SP_DP_TP_GAMES:
+        info = extract_sp_dp_tp_info(digit)
+        if info is None:
+            raise HTTPException(400, "SP DP TP: Enter single digit 0-9, e.g. 5 or 5|sp,dp,tp with checkbox selection")
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
         return
 
     if game_type in PANNA_GAMES:
@@ -166,12 +231,9 @@ def validate_digit(game_type, digit):
     if game_type in {"half_sangam", "half_sangam_a", "half_sangam_b"}:
         if len(entries) != 1 or "-" not in entries[0]:
             raise HTTPException(400, "Half Sangam must be in format 123-4")
-
         panna, single_digit = entries[0].split("-", 1)
-
         if not panna.isdigit() or len(panna) != 3:
             raise HTTPException(400, "Half Sangam Panna must be 3 digits")
-
         if not single_digit.isdigit() or len(single_digit) != 1:
             raise HTTPException(400, "Half Sangam Digit must be 1 digit")
         return
@@ -179,17 +241,25 @@ def validate_digit(game_type, digit):
     if game_type == "full_sangam":
         if len(entries) != 1 or "-" not in entries[0]:
             raise HTTPException(400, "Full Sangam must be 123-456")
-
         open_panna, close_panna = entries[0].split("-", 1)
-
         if not open_panna.isdigit() or len(open_panna) != 3:
             raise HTTPException(400, "Full Sangam OPEN PANNA must be 3 digits")
-
         if not close_panna.isdigit() or len(close_panna) != 3:
             raise HTTPException(400, "Full Sangam CLOSE PANNA must be 3 digits")
         return
 
     raise HTTPException(400, "Invalid Game Type")
+
+
+def get_panna_type(panna: str):
+    """Return panna type: sp, dp, tp"""
+    if not panna or len(panna) != 3 or not panna.isdigit():
+        return None
+    if panna[0] == panna[1] == panna[2]:
+        return "tp"
+    if panna[0] == panna[1] or panna[1] == panna[2] or panna[0] == panna[2]:
+        return "dp"
+    return "sp"
 
 
 def bid_wins(bid, result_obj, session=None):
@@ -208,17 +278,53 @@ def bid_wins(bid, result_obj, session=None):
         return open_digit != "-" and close_digit != "-" and (open_digit + close_digit) in entries
 
     if bid.game_type in MOTOR_GAMES:
+<<<<<<< HEAD
         # Motor logic: user enters unique digits like 1234567890
         # Win if any of those digits appears in result panna
+=======
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
         motor_digits = extract_motor_digits(bid.digit or "")
         if not motor_digits:
             return False
         result_panna = open_panna if current_session == "open" else close_panna
         if not result_panna or result_panna == "-":
             return False
+<<<<<<< HEAD
         # Check if any motor digit is present in result panna
         return any(d in result_panna for d in motor_digits)
 
+=======
+        return any(d in result_panna for d in motor_digits)
+
+    if bid.game_type in SP_DP_TP_GAMES:
+        info = extract_sp_dp_tp_info(bid.digit or "")
+        if not info:
+            return False
+        digit_part, selected_types = info
+        result_panna = open_panna if current_session == "open" else close_panna
+        result_digit = open_digit if current_session == "open" else close_digit
+        
+        if not result_panna or result_panna == "-":
+            return False
+        
+        # If digit_part is 3-digit (old style), check direct panna match
+        if len(digit_part) == 3:
+            return result_panna == digit_part
+        
+        # New logic: single digit + checkbox
+        # If no types selected, treat as any type - just digit match
+        # If types selected, check panna type matches selection
+        panna_type = get_panna_type(result_panna)
+        
+        if selected_types:
+            if panna_type not in selected_types:
+                return False
+        
+        # Digit logic: win if entered digit equals result digit OR appears in result panna
+        # As per requirement: digit me only one digit enter hogi
+        return digit_part == result_digit or digit_part in result_panna
+
+>>>>>>> 9763c95 (feat: SP DP TP - checkbox for SP/DP/TP (select one or multiple) + single digit only (0-9), backend parse 5|sp,dp,tp and win logic by panna type)
     if bid.game_type in PANNA_GAMES:
         result_panna = open_panna if current_session == "open" else close_panna
         return result_panna in entries
