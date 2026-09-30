@@ -52,21 +52,13 @@ PANNA_GAMES = {
     "sp",
     "dp",
     "tp",
-<<<<<<< HEAD
-    "sp_common",
-    "dp_common",
-=======
->>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
     "pana_family",
 }
 
 MOTOR_GAMES = {"sp_motor", "dp_motor"}
 SP_DP_TP_GAMES = {"sp_dp_tp"}
 TWO_DIGIT_PANA_GAMES = {"two_digit_pana"}
-<<<<<<< HEAD
-=======
 SP_COMMON_GAMES = {"sp_common", "dp_common"}
->>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
 SANGAM_GAMES = {"half_sangam", "half_sangam_a", "half_sangam_b", "full_sangam"}
 
 RATE_ALIAS = {
@@ -175,13 +167,10 @@ def validate_digit(game_type, digit):
         if any((not entry.isdigit() or len(entry) != 2) for entry in entries):
             raise HTTPException(400, "Two Digit Pana: Enter exactly 2 digits like 12, 32, 34")
         return
-<<<<<<< HEAD
-=======
     if game_type in SP_COMMON_GAMES:
         if any((not entry.isdigit() or len(entry) != 1) for entry in entries):
             raise HTTPException(400, "SP/DP Common: Enter single digit 0-9")
         return
->>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
     if game_type in PANNA_GAMES:
         if any((not entry.isdigit() or len(entry) != 3) for entry in entries):
             raise HTTPException(400, "Panna entries must be exactly 3 digits")
@@ -276,8 +265,6 @@ def bid_wins(bid, result_obj, session=None):
                 return True
         return False
 
-<<<<<<< HEAD
-=======
     if bid.game_type in SP_COMMON_GAMES:
         result_panna = open_panna if current_session == "open" else close_panna
         result_digit = open_digit if current_session == "open" else close_digit
@@ -286,12 +273,10 @@ def bid_wins(bid, result_obj, session=None):
         for entry in entries:
             if len(entry) != 1:
                 continue
-            # SP Common / DP Common: win if digit is in panna or equals result digit
             if entry == result_digit or entry in result_panna:
                 return True
         return False
 
->>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
     if bid.game_type in PANNA_GAMES:
         result_panna = open_panna if current_session == "open" else close_panna
         return result_panna in entries
