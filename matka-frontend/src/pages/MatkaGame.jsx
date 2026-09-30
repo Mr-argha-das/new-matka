@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// src/pages/MatkaGame.jsx - Final with SP DP TP checkbox + Motor unique + Panna suggestions
-=======
-// src/pages/MatkaGame.jsx - Orange + Gray Theme like screenshot + SP DP TP checkbox + Motor unique + Panna suggestions
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
+// src/pages/MatkaGame.jsx - Orange Theme + SP DP TP checkbox + Motor unique + Panna suggestions
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -124,13 +120,8 @@ function validateDigitFrontend(game_type, digit) {
 const Message = ({ type, text }) => {
   if (!text) return null;
   return (
-<<<<<<< HEAD
-    <div className={`p-3 mx-3 rounded-lg mb-4 flex items-center gap-3 ${type === "success" ? "bg-green-900 text-green-200" : type === "error" ? "bg-red-900 text-red-200" : "bg-blue-900 text-blue-200"}`}>
-      {type === "success" && <CheckCircle />} {type === "error" && <XCircle />} {type === "info" && <Loader className="animate-spin" />} {text}
-=======
     <div className={`p-3 mx-3 rounded-lg mb-4 flex items-center gap-3 text-sm ${type === "success" ? "bg-green-50 border border-green-200 text-green-700" : type === "error" ? "bg-red-50 border border-red-200 text-red-600" : "bg-orange-50 border border-orange-200 text-orange-700"}`}>
       {type === "success" && <CheckCircle size={18} />} {type === "error" && <XCircle size={18} />} {type === "info" && <Loader className="animate-spin" size={18} />} {text}
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
     </div>
   );
 };
@@ -165,17 +156,10 @@ const PannaSuggestions = ({ pannaMeta, digit, setDigit, gameType }) => {
   };
   return (
     <div className="mt-2">
-<<<<<<< HEAD
-      <div className="text-[11px] text-gray-400 mb-1.5 px-1">Suggestions for "{currentToken}" - {filtered.length} found:</div>
-      <div className="flex flex-wrap gap-2 p-2.5 rounded-lg bg-black/30 border border-white/10">
-        {filtered.map((panna) => (
-          <button key={panna} type="button" onClick={() => handleSelect(panna)} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-purple-600 border border-white/10 text-white">{panna}</button>
-=======
       <div className="text-[11px] text-gray-500 mb-1.5 px-1">Suggestions for "{currentToken}" - {filtered.length} found:</div>
       <div className="flex flex-wrap gap-2 p-2.5 rounded-xl bg-[#F5F5F5] border border-gray-200">
         {filtered.map((panna) => (
           <button key={panna} type="button" onClick={() => handleSelect(panna)} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white border border-gray-200 hover:bg-[#FF9800] hover:text-white hover:border-[#FF9800] text-black transition">{panna}</button>
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
         ))}
       </div>
     </div>
@@ -188,13 +172,8 @@ const MotorSuggestions = ({ digit, setDigit }) => {
   if (digit.length === 0) return null;
   return (
     <div className="mt-2">
-<<<<<<< HEAD
-      <div className="text-[11px] text-gray-400 mb-1.5 px-1">{digits.length}/10 Unique: {digits.join("") || "none"} - No repeat. Valid: 1234567890, Invalid: 1123456789</div>
-      <div className="flex flex-wrap gap-2 p-2.5 rounded-lg bg-black/30 border border-white/10">
-=======
       <div className="text-[11px] text-gray-500 mb-1.5 px-1">{digits.length}/10 Unique: {digits.join("") || "none"} - No repeat.</div>
       <div className="flex flex-wrap gap-2 p-2.5 rounded-xl bg-[#F5F5F5] border border-gray-200">
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
         {remaining.slice(0,10).map((d) => (
           <button key={d} type="button" onClick={() => {
             if (digits.length >= 10) return;
@@ -202,15 +181,9 @@ const MotorSuggestions = ({ digit, setDigit }) => {
               const cleaned = prev.replace(/[^0-9]/g, "");
               return [...new Set((cleaned + d).split(""))].join("").slice(0,10);
             });
-<<<<<<< HEAD
-          }} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white/10 hover:bg-emerald-600 border border-white/10 text-white">{d}</button>
-        ))}
-        <button type="button" onClick={() => setDigit("")} className="px-3 py-1.5 rounded-full text-xs bg-red-900/50 border border-red-700/30 text-red-200">Clear</button>
-=======
           }} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white border border-gray-200 hover:bg-[#00A651] hover:text-white text-black transition">{d}</button>
         ))}
         <button type="button" onClick={() => setDigit("")} className="px-3 py-1.5 rounded-full text-xs bg-red-50 border border-red-200 text-red-600 hover:bg-red-100">Clear</button>
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
       </div>
     </div>
   );
@@ -225,21 +198,6 @@ const SpDpTpSelector = ({ selected, setSelected }) => {
   const toggle = (id) => setSelected(prev => ({ ...prev, [id]: !prev[id] }));
   const selectedList = Object.keys(selected).filter(k => selected[k]);
   return (
-<<<<<<< HEAD
-    <div className="mt-3 p-3 rounded-lg bg-black/30 border border-white/10">
-      <div className="text-sm font-semibold text-white mb-2">Choose Pana Type (Checkbox):</div>
-      <div className="grid grid-cols-3 gap-2">
-        {options.map(opt => (
-          <label key={opt.id} className={`relative flex flex-col items-center gap-1 p-3 rounded-lg border cursor-pointer ${selected[opt.id] ? "bg-purple-600/20 border-purple-500 text-white" : "bg-white/5 border-white/10 text-gray-300"}`}>
-            <input type="checkbox" checked={selected[opt.id]} onChange={() => toggle(opt.id)} className="absolute top-2 right-2 accent-purple-600" />
-            <div className={`h-8 w-8 rounded-full ${opt.color} flex items-center justify-center font-bold text-sm text-white`}>{opt.label}</div>
-            <span className="text-xs font-semibold">{opt.label}</span>
-            <span className="text-[10px] opacity-70">{opt.desc}</span>
-          </label>
-        ))}
-      </div>
-      <div className="mt-2 text-[11px] text-gray-400">Selected: {selectedList.length ? selectedList.join(", ").toUpperCase() : "None"} - Can select multiple</div>
-=======
     <div className="mt-3 p-3 rounded-xl bg-[#F5F5F5] border border-gray-200">
       <div className="text-sm font-bold text-black mb-2">Choose Pana Type (Checkbox):</div>
       <div className="grid grid-cols-3 gap-2">
@@ -253,7 +211,6 @@ const SpDpTpSelector = ({ selected, setSelected }) => {
         ))}
       </div>
       <div className="mt-2 text-[11px] text-gray-500">Selected: {selectedList.length ? selectedList.join(", ").toUpperCase() : "None"} - Can select multiple</div>
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
     </div>
   );
 };
@@ -354,41 +311,6 @@ export default function MatkaGame() {
     }
   };
 
-<<<<<<< HEAD
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-white"><Loader className="animate-spin" /> Loading...</div>;
-  if (!market) return <div className="text-center text-red-400 p-6">Market Not Found</div>;
-
-  return (
-    <div className="max-w-md mx-auto min-h-screen text-white pb-10">
-      <div className="w-full relative bg-gradient-to-b from-black to-black/0 py-2 flex items-center justify-between">
-        <button onClick={() => window.history.back()} className="p-2 pl-4 z-10 rounded-full hover:bg-white/10"><ArrowLeft size={22} /></button>
-        <h2 className="text-md z-0 w-full absolute font-bold px-4 py-2 flex justify-center uppercase">{market.name} — {displayGame}</h2>
-      </div>
-      <p className="text-xs bg-white/5 flex justify-between px-3 py-3 rounded-b-lg text-gray-300 mb-4">
-        <span className="flex flex-col"><strong>Open:</strong> {market.open_time}</span>
-        <span className="flex flex-col"><strong>Close:</strong> {market.close_time}</span>
-        <span className={`font-bold ${marketPlayable ? "text-green-400" : "text-red-400"}`}>{marketPlayable ? "Running" : "Closed"}</span>
-      </p>
-      <Message type={msg?.type} text={msg?.text} />
-      <form onSubmit={placeBid} className="bg-white/5 p-4 mx-3 rounded-lg border border-gray-800">
-        <div className="mb-3 text-sm text-gray-300">
-          <label className="mr-3"><input type="radio" value="open" checked={session === "open"} onChange={() => setSession("open")} className="accent-purple-600 mr-1" />Open</label>
-          <label className="ml-3"><input type="radio" value="close" checked={session === "close"} onChange={() => setSession("close")} className="accent-purple-600 mr-1" />Close</label>
-        </div>
-        <div className="mb-3">
-          <label className="block text-sm text-gray-300 mb-1">{inputHelp.label}</label>
-          {HALF_SANGAM_GAMES.has(gameType) && (
-            <>
-              <div className="grid grid-cols-2 gap-2 mb-2">
-                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
-                <input placeholder="Close Digit" value={closeDigit} onChange={(e) => setCloseDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white" />
-              </div>
-              <div className="grid grid-cols-2 gap-2 mb-2">
-                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
-                <input placeholder="Open Digit" value={openDigit} onChange={(e) => setOpenDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white" />
-              </div>
-              <input placeholder="OR Combined (123-4)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
-=======
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-white text-black"><Loader className="animate-spin" /> Loading...</div>;
   if (!market) return <div className="text-center text-red-600 p-6 bg-white min-h-screen">Market Not Found</div>;
 
@@ -422,75 +344,46 @@ export default function MatkaGame() {
                 <input placeholder="Open Digit" value={openDigit} onChange={(e) => setOpenDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
               </div>
               <input placeholder="OR Combined (123-4)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
             </>
           )}
           {gameType === "full_sangam" && (
             <>
               <div className="grid grid-cols-2 gap-2 mb-2">
-<<<<<<< HEAD
-                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
-                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2 bg-black/30 rounded border w-full text-white" />
-              </div>
-              <input placeholder="OR Combined (123-456)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
-=======
                 <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
                 <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
               </div>
               <input placeholder="OR Combined (123-456)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
             </>
           )}
           {!HALF_SANGAM_GAMES.has(gameType) && gameType !== "full_sangam" && (
             <>
               {MOTOR_GAMES.has(gameType) ? (
                 <>
-<<<<<<< HEAD
-                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => handleMotorInput(e.target.value)} className="p-2 bg-black/30 rounded border w-full text-white" />
-=======
                   <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => handleMotorInput(e.target.value)} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
                   <MotorSuggestions digit={digit} setDigit={setDigit} />
                 </>
               ) : SP_DP_TP_GAMES.has(gameType) ? (
                 <>
                   <SpDpTpSelector selected={spDpTpSelected} setSelected={setSpDpTpSelected} />
                   <div className="mt-3">
-<<<<<<< HEAD
-                    <input placeholder="Single digit 0-9 only" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2 bg-black/30 rounded border w-full text-white text-center text-lg font-bold" />
-                    <div className="text-[11px] text-gray-400 mt-1">Only one digit (0-9). Choose SP/DP/TP above - can select multiple like SP+DP</div>
-=======
                     <input placeholder="Single digit 0-9 only" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black text-center text-lg font-bold focus:border-[#FF8C00] focus:outline-none" />
                     <div className="text-[11px] text-gray-500 mt-1">Only one digit (0-9). Choose SP/DP/TP above - can select multiple</div>
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
                   </div>
                 </>
               ) : (
                 <>
-<<<<<<< HEAD
-                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
-=======
                   <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
                   {pannaMeta && <PannaSuggestions pannaMeta={pannaMeta} digit={digit} setDigit={setDigit} gameType={gameType} />}
                 </>
               )}
             </>
           )}
         </div>
-<<<<<<< HEAD
-        <div className="mb-3">
-          <label className="block text-sm text-gray-300 mb-1">Points</label>
-          <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2 bg-black/30 rounded border w-full text-white" />
-        </div>
-        <button disabled={!marketPlayable} className={`w-full py-3 rounded-lg font-semibold ${marketPlayable ? "bg-gradient-to-r from-purple-700 to-purple-900" : "bg-slate-300 text-slate-600"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
-=======
         <div className="mb-4">
           <label className="block text-sm font-bold text-black mb-1.5">Points</label>
           <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
         </div>
         <button disabled={!marketPlayable} className={`w-full py-3 rounded-xl font-bold text-white shadow-md transition ${marketPlayable ? "bg-gradient-to-r from-[#FF9800] to-[#F57C00] hover:shadow-lg" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
->>>>>>> b1a0392 (feat: theme change to screenshot style - orange header #FF9800, gray cards #E0E0E0, white circle, green icons #00A651, light background)
       </form>
     </div>
   );
