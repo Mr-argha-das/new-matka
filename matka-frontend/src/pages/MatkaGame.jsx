@@ -1,4 +1,4 @@
-// src/pages/MatkaGame.jsx - Final Orange Theme + SP DP TP checkbox + Two Digit Pana 2 digits + SP Common 0-9 buttons
+// src/pages/MatkaGame.jsx - Final Orange Theme + SP DP TP checkbox + Two Digit Pana 2 digits + SP Common 0-9 buttons + Odd Even radio
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -46,20 +46,13 @@ const prettyName = (slug = "") => slug.replace(/-/g, " ").replace(/\b\w/g, (c) =
 const splitEntries = (value = "") => value.trim().split(/[\s,]+/).filter(Boolean);
 
 const SINGLE_GAMES = new Set(["single", "single_bulk"]);
-<<<<<<< HEAD
-const JODI_GAMES = new Set(["jodi","jodi_bulk","odd_even","red_jodi","digit_based_jodi","cycle_jodi","jodi_family"]);
-=======
 const JODI_GAMES = new Set(["jodi","jodi_bulk","red_jodi","digit_based_jodi","cycle_jodi","jodi_family"]);
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
 const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","pana_family"]);
 const TWO_DIGIT_PANA_GAMES = new Set(["two_digit_pana"]);
 const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
 const SP_DP_TP_GAMES = new Set(["sp_dp_tp"]);
 const SP_COMMON_GAMES = new Set(["sp_common","dp_common"]);
-<<<<<<< HEAD
-=======
 const ODD_EVEN_GAMES = new Set(["odd_even"]);
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
 const HALF_SANGAM_GAMES = new Set(["half_sangam","half_sangam_a","half_sangam_b"]);
 const BULK_GAMES = new Set(["single_bulk","jodi_bulk","single_panna_bulk","double_panna_bulk"]);
 
@@ -78,11 +71,7 @@ const inputHelpByGame = {
   sp_dp_tp: { label: "SP DP TP - Single Digit", placeholder: "Enter single digit 0-9", allowList: false },
   two_digit_pana: { label: "Two Digit Pana - Only 2 Digits", placeholder: "12, 32, 34", allowList: true },
   sp_common: { label: "SP Common - Click Digit", placeholder: "Click 0-9 button", allowList: false },
-<<<<<<< HEAD
-  odd_even: { label: "Odd Even", placeholder: "12, 34", allowList: true },
-=======
   odd_even: { label: "Odd Even - Choose Odd or Even", placeholder: "odd / even", allowList: false },
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
   dp_common: { label: "DP Common - Click Digit", placeholder: "Click 0-9 button", allowList: false },
   red_jodi: { label: "Red Jodi", placeholder: "05, 16", allowList: true },
   pana_family: { label: "Pana Family", placeholder: "123, 456", allowList: true },
@@ -128,10 +117,7 @@ function validateDigitFrontend(game_type, digit) {
   }
   if (TWO_DIGIT_PANA_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Two Digit Pana: Enter exactly 2 digits like 12, 32, 34");
   if (SP_COMMON_GAMES.has(game_type) && entries.some((e) => !/^\d$/.test(e))) throw new Error("SP/DP Common: Enter single digit 0-9");
-<<<<<<< HEAD
-=======
   if (ODD_EVEN_GAMES.has(game_type) && (entries.length !== 1 || !["odd","even"].includes(entries[0].toLowerCase()))) throw new Error("Odd Even: Choose odd or even");
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
   if (PANNA_GAMES.has(game_type) && entries.some((e) => !/^\d{3}$/.test(e))) throw new Error("Panna entries must be exactly 3 digits.");
   if (HALF_SANGAM_GAMES.has(game_type) && !/^\d{3}-\d$/.test(digit)) throw new Error("Half Sangam must be in format 123-4");
   if (game_type === "full_sangam" && !/^\d{3}-\d{3}$/.test(digit)) throw new Error("Full Sangam must be in format 123-456");
@@ -255,16 +241,14 @@ const SpCommonDigitButtons = ({ onDigitClick, points }) => {
       <div className="mt-2 text-[11px] text-gray-500 text-center">
         {points ? `Points: ${points} - Click any digit 0-9 to place bid` : "Enter Points above, then click digit 0-9 to bid"}
       </div>
-<<<<<<< HEAD
-=======
     </div>
   );
 };
 
-const OddEvenSelector = ({ selected, setSelected, points, onPlace }) => {
+const OddEvenSelector = ({ selected, setSelected }) => {
   return (
     <div className="mt-3">
-      <div className="text-sm font-bold text-black mb-3">Choose Odd or Even:</div>
+      <div className="text-sm font-bold text-black mb-3">Choose Odd or Even (Radio):</div>
       <div className="grid grid-cols-2 gap-4">
         <label className={`relative flex flex-col items-center gap-2 p-5 rounded-[16px] border-2 cursor-pointer transition-all ${selected === "odd" ? "bg-[#FFF3E0] border-[#FF9800] shadow-md" : "bg-[#E0E0E0] border-gray-200 hover:bg-[#D5D5D5]"}`}>
           <input type="radio" name="odd_even" value="odd" checked={selected === "odd"} onChange={() => setSelected("odd")} className="absolute top-3 right-3 accent-[#FF8C00] w-5 h-5" />
@@ -279,10 +263,6 @@ const OddEvenSelector = ({ selected, setSelected, points, onPlace }) => {
           <span className="text-[11px] text-gray-600">0,2,4,6,8</span>
         </label>
       </div>
-      <div className="mt-3 text-[11px] text-gray-500 text-center">
-        {points ? `Points: ${points} - Select Odd/Even above and click Place Bid` : "Enter Points, then choose Odd or Even"}
-      </div>
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
     </div>
   );
 };
@@ -305,10 +285,7 @@ export default function MatkaGame() {
   const [closeDigit, setCloseDigit] = useState("");
   const [msg, setMsg] = useState(null);
   const [spDpTpSelected, setSpDpTpSelected] = useState({ sp: false, dp: false, tp: false });
-<<<<<<< HEAD
-=======
   const [oddEvenSelected, setOddEvenSelected] = useState("");
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
   const token = localStorage.getItem("accessToken");
   const authHeader = useMemo(() => ({ Authorization: `Bearer ${token}` }), [token]);
   const pannaMeta = useMemo(() => getPannaListByGameType(gameType), [gameType]);
@@ -342,12 +319,9 @@ export default function MatkaGame() {
       if (selected.length === 0) return digit;
       return `${digit}|${selected.join(",")}`;
     }
-<<<<<<< HEAD
-=======
     if (ODD_EVEN_GAMES.has(gameType)) {
       return oddEvenSelected;
     }
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
     return digit;
   };
 
@@ -374,12 +348,9 @@ export default function MatkaGame() {
         if (selected.length === 0) throw new Error("Select at least one: SP, DP, TP");
         if (!/^\d$/.test(overrideDigit || digit)) throw new Error("SP DP TP: Enter only one digit 0-9");
       }
-<<<<<<< HEAD
-=======
       if (ODD_EVEN_GAMES.has(gameType)) {
         if (!oddEvenSelected) throw new Error("Odd Even: Choose odd or even");
       }
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
       const finalDigit = overrideDigit ? overrideDigit : assembledDigit();
       validateDigitFrontend(gameType, finalDigit);
       const payload = { market_id: marketId, game_type: gameType, session, points: Number(points), digit: finalDigit };
@@ -391,20 +362,12 @@ export default function MatkaGame() {
         else if (closePanna && openDigit) { payload.close_panna = closePanna; payload.open_digit = openDigit; delete payload.digit; }
       }
       await axios.post(`${API_BASE}/user/bid/place`, {}, { params: payload, headers: authHeader });
-<<<<<<< HEAD
-      setMsg({ type: "success", text: `Bid placed! Digit: ${finalDigit} Points: ${points}` });
-      if (!overrideDigit) setDigit("");
-      setOpenPanna(""); setClosePanna(""); setOpenDigit(""); setCloseDigit("");
-      if (!SP_COMMON_GAMES.has(gameType)) setPoints("");
-      setSpDpTpSelected({ sp: false, dp: false, tp: false });
-=======
-      setMsg({ type: "success", text: `Bid placed! ${gameType === "odd_even" ? oddEvenSelected : `Digit: ${finalDigit}`} Points: ${points}` });
+      setMsg({ type: "success", text: `Bid placed! ${gameType === "odd_even" ? oddEvenSelected.toUpperCase() : `Digit: ${finalDigit}`} Points: ${points}` });
       if (!overrideDigit) setDigit("");
       setOpenPanna(""); setClosePanna(""); setOpenDigit(""); setCloseDigit("");
       if (!SP_COMMON_GAMES.has(gameType) && !ODD_EVEN_GAMES.has(gameType)) setPoints("");
       setSpDpTpSelected({ sp: false, dp: false, tp: false });
-      if (ODD_EVEN_GAMES.has(gameType)) setOddEvenSelected("");
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
+      if (ODD_EVEN_GAMES.has(gameType)) { setOddEvenSelected(""); setPoints(""); }
     } catch (err) {
       setMsg({ type: "error", text: err.response?.data?.detail || err.message || "Bid failed." });
     }
@@ -478,16 +441,13 @@ export default function MatkaGame() {
                   <input placeholder="12, 32, 34" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d,\s]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
                   <div className="text-[11px] text-gray-500 mt-1">Only 2 digits per entry, e.g. 12, 32, 34 - separated by comma</div>
                 </>
-<<<<<<< HEAD
-=======
               ) : ODD_EVEN_GAMES.has(gameType) ? (
                 <>
                   <div className="mb-2 text-[12px] text-gray-600 bg-[#FFF3E0] border border-orange-200 rounded-lg p-2.5">
                     <span className="font-bold text-[#E65100]">Odd Even:</span> Sirf Points field hoga aur 2 radio button Odd/Even - ek choose karo, points add karo, bid place ho jayegi
                   </div>
-                  <OddEvenSelector selected={oddEvenSelected} setSelected={setOddEvenSelected} points={points} />
+                  <OddEvenSelector selected={oddEvenSelected} setSelected={setOddEvenSelected} />
                 </>
->>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
               ) : SP_COMMON_GAMES.has(gameType) ? (
                 <>
                   <div className="mb-3">
