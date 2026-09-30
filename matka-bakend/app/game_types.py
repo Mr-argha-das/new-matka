@@ -37,7 +37,6 @@ SINGLE_GAMES = {"single", "single_bulk"}
 JODI_GAMES = {
     "jodi",
     "jodi_bulk",
-    "odd_even",
     "red_jodi",
     "digit_based_jodi",
     "cycle_jodi",
@@ -59,6 +58,10 @@ MOTOR_GAMES = {"sp_motor", "dp_motor"}
 SP_DP_TP_GAMES = {"sp_dp_tp"}
 TWO_DIGIT_PANA_GAMES = {"two_digit_pana"}
 SP_COMMON_GAMES = {"sp_common", "dp_common"}
+<<<<<<< HEAD
+=======
+ODD_EVEN_GAMES = {"odd_even"}
+>>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
 SANGAM_GAMES = {"half_sangam", "half_sangam_a", "half_sangam_b", "full_sangam"}
 
 RATE_ALIAS = {
@@ -171,6 +174,13 @@ def validate_digit(game_type, digit):
         if any((not entry.isdigit() or len(entry) != 1) for entry in entries):
             raise HTTPException(400, "SP/DP Common: Enter single digit 0-9")
         return
+<<<<<<< HEAD
+=======
+    if game_type in ODD_EVEN_GAMES:
+        if len(entries) != 1 or entries[0].lower() not in {"odd", "even"}:
+            raise HTTPException(400, "Odd Even: Choose odd or even")
+        return
+>>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
     if game_type in PANNA_GAMES:
         if any((not entry.isdigit() or len(entry) != 3) for entry in entries):
             raise HTTPException(400, "Panna entries must be exactly 3 digits")
@@ -277,6 +287,31 @@ def bid_wins(bid, result_obj, session=None):
                 return True
         return False
 
+<<<<<<< HEAD
+=======
+    if bid.game_type in ODD_EVEN_GAMES:
+        if not entries:
+            return False
+        choice = entries[0].lower()
+        result_digit = open_digit if current_session == "open" else close_digit
+        if not result_digit or result_digit == "-":
+            # Fallback to jodi if digit not available
+            if open_digit != "-" and close_digit != "-":
+                try:
+                    jodi_val = int(open_digit + close_digit)
+                    is_odd = jodi_val % 2 == 1
+                    return (choice == "odd" and is_odd) or (choice == "even" and not is_odd)
+                except:
+                    return False
+            return False
+        try:
+            d = int(result_digit)
+            is_odd = d % 2 == 1
+            return (choice == "odd" and is_odd) or (choice == "even" and not is_odd)
+        except:
+            return False
+
+>>>>>>> 5b9e839 (feat: ODD Even - only Points field + 2 radio buttons Odd/Even, choose one, add points, place bid - backend odd/even validation + win logic parity check)
     if bid.game_type in PANNA_GAMES:
         result_panna = open_panna if current_session == "open" else close_panna
         return result_panna in entries
