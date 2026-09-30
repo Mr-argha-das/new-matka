@@ -47,10 +47,18 @@ const splitEntries = (value = "") => value.trim().split(/[\s,]+/).filter(Boolean
 
 const SINGLE_GAMES = new Set(["single", "single_bulk"]);
 const JODI_GAMES = new Set(["jodi","jodi_bulk","odd_even","red_jodi","digit_based_jodi","cycle_jodi","jodi_family"]);
+<<<<<<< HEAD
 const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","sp_common","dp_common","pana_family"]);
 const TWO_DIGIT_PANA_GAMES = new Set(["two_digit_pana"]);
 const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
 const SP_DP_TP_GAMES = new Set(["sp_dp_tp"]);
+=======
+const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","pana_family"]);
+const TWO_DIGIT_PANA_GAMES = new Set(["two_digit_pana"]);
+const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
+const SP_DP_TP_GAMES = new Set(["sp_dp_tp"]);
+const SP_COMMON_GAMES = new Set(["sp_common","dp_common"]);
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
 const HALF_SANGAM_GAMES = new Set(["half_sangam","half_sangam_a","half_sangam_b"]);
 const BULK_GAMES = new Set(["single_bulk","jodi_bulk","single_panna_bulk","double_panna_bulk"]);
 
@@ -68,9 +76,13 @@ const inputHelpByGame = {
   sp_motor: { label: "SP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
   sp_dp_tp: { label: "SP DP TP - Single Digit", placeholder: "Enter single digit 0-9", allowList: false },
   two_digit_pana: { label: "Two Digit Pana - Only 2 Digits", placeholder: "12, 32, 34", allowList: true },
+<<<<<<< HEAD
   sp_common: { label: "SP Common", placeholder: "123, 147", allowList: true },
+=======
+  sp_common: { label: "SP Common - Click Digit Button", placeholder: "Click 0-9 button", allowList: false },
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
   odd_even: { label: "Odd Even", placeholder: "12, 34", allowList: true },
-  dp_common: { label: "DP Common", placeholder: "112, 224", allowList: true },
+  dp_common: { label: "DP Common - Click Digit Button", placeholder: "Click 0-9 button", allowList: false },
   red_jodi: { label: "Red Jodi", placeholder: "05, 16", allowList: true },
   pana_family: { label: "Pana Family", placeholder: "123, 456", allowList: true },
   digit_based_jodi: { label: "Digit Based Jodi", placeholder: "12, 23, 34", allowList: true },
@@ -114,6 +126,10 @@ function validateDigitFrontend(game_type, digit) {
     return;
   }
   if (TWO_DIGIT_PANA_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Two Digit Pana: Enter exactly 2 digits like 12, 32, 34");
+<<<<<<< HEAD
+=======
+  if (SP_COMMON_GAMES.has(game_type) && entries.some((e) => !/^\d$/.test(e))) throw new Error("SP/DP Common: Enter single digit 0-9");
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
   if (PANNA_GAMES.has(game_type) && entries.some((e) => !/^\d{3}$/.test(e))) throw new Error("Panna entries must be exactly 3 digits.");
   if (HALF_SANGAM_GAMES.has(game_type) && !/^\d{3}-\d$/.test(digit)) throw new Error("Half Sangam must be in format 123-4");
   if (game_type === "full_sangam" && !/^\d{3}-\d{3}$/.test(digit)) throw new Error("Full Sangam must be in format 123-456");
@@ -213,6 +229,33 @@ const SpDpTpSelector = ({ selected, setSelected }) => {
         ))}
       </div>
       <div className="mt-2 text-[11px] text-gray-500">Selected: {selectedList.length ? selectedList.join(", ").toUpperCase() : "None"} - Can select multiple</div>
+<<<<<<< HEAD
+=======
+    </div>
+  );
+};
+
+const SpCommonDigitButtons = ({ onDigitClick, points }) => {
+  const digits = ["1","2","3","4","5","6","7","8","9","0"];
+  return (
+    <div className="mt-3">
+      <div className="text-sm font-bold text-black mb-3">Select Digit (0-9) - Click to Bid:</div>
+      <div className="grid grid-cols-3 gap-3">
+        {digits.map((d) => (
+          <button
+            key={d}
+            type="button"
+            onClick={() => onDigitClick(d)}
+            className="h-[56px] rounded-[14px] bg-[#E0E0E0] hover:bg-[#FF9800] hover:text-white active:scale-95 text-black font-bold text-[20px] shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-[#FF9800]"
+          >
+            {d}
+          </button>
+        ))}
+      </div>
+      <div className="mt-2 text-[11px] text-gray-500 text-center">
+        {points ? `Points: ${points} - Click any digit 0-9 to place bid` : "Enter Points above, then click digit 0-9 to bid"}
+      </div>
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
     </div>
   );
 };
@@ -283,6 +326,7 @@ export default function MatkaGame() {
     setDigit(unique.join("").slice(0,10));
   };
 
+<<<<<<< HEAD
   const placeBid = async (e) => {
     e.preventDefault();
     setMsg(null);
@@ -295,6 +339,20 @@ export default function MatkaGame() {
         if (!/^\d$/.test(digit)) throw new Error("SP DP TP: Enter only one digit 0-9");
       }
       const finalDigit = assembledDigit();
+=======
+  const placeBid = async (e, overrideDigit) => {
+    if (e) e.preventDefault();
+    setMsg(null);
+    try {
+      if (!marketPlayable) throw new Error("Market Closed");
+      if (!points || Number(points) <= 0) throw new Error("Points must be greater than 0 - Enter points first");
+      if (SP_DP_TP_GAMES.has(gameType)) {
+        const selected = Object.keys(spDpTpSelected).filter(k => spDpTpSelected[k]);
+        if (selected.length === 0) throw new Error("Select at least one: SP, DP, TP");
+        if (!/^\d$/.test(overrideDigit || digit)) throw new Error("SP DP TP: Enter only one digit 0-9");
+      }
+      const finalDigit = overrideDigit ? overrideDigit : assembledDigit();
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
       validateDigitFrontend(gameType, finalDigit);
       const payload = { market_id: marketId, game_type: gameType, session, points: Number(points), digit: finalDigit };
       if (gameType === "full_sangam") {
@@ -305,14 +363,32 @@ export default function MatkaGame() {
         else if (closePanna && openDigit) { payload.close_panna = closePanna; payload.open_digit = openDigit; delete payload.digit; }
       }
       await axios.post(`${API_BASE}/user/bid/place`, {}, { params: payload, headers: authHeader });
+<<<<<<< HEAD
       setMsg({ type: "success", text: "Bid placed successfully!" });
       setDigit(""); setOpenPanna(""); setClosePanna(""); setOpenDigit(""); setCloseDigit(""); setPoints("");
+=======
+      setMsg({ type: "success", text: `Bid placed successfully! Digit: ${finalDigit} Points: ${points}` });
+      if (!overrideDigit) {
+        setDigit(""); setOpenPanna(""); setClosePanna(""); setOpenDigit(""); setCloseDigit(""); 
+      }
+      // Don't clear points for SP Common button flow - keep points for next bid
+      if (!SP_COMMON_GAMES.has(gameType)) {
+        setPoints("");
+      }
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
       setSpDpTpSelected({ sp: false, dp: false, tp: false });
     } catch (err) {
       setMsg({ type: "error", text: err.response?.data?.detail || err.message || "Bid failed." });
     }
   };
 
+<<<<<<< HEAD
+=======
+  const handleSpCommonDigitClick = (d) => {
+    placeBid(null, d);
+  };
+
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-white text-black"><Loader className="animate-spin" /> Loading...</div>;
   if (!market) return <div className="text-center text-red-600 p-6 bg-white min-h-screen">Market Not Found</div>;
 
@@ -375,12 +451,29 @@ export default function MatkaGame() {
               ) : TWO_DIGIT_PANA_GAMES.has(gameType) ? (
                 <>
                   <input placeholder="12, 32, 34" value={digit} onChange={(e) => {
+<<<<<<< HEAD
                     // Allow only digits, comma, space and ensure each token max 2 digits
+=======
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
                     const val = e.target.value.replace(/[^\d,\s]/g, "");
                     setDigit(val);
                   }} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
                   <div className="text-[11px] text-gray-500 mt-1">Only 2 digits per entry, e.g. 12, 32, 34 - separated by comma</div>
                 </>
+<<<<<<< HEAD
+=======
+              ) : SP_COMMON_GAMES.has(gameType) ? (
+                <>
+                  <div className="mb-3">
+                    <label className="block text-sm font-bold text-black mb-1.5">Points</label>
+                    <input placeholder="Enter Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none text-center text-lg font-bold" />
+                  </div>
+                  <div className="mb-2 text-[12px] text-gray-600 bg-[#FFF3E0] border border-orange-200 rounded-lg p-2.5">
+                    <span className="font-bold text-[#E65100]">SP/DP Common:</span> Points enter karo, phir niche 0-9 me se kisi ek digit pe click karo - bid lag jayegi. No need to type digit.
+                  </div>
+                  <SpCommonDigitButtons onDigitClick={handleSpCommonDigitClick} points={points} />
+                </>
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
               ) : (
                 <>
                   <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
@@ -390,11 +483,28 @@ export default function MatkaGame() {
             </>
           )}
         </div>
+<<<<<<< HEAD
         <div className="mb-4">
           <label className="block text-sm font-bold text-black mb-1.5">Points</label>
           <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
         </div>
         <button disabled={!marketPlayable} className={`w-full py-3 rounded-xl font-bold text-white shadow-md transition ${marketPlayable ? "bg-gradient-to-r from-[#FF9800] to-[#F57C00] hover:shadow-lg" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
+=======
+        {!SP_COMMON_GAMES.has(gameType) && (
+          <>
+            <div className="mb-4">
+              <label className="block text-sm font-bold text-black mb-1.5">Points</label>
+              <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+            </div>
+            <button disabled={!marketPlayable} className={`w-full py-3 rounded-xl font-bold text-white shadow-md transition ${marketPlayable ? "bg-gradient-to-r from-[#FF9800] to-[#F57C00] hover:shadow-lg" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
+          </>
+        )}
+        {SP_COMMON_GAMES.has(gameType) && (
+          <div className="text-center text-[11px] text-gray-500 mt-3">
+            Points enter karke 0-9 button pe click karo, bid direct lag jayegi
+          </div>
+        )}
+>>>>>>> bd7ef03 (feat: SP Common - digit field replaced with 0-9 buttons (1-9,0), Points field remains, click button to place bid - backend single digit 0-9 win if digit in panna)
       </form>
     </div>
   );
