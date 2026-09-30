@@ -1,71 +1,47 @@
 import React from "react";
-import {
-  Home,
-  TrendingUp,
-  CalendarDays,
-  DollarSign,
-  Send,
-  User,
-} from "lucide-react";
+import { Home, User } from "lucide-react";
 import { IoHammerOutline } from "react-icons/io5";
-import { FaBook } from "react-icons/fa";
 import { IoMdBook } from "react-icons/io";
 import { MdOutlineCurrencyRupee } from "react-icons/md";
 
 export default function BottomNavBar() {
   return (
-    <div className="fixed -bottom-2 left-0 z-40 flex w-full items-center justify-center">
-      <div className="relative flex w-[100%] max-w-md items-center justify-between overflow-hidden rounded-t-[34px] border border-green-600/15 bg-white/92 text-emerald-900 shadow-[0_-18px_45px_rgba(9,78,36,0.14)] backdrop-blur-3xl">
+    <div className="fixed bottom-0 left-0 z-40 flex w-full items-center justify-center">
+      <div className="relative flex w-full max-w-md items-center justify-between bg-white border-t border-gray-200 px-2 py-2 shadow-[0_-2px_12px_rgba(0,0,0,0.08)]">
         {/* Left icons */}
-        <div className="mr-18 mt-1 flex w-full items-center space-x-8 rounded-tl-[30px] rounded-tr-[38px] bg-emerald-50/95 p-3">
-          <a href="/bid-history" className="w-full min-w-11 text-center transition hover:text-emerald-600">
-            <IoHammerOutline
-              size={22}
-              className="w-full cursor-pointer transition"
-            />
-            <span className="text-xs"> My Bids</span>
+        <div className="flex w-full items-center justify-around">
+          <a href="/bid-history" className="flex flex-col items-center gap-1 px-3 py-1 text-gray-500 hover:text-[#FF8C00] transition">
+            <IoHammerOutline size={22} />
+            <span className="text-[11px] font-medium">My Bids</span>
           </a>
-
-          <a href="/passbook" className="w-full text-center transition hover:text-emerald-600">
-            <IoMdBook
-              size={24}
-              className="w-full cursor-pointer transition"
-            />
-            <span className="text-xs"> Passbook</span>
+          <a href="/passbook" className="flex flex-col items-center gap-1 px-3 py-1 text-gray-500 hover:text-[#FF8C00] transition">
+            <IoMdBook size={22} />
+            <span className="text-[11px] font-medium">Passbook</span>
           </a>
         </div>
 
-        {/* Floating Home Button */}
-
-        <span className="absolute top-0 left-1/2 h-19 w-18 -translate-x-1/2 transform rounded-t-full bg-emerald-50/95"></span>
-        <span className="absolute -top-10 left-1/2 h-19 w-18 -translate-x-1/2 transform rounded-full bg-white/95"></span>
+        {/* Center Home */}
+        <div className="flex w-full justify-center">
+          <a href="/" className="flex flex-col items-center">
+            <div className="rounded-full bg-gradient-to-br from-[#FF9800] to-[#F57C00] p-3 shadow-lg hover:scale-105 transition">
+              <Home size={22} className="text-white" />
+            </div>
+            <span className="text-[11px] font-medium text-[#FF8C00] mt-1">Home</span>
+          </a>
+        </div>
 
         {/* Right icons */}
-        <div className="-ml-[14px] mt-1 grid w-full grid-cols-2 items-center space-x-8 rounded-tl-[38px] rounded-tr-[30px] bg-emerald-50/95 p-3">
-          <a href="/withdrawal-request" className="w-full text-center transition hover:text-emerald-600">
-            <MdOutlineCurrencyRupee
-              size={24}
-              className="w-full cursor-pointer transition"
-            />
-            <span className="text-xs"> Withdrawal</span>
+        <div className="flex w-full items-center justify-around">
+          <a href="/withdrawal-request" className="flex flex-col items-center gap-1 px-3 py-1 text-gray-500 hover:text-[#FF8C00] transition">
+            <MdOutlineCurrencyRupee size={22} />
+            <span className="text-[11px] font-medium">Withdraw</span>
           </a>
-          <a href="/profile" className="w-full text-center transition hover:text-emerald-600">
-            <User
-              size={22}
-              className="w-full cursor-pointer transition"
-            />
-            <span className="text-xs"> Profile</span>
+          <a href="/profile" className="flex flex-col items-center gap-1 px-3 py-1 text-gray-500 hover:text-[#FF8C00] transition">
+            <User size={22} />
+            <span className="text-[11px] font-medium">Profile</span>
           </a>
         </div>
       </div>
-      <a
-        href="/"
-        className="absolute -top-6 left-1/2 -translate-x-1/2 transform"
-      >
-        <div className="cursor-pointer rounded-full bg-gradient-to-b from-[#28c76f] to-[#087a37] p-4 shadow-[0_10px_30px_rgba(22,163,74,0.32)] transition hover:scale-105">
-          <Home size={22} className="text-white" />
-        </div>
-      </a>
     </div>
   );
 }

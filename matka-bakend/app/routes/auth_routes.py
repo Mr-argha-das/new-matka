@@ -118,11 +118,12 @@ def register(payload: UserCreate):
     settings = SiteSettings.objects().first()
     initial_balance = settings.welcome_bonus if settings else 5
 
-    # 4. Create new user
+    # 4. Create new user - FIXED: hash password properly
+    hashed_password = hash_password(password)
     new_user = User(
         username=username,
         mobile=mobile,
-        password_hash=password,
+        password_hash=hashed_password,
         referral_code=referral_code,
         referred_by=referral_input,
     ).save()

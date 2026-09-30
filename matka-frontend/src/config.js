@@ -2,7 +2,7 @@ const resolveApiUrl = () => {
   const configured = import.meta.env.VITE_API_URL;
   if (configured) return configured;
 
-  return "https://api.natraj777.com";
+  return "https://api.sridevimatka9.live";
 };
 
 export const API_URL = resolveApiUrl();

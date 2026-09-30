@@ -2,52 +2,26 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
-import { ArrowLeft, CardSim, Coins, Diamond, Dice1, Dice2 } from "lucide-react";
+import { ArrowLeft, Dice1, Dice2, Diamond, Coins, Layers, Hash, Shuffle, Star, CircleDollarSign, Spade, Heart, Gem, Clover, Copy, Repeat, Users } from "lucide-react";
 import { isMarketPlayable } from "../utils/marketTime";
 
 export default function Games() {
   const { marketId } = useParams();
-
   const [market, setMarket] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [now, setNow] = useState(() => new Date());
-
   const token = localStorage.getItem("accessToken");
   const headers = { Authorization: `Bearer ${token}` };
-
-  // Convert name → slug
   const createSlug = (name) => name.toLowerCase().replace(/\s+/g, "-");
 
-  // ============================
-  // FETCH MARKET DETAILS
-  // ============================
-
   const fetchMarketDetails = useCallback(async () => {
-    if (!marketId) {
-      setError("Market ID missing");
-      setIsLoading(false);
-      return;
-    }
-
+    if (!marketId) { setError("Market ID missing"); setIsLoading(false); return; }
     try {
       setIsLoading(true);
-
-      const res = await axios.get(`${API_URL}/api/admin/market/${marketId}`, {
-        headers,
-      });
-
-      console.log(res);
-
+      const res = await axios.get(`${API_URL}/api/admin/market/${marketId}`, { headers });
       const m = res?.data?.data;
-
-      console.log(m);
-
-      if (!m) {
-        setError("Market not found");
-        return;
-      }
-
+      if (!m) { setError("Market not found"); return; }
       setMarket({
         id: m._id?.$oid,
         name: m.name,
@@ -58,233 +32,88 @@ export default function Games() {
         is_active: m.is_active,
         marketType: m.marketType,
       });
-    } catch (err) {
-      console.log(err);
-      setError("Failed to load market details.");
-    } finally {
-      setIsLoading(false);
-    }
+    } catch { setError("Failed to load market details."); }
+    finally { setIsLoading(false); }
   }, [marketId]);
 
-  useEffect(() => {
-    fetchMarketDetails();
-  }, [fetchMarketDetails]);
-
+  useEffect(() => { fetchMarketDetails(); }, [fetchMarketDetails]);
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 30000);
     return () => window.clearInterval(timer);
   }, []);
 
-  // ============================
-  // GAME CARDS
-  // ============================
-  const colors = ["#ff9800", "#7ee000", "#ffd700", "#29b6e8", "#4d63ff", "#ff3f72"];
-  const withColor = (items) =>
-    items.map((item, index) => ({ ...item, color: colors[index % colors.length] }));
+  const allGames = [
+    { name: "Single Digit", icon: <Dice1 size={28} /> },
+    { name: "Single Bulk Digit", icon: <Hash size={28} /> },
+    { name: "Jodi Digit", icon: <Dice2 size={28} /> },
+    { name: "Jodi Digit Bulk", icon: <Copy size={28} /> },
+    { name: "Single Panna", icon: <Layers size={28} /> },
+    { name: "Single Panna Bulk", icon: <Layers size={28} /> },
+    { name: "Double Panna", icon: <Spade size={28} /> },
+    { name: "Double Panna Bulk", icon: <Spade size={28} /> },
+    { name: "Triple Panna", icon: <Diamond size={28} /> },
+    { name: "Full Sangam", icon: <Coins size={28} /> },
+    { name: "Half Sangam(A)", icon: <Gem size={28} /> },
+    { name: "Half Sangam(B)", icon: <Gem size={28} /> },
+    { name: "DP Motor", icon: <Clover size={28} /> },
+    { name: "SP Motor", icon: <Clover size={28} /> },
+    { name: "SP DP TP", icon: <Layers size={28} /> },
+    { name: "Two Digit Pana", icon: <Dice1 size={28} /> },
+    { name: "SP Common", icon: <Shuffle size={28} /> },
+    { name: "Odd Even", icon: <Dice2 size={28} /> },
+    { name: "DP Common", icon: <Clover size={28} /> },
+    { name: "Red Jodi", icon: <Heart size={28} /> },
+    { name: "Pana Family", icon: <Users size={28} /> },
+    { name: "Digit Based Jodi", icon: <Hash size={28} /> },
+    { name: "Cycle Jodi", icon: <Repeat size={28} /> },
+    { name: "Jodi Family", icon: <Users size={28} /> },
+  ];
 
-  const allGames = withColor([
-    {
-      name: "Single Digit",
-      icon: <Dice1 size={30} />,
-    },
-    {
-      name: "Single Bulk Digit",
-      icon: <Dice1 size={30} />,
-    },
-    {
-      name: "Jodi Digit",
-      icon: <Dice2 size={30} />,
-    },
-    {
-      name: "Jodi Digit Bulk",
-      icon: <Dice2 size={30} />,
-    },
-    {
-      name: "Single Panna",
-      icon: <CardSim size={30} />,
-    },
-    {
-      name: "Single Panna Bulk",
-      icon: <CardSim size={30} />,
-    },
-    {
-      name: "Double Panna",
-      icon: <CardSim size={30} />,
-    },
-    {
-      name: "Double Panna Bulk",
-      icon: <CardSim size={30} />,
-    },
-    {
-      name: "Triple Panna",
-      icon: <Diamond size={30} />,
-    },
-    {
-      name: "Full Sangam",
-      icon: <Coins size={30} />,
-    },
-    {
-      name: "Half Sangam(A)",
-      icon: <Diamond size={30} />,
-    },
-    {
-      name: "Half Sangam(B)",
-      icon: <Diamond size={30} />,
-    },
-    {
-      name: "DP Motor",
-      icon: <Coins size={30} />,
-    },
-    {
-      name: "SP Motor",
-      icon: <Coins size={30} />,
-    },
-    {
-      name: "SP DP TP",
-      icon: <Coins size={30} />,
-    },
-    {
-      name: "Two Digit Pana",
-      icon: <CardSim size={30} />,
-    },
-    {
-      name: "SP Common",
-      icon: <Coins size={30} />,
-    },
-    {
-      name: "Odd Even",
-      icon: <Dice2 size={30} />,
-    },
-    {
-      name: "DP Common",
-      icon: <Coins size={30} />,
-    },
-    {
-      name: "Red Jodi",
-      icon: <Dice2 size={30} />,
-    },
-    {
-      name: "Pana Family",
-      icon: <CardSim size={30} />,
-    },
-    {
-      name: "Digit Based Jodi",
-      icon: <Dice2 size={30} />,
-    },
-    {
-      name: "Cycle Jodi",
-      icon: <Dice2 size={30} />,
-    },
-    {
-      name: "Jodi Family",
-      icon: <Dice2 size={30} />,
-    },
-  ]);
-
-  if (isLoading)
-    return (
-      <div className="text-white text-center py-10 max-w-md mx-auto min-h-screen">
-        <h1 className="text-xl font-semibold animate-pulse">
-          Loading Market...
-        </h1>
-      </div>
-    );
-
-  if (error)
-    return (
-      <div className="text-center py-10 max-w-md mx-auto min-h-screen bg-red-800/30 text-red-300 p-4">
-        <h1 className="text-xl font-semibold mb-2">Error</h1>
-        <p>{error}</p>
-      </div>
-    );
-
-  if (!market)
-    return (
-      <div className="text-white text-center py-10 max-w-md mx-auto min-h-screen">
-        <h1 className="text-xl font-semibold">Market Not Found</h1>
-      </div>
-    );
+  if (isLoading) return <div className="text-center py-20 max-w-md mx-auto min-h-screen bg-white text-black">Loading Market...</div>;
+  if (error) return <div className="text-center py-20 max-w-md mx-auto min-h-screen bg-white text-red-600">{error}</div>;
+  if (!market) return <div className="text-center py-20 max-w-md mx-auto min-h-screen bg-white text-black">Market Not Found</div>;
 
   const marketPlayable = isMarketPlayable(market, now);
 
   return (
-    <div className="max-w-md mx-auto flex min-h-screen flex-col bg-[#f5f6f6] font-sans text-slate-950">
-      <div className="w-full relative bg-gradient-to-b from-black to-black/0 pb-2 flex items-center justify-between">
-        <button
-          onClick={() => window.history.back()}
-          className="p-2 pl-4 z-10 rounded-full hover:bg-white/10 transition"
-        >
-          <ArrowLeft size={22} />
+    <div className="max-w-md mx-auto flex min-h-screen flex-col bg-white font-sans">
+      {/* Orange Header like screenshot */}
+      <div className="w-full bg-[#FF9800] flex items-center px-3 py-3 shadow-md">
+        <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-white/20 transition text-white">
+          <ArrowLeft size={24} className="text-white" />
         </button>
-        <h2 className="text-md z-0 w-full absolute   justify-between font-bold bg-gradient-to-b from-black to-black/0 px-4 py-2  flex justify-center items-center gap-2">
-          <span className="flex gap-2 uppercase text-md items-center">
-            {market?.name}
-          </span>
+        <h2 className="flex-1 text-center text-[18px] font-bold text-white uppercase tracking-wide pr-10">
+          {market?.name}
         </h2>
-        <a className="pr-4 z-10">{/* <HistoryIcon /> */}</a>
       </div>
 
-      <p className="text-xs bg-white/5 flex justify-between px-4 py-3 rounded-b-lg text-gray-300 mb-4">
-        <span className="flex flex-col">
-          <strong>Open Time :</strong> <span>{market.open_time}</span>
-        </span>
-        {market.marketType !== "Starline" ? (
-          <span className="flex flex-col">
-            <strong>Close Time :</strong>
-            <span>{market.close_time}</span>
-          </span>
-        ) : (
-          ""
-        )}
-        <span className="flex flex-col">
-          <strong>Status:</strong>
-          <span
-            className={`font-bold rounded-full text-xs ${
-              marketPlayable ? "text-green-600" : "text-red-600"
-            }`}
-          >
-            {marketPlayable ? "Market Running" : "Market Closed"}
-          </span>
-        </span>
-      </p>
+      {/* Market Info - light gray */}
+      <div className="bg-[#F5F5F5] border-b border-gray-200 px-4 py-2.5 flex justify-between text-[12px]">
+        <span className="flex flex-col"><span className="text-gray-500 font-medium">Open Time:</span><span className="font-bold text-black">{market.open_time}</span></span>
+        <span className="flex flex-col"><span className="text-gray-500 font-medium">Close Time:</span><span className="font-bold text-black">{market.close_time}</span></span>
+        <span className="flex flex-col"><span className="text-gray-500 font-medium">Status:</span><span className={`font-bold ${marketPlayable ? "text-green-600" : "text-red-600"}`}>{marketPlayable ? "Running" : "Closed"}</span></span>
+      </div>
 
       {!marketPlayable && (
-        <div className="mx-3 mb-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">
+        <div className="mx-3 mt-3 rounded-lg bg-red-50 border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 text-center">
           Market Closed. Play is disabled after close time.
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4 px-4 pb-28 pt-3">
+      {/* Game Grid - like screenshot: gray cards */}
+      <div className="grid grid-cols-2 gap-3 px-3 pb-28 pt-4 bg-white">
         {allGames.map((game, index) => (
           <a
             key={index}
             href={marketPlayable ? `/game/${marketId}/${createSlug(game.name)}` : undefined}
             aria-disabled={!marketPlayable}
-            onClick={(e) => {
-              if (!marketPlayable) e.preventDefault();
-            }}
-            className={`group flex min-h-[136px] flex-col items-center justify-center rounded-xl border bg-white px-3 py-4 text-center shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition-all duration-200 ${
-              marketPlayable
-                ? "border-slate-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-[0_14px_30px_rgba(15,23,42,0.12)]"
-                : "border-red-200 bg-red-50 opacity-70 cursor-not-allowed"
-            }`}
+            onClick={(e) => { if (!marketPlayable) e.preventDefault(); }}
+            className={`flex flex-col items-center justify-center rounded-[16px] px-3 py-5 text-center transition-all duration-200 ${marketPlayable ? "bg-[#E0E0E0] hover:bg-[#D5D5D5] hover:shadow-md hover:-translate-y-0.5" : "bg-gray-200 opacity-60 cursor-not-allowed"}`}
           >
-            <div
-              className="mb-4 flex h-16 w-16 items-center justify-center rounded-full text-white shadow-[0_8px_18px_rgba(15,23,42,0.22)]"
-              style={{
-                backgroundColor: marketPlayable ? game.color : "#cbd5e1",
-                color: "#fff",
-              }}
-            >
-              {React.cloneElement(game.icon, { strokeWidth: 2.2 })}
+            <div className="flex h-[64px] w-[64px] items-center justify-center rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-[#00A651]">
+              {game.icon}
             </div>
-            <span
-              className="mb-3 h-1 w-24 rounded-full"
-              style={{ backgroundColor: marketPlayable ? game.color : "#cbd5e1" }}
-            />
-            <p className={`text-[15px] font-semibold leading-snug ${
-              marketPlayable ? "text-slate-950" : "text-slate-500"
-            }`}>
+            <p className="mt-3 text-[14px] font-bold leading-tight text-black">
               {game.name}
             </p>
           </a>

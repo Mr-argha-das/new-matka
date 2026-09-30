@@ -7,13 +7,9 @@ import { API_URL } from "../../config";
 export default function JackpotGame() {
   const token = localStorage.getItem("accessToken");
   const headers = { Authorization: `Bearer ${token}` };
-
   const [markets, setMarkets] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ----------------------------
-  // CLEAN ID HELPER
-  // ----------------------------
   const getId = (obj) => {
     if (!obj) return null;
     if (obj._id?.$oid) return obj._id.$oid;
@@ -22,17 +18,9 @@ export default function JackpotGame() {
     return null;
   };
 
-  // ----------------------------
-  // FETCH MARKETS (USER API)
-  // ----------------------------
   const fetchMarkets = async () => {
     try {
-      const res = await axios.get(`${API_URL}/api/admin/Golidesawar/market`, {
-        headers,
-      });
-
-      console.log("G Markets =", res);
-
+      const res = await axios.get(`${API_URL}/api/admin/Golidesawar/market`, { headers });
       const list = (res.data?.data || []).map((m) => ({
         id: getId(m),
         name: m.name,
@@ -41,181 +29,64 @@ export default function JackpotGame() {
         status: m.status,
         today_result: m.today_result || null,
       }));
-
       setMarkets(list);
-    } catch (err) {
-      console.log("User Golidesawar load error:", err);
-    }
-
+    } catch (err) { console.log("Golidesawar load error:", err); }
     setLoading(false);
   };
 
-  useEffect(() => {
-    fetchMarkets();
-  }, []);
+  useEffect(() => { fetchMarkets(); }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-[60vh] text-white">
-        Loading Markets…
-      </div>
-    );
-  }
+  if (loading) return <div className="flex justify-center items-center h-[60vh] bg-white text-black">Loading Markets…</div>;
 
   return (
-    <div className="space-y-3 mx-auto max-w-md font-sans pb-20">
-      <div className="w-full relative bg-gradient-to-b from-black to-black/0 py-2 flex items-center justify-between">
-        <button
-          onClick={() => window.history.back()}
-          className="p-2 pl-4 z-10 rounded-full hover:bg-white/10 transition"
-        >
-          <ArrowLeft size={22} />
-        </button>
-
-        <h2 className="text-md z-0 w-full absolute font-bold px-4 py-2 flex justify-center items-center gap-2">
-          <span className="flex gap-2 text-md items-center uppercase">
-            Golidesawar
-          </span>
-        </h2>
-
-        <div className="pr-4 z-10"></div>
+    <div className="space-y-3 mx-auto max-w-md font-sans pb-20 bg-white min-h-screen">
+      <div className="w-full bg-[#FF9800] flex items-center px-3 py-3 shadow-md">
+        <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-white/20 text-white"><ArrowLeft size={22} /></button>
+        <h2 className="flex-1 text-center text-[18px] font-bold text-white uppercase pr-10">Golidesawar</h2>
       </div>
 
       <div className="px-3">
-        <div className="w-full   bg-white/5 p-4 border border-gray-50/5 rounded-xl space-y-2">
-          {/* Row 1 */}
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-100 text-[13px]">
-              Left Digit
-            </span>
-            <span className="font-semibold text-gray-100 text-[13px]">
-              10–100
-            </span>
-          </div>
-
-          {/* Row 2 */}
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-100 text-[13px]">
-              Right Digit
-            </span>
-            <span className="font-semibold text-gray-100 text-[13px]">
-              10–100
-            </span>
-          </div>
-
-          {/* Row 3 */}
-          <div className="flex justify-between items-center">
-            <span className="font-semibold text-gray-100 text-[13px]">
-              Jodi Digit
-            </span>
-            <span className="font-semibold text-gray-100 text-[13px]">
-              10–1000
-            </span>
-          </div>
+        <div className="w-full bg-[#F5F5F5] border border-gray-200 p-4 rounded-xl space-y-2">
+          <div className="flex justify-between items-center"><span className="font-semibold text-black text-[13px]">Left Digit</span><span className="font-bold text-black text-[13px]">10–100</span></div>
+          <div className="flex justify-between items-center"><span className="font-semibold text-black text-[13px]">Right Digit</span><span className="font-bold text-black text-[13px]">10–100</span></div>
+          <div className="flex justify-between items-center"><span className="font-semibold text-black text-[13px]">Jodi Digit</span><span className="font-bold text-black text-[13px]">10–1000</span></div>
         </div>
       </div>
 
-      <div className="w-full flex  gap-3 px-3 ">
-        <a
-          href="/king-bids-history"
-          className="bg-white/10 flex items-center justify-center font-medium rounded-xl border border-gray-50/5 py-2 px-3 w-full"
-        >
-          Bids History
-        </a>
-        <a
-          href="/king-win-history"
-          className="bg-white/10 flex items-center justify-center font-medium rounded-xl border border-gray-50/5 py-2 px-3 w-full"
-        >
-          Win History
-        </a>
+      <div className="w-full flex gap-3 px-3">
+        <a href="/king-bids-history" className="bg-[#E0E0E0] hover:bg-[#D5D5D5] flex items-center justify-center font-bold rounded-xl py-2.5 px-3 w-full text-black text-sm">Bids History</a>
+        <a href="/king-win-history" className="bg-[#E0E0E0] hover:bg-[#D5D5D5] flex items-center justify-center font-bold rounded-xl py-2.5 px-3 w-full text-black text-sm">Win History</a>
       </div>
 
       <div className="px-3 flex flex-col gap-3">
         {markets.map((mkt) => {
           const openDigit = mkt.today_result?.open_digit || "X";
           const closeDigit = mkt.today_result?.close_digit || "X";
-
           return (
-            <div
-              key={mkt.id}
-              className="w-full rounded-xl shadow-lg backdrop-blur-2xl border border-white/10"
-            >
-              <div className="rounded-xl p-3 text-white">
-                {/* HEADER */}
+            <div key={mkt.id} className="w-full rounded-xl bg-white border border-gray-200 shadow-sm">
+              <div className="rounded-xl p-3">
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center gap-1">
-                    <h2 className="text-base font-semibold uppercase">
-                      {mkt.name}
-                    </h2>
-
-                    <Info
-                      size={18}
-                      className="bg-gray-300 rounded-full text-black"
-                    />
+                    <h2 className="text-[15px] font-bold uppercase text-black">{mkt.name}</h2>
+                    <Info size={16} className="bg-orange-100 text-[#FF8C00] rounded-full p-0.5" />
                   </div>
-
-                  <span
-                    className={`text-xs font-semibold ${
-                      mkt.status === true ? "text-green-400" : "text-red-400"
-                    }`}
-                  >
-                    {mkt.status === true ? "Running" : "Closed"}
-                  </span>
+                  <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${mkt.status ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>{mkt.status ? "Running" : "Closed"}</span>
                 </div>
-
-                {/* LINE */}
-                <div className="border-b border-dashed border-cyan-400/25 mb-2"></div>
-
-                {/* DETAILS */}
-                <div className="flex justify-between items-center text-xs text-gray-300">
+                <div className="border-b border-dashed border-gray-300 mb-2"></div>
+                <div className="flex justify-between items-center">
                   <div>
-                    {/* RESULT */}
-                    <h3 className="text-xl mb-1 font-semibold text-[#c21af0]">
-                      {openDigit}-{closeDigit}
-                    </h3>
-
-                    <div className="flex gap-7">
-                      <p>
-                        <span className="text-gray-400">Open Time:</span>
-                        <span className="block text-white font-medium">
-                          {mkt.openTime}
-                        </span>
-                      </p>
-
-                      <p>
-                        <span className="text-gray-400">Close Time:</span>
-                        <span className="block text-white font-medium">
-                          {mkt.closeTime}
-                        </span>
-                      </p>
+                    <h3 className="text-xl mb-1 font-bold text-[#FF8C00]">{openDigit}-{closeDigit}</h3>
+                    <div className="flex gap-6 text-[11px]">
+                      <p><span className="text-gray-500">Open:</span><span className="block font-bold text-black">{mkt.openTime}</span></p>
+                      <p><span className="text-gray-500">Close:</span><span className="block font-bold text-black">{mkt.closeTime}</span></p>
                     </div>
                   </div>
-
-                  {/* Chart */}
-                  <a href={`/GCharts/${mkt.id}`}>
-                    <FaChartLine size={26} />
-                  </a>
-
-                  {/* Play */}
-                  <div className="flex flex-col items-center gap-1">
-                    <a
-                      href={mkt.status === true ? `/king/${mkt.id}` : ""}
-                      className={`w-10 h-10 rounded-full border-2 flex items-center justify-center ${
-                        mkt.status === true
-                          ? "border-white"
-                          : "border-red-400 cursor-not-allowed"
-                      }`}
-                    >
-                      <Play
-                        className={
-                          mkt.status === true
-                            ? "text-green-500"
-                            : "text-red-400"
-                        }
-                        size={18}
-                      />
-                    </a>
-                    <span className="text-[14px] font-semibold">Play</span>
+                  <div className="flex items-center gap-3">
+                    <a href={`/GCharts/${mkt.id}`} className="text-gray-400 hover:text-[#FF8C00]"><FaChartLine size={22} /></a>
+                    <div className="flex flex-col items-center gap-1">
+                      <a href={mkt.status ? `/king/${mkt.id}` : ""} className={`w-11 h-11 rounded-full flex items-center justify-center shadow-md ${mkt.status ? "bg-gradient-to-br from-[#FF9800] to-[#F57C00] text-white" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}><Play size={18} fill="white" /></a>
+                      <span className="text-[12px] font-bold text-black">Play</span>
+                    </div>
                   </div>
                 </div>
               </div>

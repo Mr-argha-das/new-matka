@@ -8,18 +8,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --theme-bg: #f6fbf7;
-  --theme-bg-deep: #e8f6ec;
-  --theme-panel: rgba(255, 255, 255, 0.94);
-  --theme-panel-soft: rgba(236, 248, 240, 0.82);
-  --theme-field: rgba(255, 255, 255, 0.9);
-  --theme-border: rgba(16, 128, 67, 0.14);
-  --theme-border-red: rgba(16, 128, 67, 0.18);
-  --theme-red: #16a34a;
-  --theme-red-dark: #087a37;
-  --theme-text: #0f2819;
-  --theme-muted: #65776b;
-  --theme-gold: #d59f22;
+  --theme-bg: #ffffff;
+  --theme-orange: #FF8C00;
+  --theme-orange-dark: #F57C00;
+  --theme-orange-light: #FFA726;
+  --theme-card-gray: #E0E0E0;
+  --theme-card-gray-hover: #D5D5D5;
+  --theme-icon-green: #00A651;
+  --theme-icon-green-dark: #059669;
+  --theme-text: #000000;
+  --theme-muted: #6B7280;
 }
 
 html,
@@ -27,466 +25,178 @@ body {
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  -webkit-overflow-scrolling: auto;
-  background:
-    radial-gradient(circle at 50% -10%, rgba(34, 197, 94, 0.16), transparent 32rem),
-    radial-gradient(circle at 100% 20%, rgba(20, 184, 166, 0.12), transparent 28rem),
-    linear-gradient(180deg, #ffffff 0%, #f4fbf6 46%, #eaf7ee 100%);
-  background-color: var(--theme-bg);
+  background: #ffffff;
+  background-color: #ffffff;
+  color: #000;
 }
 
 button {
   cursor: pointer;
 }
 
-/* Enable scroll only on the main content wrapper */
 #root,
 .app-container {
   height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
+  background: #ffffff;
 }
 
-/* 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+/* Theme Helpers */
+.theme-page {
+  background: #ffffff;
+  color: #000;
 }
 
-button:hover {
-  border-color: #646cff;
-} */
-
-/* button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-} */
-
-@media (prefers-color-scheme: dark) {
+.theme-shell {
+  background: #ffffff;
 }
 
-/* Bottom Nav */
+/* Orange Header - Like screenshot */
+.theme-orange-header {
+  background: linear-gradient(135deg, #FF9800 0%, #FF8C00 100%);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(255,140,0,0.3);
+}
 
-/* Container for fixed positioning */
-.bottom-nav-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+.theme-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.theme-panel {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+}
+
+/* Gray Game Cards like screenshot */
+.game-card-gray {
+  background: #D9D9D9;
+  background: #E2E2E2;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+}
+
+.game-card-gray:hover {
+  background: #D5D5D5;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.game-card-icon-circle {
+  background: #ffffff;
+  border-radius: 9999px;
+  width: 64px;
+  height: 64px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  z-index: 50;
-  /* Adjust max-width as needed for your app's layout */
-  max-width: 448px;
-  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
-/* --- Main Navigation Bar Styling --- */
-
-.bottom-nav-bar {
-  /* Set a fixed height and the desired width */
-  width: 100%;
-  max-width: 448px; /* Matching the container max-width */
-  height: 60px; /* Height of the main bar section */
-
-  /* Background style from the image */
-  background-color: #1a1a2e; /* A dark, slightly purplish-black */
-  backdrop-filter: blur(15px); /* Mimics the backdrop-blur */
-
-  /* Rounded top corners */
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-
-  /* Flexbox to arrange items */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px; /* Horizontal padding for the icons */
-
-  /* Shadow is subtle in the original, you can adjust */
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
-
-  /* Crucial: Relative positioning for absolute children */
-  position: relative;
+.game-card-icon-green {
+  color: #00A651;
 }
 
-/* --- Icon Groups --- */
-.nav-icons-group {
-  display: flex;
-  align-items: center;
-  gap: 40px; /* Spacing between the icons, adjusted to fit the layout */
-  color: #a0a0a0; /* Gray color for inactive icons */
+.theme-green-bar {
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: #fff;
 }
 
-.nav-icon {
-  cursor: pointer;
-  transition: color 0.3s ease;
+.theme-pill {
+  border: 1px solid #E5E7EB;
+  background: #ffffff;
+  color: #000;
+  border-radius: 9999px;
 }
 
-.nav-icon:hover {
-  color: #ffffff;
+.theme-button {
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255,140,0,0.3);
 }
 
-/* --- Center Home Button Styling --- */
-
-/* This is the container for the button which must be absolutely positioned */
-.nav-center-placeholder {
-  /* Absolute position to center the button */
-  position: absolute;
-  top: -30px; /* Half the button height to make it stick out */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 60; /* Higher z-index to be on top */
+/* Bottom Nav - Light theme */
+.bottom-nav-light {
+  background: #ffffff;
+  border-top: 1px solid #E5E7EB;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
 }
 
-.nav-center-button-wrapper {
-  /* No default styles, just a wrapper for the link */
+/* Input styling light */
+.theme-input {
+  background: #ffffff;
+  border: 1px solid #D1D5DB;
+  color: #000;
+  border-radius: 12px;
 }
 
-.nav-center-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-
-  /* The purple/pink gradient from the image */
-  background: linear-gradient(135deg, #79049a, #212b61);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  /* Shadow for the floating effect */
-  box-shadow: 0 4px 15px rgba(121, 4, 154, 0.6);
-  cursor: pointer;
-  transition: transform 0.3s ease;
+.theme-input::placeholder {
+  color: #9CA3AF;
 }
 
-.nav-center-button:hover {
-  transform: scale(1.05);
+.theme-input:focus {
+  border-color: #FF8C00;
+  box-shadow: 0 0 0 3px rgba(255,140,0,0.15);
+  outline: none;
 }
 
-.nav-icon-home {
-  color: white;
+/* Market cards light */
+.market-card-light {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-/* --- Creating the Custom Curvature (Inward Notch Effect) --- */
-/* The key to the design: creating the illusion of a notch */
-
-/* The two crescent elements placed on the sides of the floating button */
-
-.bottom-nav-bar::before,
-.bottom-nav-bar::after {
-  content: "";
-  position: absolute;
-  top: 0px;
-  width: 25px;
-  height: 25px;
-  background-color: transparent; /* Makes the main bar invisible here */
-  box-shadow: 0 0 0 40px #fff;
-  z-index: 40; /* Lower than the nav-center-placeholder */
+/* Light overrides for old dark classes */
+.bg-black\/30 {
+  background: rgba(255,255,255,0.9) !important;
+  border: 1px solid #E5E7EB !important;
 }
 
-/* Left crescent */
-.bottom-nav-bar::before {
-  left: calc(50% - 30px - 25px);
-  border-top-right-radius: 50%; /* Inward curve */
+.text-white {
+  color: inherit;
 }
 
-/* Right crescent */
-.bottom-nav-bar::after {
-  right: calc(
-    50% - 30px - 25px
-  ); /* Center point - half button width - width of this element */
-  border-top-left-radius: 50%; /* Inward curve */
+.theme-page .text-white {
+  color: #000;
 }
 
+.theme-page .text-gray-300,
+.theme-page .text-gray-400 {
+  color: #6B7280;
+}
+
+/* Keep orange header text white */
+.theme-orange-header .text-white,
+.theme-orange-header * {
+  color: #fff !important;
+}
+
+.theme-orange-header svg {
+  color: #fff !important;
+}
+
+/* Animations */
 @keyframes marquee {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 @keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  90% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
+  0% { opacity: 0; transform: translateY(10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(10px); }
 }
 
 .animate-fadeIn {
   animation: fadeInOut 12s ease forwards;
 }
-
-.theme-page {
-  color: var(--theme-text);
-}
-
-.theme-shell {
-  background:
-    radial-gradient(circle at 18% -8%, rgba(34, 197, 94, 0.18), transparent 24rem),
-    radial-gradient(circle at 94% 18%, rgba(20, 184, 166, 0.14), transparent 25rem),
-    linear-gradient(180deg, #ffffff 0%, #f6fbf7 52%, #e9f7ed 100%);
-}
-
-.theme-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 252, 247, 0.96));
-  border: 1px solid var(--theme-border-red);
-  border-radius: 32px;
-  box-shadow:
-    0 22px 70px rgba(9, 78, 36, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.theme-panel {
-  background: var(--theme-panel);
-  border: 1px solid var(--theme-border);
-  border-radius: 26px;
-  box-shadow: 0 16px 38px rgba(9, 78, 36, 0.1);
-}
-
-.theme-label {
-  color: var(--theme-muted);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.theme-input {
-  width: 100%;
-  border-radius: 22px;
-  border: 1px solid rgba(16, 128, 67, 0.18);
-  background: var(--theme-field);
-  color: var(--theme-text);
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-
-.theme-input::placeholder {
-  color: rgba(139, 148, 168, 0.72);
-}
-
-.theme-input:focus {
-  border-color: rgba(22, 163, 74, 0.72);
-  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16);
-  background: rgba(255, 255, 255, 0.98);
-}
-
-.theme-icon {
-  color: var(--theme-muted);
-}
-
-.theme-link {
-  color: #0f8a3e;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.theme-button {
-  border-radius: 22px;
-  background: linear-gradient(180deg, #28c76f 0%, #16a34a 52%, #087a37 100%);
-  color: #fff;
-  box-shadow: 0 16px 32px rgba(22, 163, 74, 0.24);
-  transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
-}
-
-.theme-button:hover {
-  box-shadow: 0 20px 40px rgba(22, 163, 74, 0.3);
-  transform: translateY(-1px);
-}
-
-.theme-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.48;
-  transform: none;
-}
-
-.theme-alert-error {
-  background: rgba(95, 8, 8, 0.74);
-  border-left: 4px solid #ff2020;
-  color: #ff7b7b;
-}
-
-.theme-green-bar {
-  background: linear-gradient(135deg, #0b7a39 0%, #16a34a 52%, #20c971 100%);
-  color: #fff;
-  box-shadow: 0 18px 42px rgba(11, 122, 57, 0.22);
-}
-
-.theme-pill {
-  border: 1px solid rgba(22, 163, 74, 0.18);
-  background: rgba(255, 255, 255, 0.88);
-  color: #0f5130;
-  box-shadow: 0 8px 22px rgba(9, 78, 36, 0.08);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-
-.theme-pill:hover {
-  background: #eefaf2;
-  box-shadow: 0 12px 28px rgba(9, 78, 36, 0.12);
-  transform: translateY(-1px);
-}
-
-.theme-alert-success {
-  background: rgba(9, 80, 37, 0.42);
-  border-left: 4px solid #2ee66d;
-  color: #a4f7bf;
-}
-
-.theme-alert-info {
-  background: rgba(48, 35, 20, 0.72);
-  border-left: 4px solid var(--theme-gold);
-  color: #ffd48a;
-}
-
-/* Light-theme repair layer for older dark-screen Tailwind classes. */
-.theme-page main,
-.admin-shell main {
-  color: var(--theme-text);
-}
-
-.theme-page main > [class*="text-white"],
-.theme-page main section[class*="text-white"],
-.theme-page main div[class*="text-white"],
-.admin-shell main > [class*="text-white"],
-.admin-shell main section[class*="text-white"],
-.admin-shell main div[class*="text-white"] {
-  color: var(--theme-text);
-}
-
-.theme-page [class*="bg-white/5"],
-.theme-page [class*="bg-white/10"],
-.theme-page [class*="bg-white/20"],
-.theme-page [class*="bg-white/30"],
-.admin-shell [class*="bg-white/5"],
-.admin-shell [class*="bg-white/10"],
-.admin-shell [class*="bg-white/20"],
-.admin-shell [class*="bg-white/30"] {
-  background: rgba(255, 255, 255, 0.94);
-  border-color: rgba(16, 128, 67, 0.14);
-  color: var(--theme-text);
-  box-shadow: 0 14px 34px rgba(9, 78, 36, 0.08);
-}
-
-.theme-page [class*="from-black"][class*="to-black"],
-.theme-page [class*="bg-gradient-to-b"][class*="from-black"],
-.admin-shell [class*="from-black"][class*="to-black"],
-.admin-shell [class*="bg-gradient-to-b"][class*="from-black"] {
-  background: linear-gradient(135deg, #0b7a39 0%, #16a34a 52%, #20c971 100%);
-  color: #fff;
-}
-
-.theme-page input,
-.theme-page select,
-.theme-page textarea,
-.admin-shell input,
-.admin-shell select,
-.admin-shell textarea {
-  background-color: #fff;
-  color: #0f2819;
-  border-color: rgba(16, 128, 67, 0.2);
-}
-
-.theme-page input::placeholder,
-.theme-page textarea::placeholder,
-.admin-shell input::placeholder,
-.admin-shell textarea::placeholder {
-  color: #7b8a81;
-}
-
-.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-200"],
-.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-300"],
-.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-400"],
-.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-purple-300"],
-.theme-page :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-white"],
-.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-200"],
-.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-300"],
-.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-gray-400"],
-.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-purple-300"],
-.admin-shell :is(td, th, label, p, span, h1, h2, h3, h4, h5, h6)[class*="text-white"] {
-  color: var(--theme-text);
-}
-
-.theme-page .theme-green-bar :is(h1, h2, h3, p, span, a, button, svg),
-.theme-page [class*="bg-emerald-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.theme-page [class*="bg-green-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.theme-page [class*="bg-blue-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.theme-page [class*="bg-red-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.theme-page [class*="bg-purple-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.theme-page .theme-button,
-.admin-shell .theme-green-bar :is(h1, h2, h3, p, span, a, button, svg),
-.admin-shell [class*="bg-emerald-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.admin-shell [class*="bg-green-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.admin-shell [class*="bg-blue-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.admin-shell [class*="bg-red-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.admin-shell [class*="bg-purple-600"] :is(h1, h2, h3, p, span, a, button, svg),
-.admin-shell .theme-button {
-  color: #fff;
-}
-
-.theme-page table,
-.admin-shell table {
-  color: #263a2d;
-}
-
-.theme-page thead,
-.admin-shell thead {
-  background: #eefaf2;
-  color: #0f5130;
-}
-
-.theme-page tbody tr,
-.admin-shell tbody tr {
-  border-color: rgba(16, 128, 67, 0.1);
-}
-
-.theme-page tbody tr:hover,
-.admin-shell tbody tr:hover {
-  background: #f5fbf7;
-}
-
-.admin-shell main {
-  min-height: calc(100vh - 60px);
-  background:
-    radial-gradient(circle at 20% 0%, rgba(34, 197, 94, 0.12), transparent 24rem),
-    linear-gradient(180deg, #ffffff 0%, #f6fbf7 100%);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* .animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
-} */
