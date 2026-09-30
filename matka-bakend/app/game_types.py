@@ -52,16 +52,14 @@ PANNA_GAMES = {
     "sp",
     "dp",
     "tp",
-    "two_digit_pana",
     "sp_common",
     "dp_common",
     "pana_family",
 }
 
 MOTOR_GAMES = {"sp_motor", "dp_motor"}
-
 SP_DP_TP_GAMES = {"sp_dp_tp"}
-
+TWO_DIGIT_PANA_GAMES = {"two_digit_pana"}
 SANGAM_GAMES = {"half_sangam", "half_sangam_a", "half_sangam_b", "full_sangam"}
 
 RATE_ALIAS = {
@@ -166,6 +164,10 @@ def validate_digit(game_type, digit):
         if info is None:
             raise HTTPException(400, "SP DP TP: Enter single digit 0-9, e.g. 5 or 5|sp,dp,tp with checkbox selection")
         return
+    if game_type in TWO_DIGIT_PANA_GAMES:
+        if any((not entry.isdigit() or len(entry) != 2) for entry in entries):
+            raise HTTPException(400, "Two Digit Pana: Enter exactly 2 digits like 12, 32, 34")
+        return
     if game_type in PANNA_GAMES:
         if any((not entry.isdigit() or len(entry) != 3) for entry in entries):
             raise HTTPException(400, "Panna entries must be exactly 3 digits")
@@ -241,6 +243,24 @@ def bid_wins(bid, result_obj, session=None):
             if panna_type not in selected_types:
                 return False
         return digit_part == result_digit or digit_part in result_panna
+
+    if bid.game_type in TWO_DIGIT_PANA_GAMES:
+        result_panna = open_panna if current_session == "open" else close_panna
+        if not result_panna or result_panna == "-":
+            return False
+        for entry in entries:
+            if len(entry) != 2:
+                continue
+            if entry in result_panna:
+                return True
+            from collections import Counter
+            panna_counter = Counter(result_panna)
+            entry_counter = Counter(entry)
+            if all(panna_counter[d] >= entry_counter[d] for d in entry_counter):
+                return True
+            if entry[0] in result_panna and entry[1] in result_panna:
+                return True
+        return False
 
     if bid.game_type in PANNA_GAMES:
         result_panna = open_panna if current_session == "open" else close_panna

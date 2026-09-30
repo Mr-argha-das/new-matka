@@ -1,4 +1,4 @@
-// src/pages/MatkaGame.jsx - Orange Theme + SP DP TP checkbox + Motor unique + Panna suggestions
+// src/pages/MatkaGame.jsx - Orange Theme + SP DP TP checkbox + Motor unique + Panna suggestions + Two Digit Pana 2 digits only
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -47,7 +47,8 @@ const splitEntries = (value = "") => value.trim().split(/[\s,]+/).filter(Boolean
 
 const SINGLE_GAMES = new Set(["single", "single_bulk"]);
 const JODI_GAMES = new Set(["jodi","jodi_bulk","odd_even","red_jodi","digit_based_jodi","cycle_jodi","jodi_family"]);
-const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","two_digit_pana","sp_common","dp_common","pana_family"]);
+const PANNA_GAMES = new Set(["single_panna","single_panna_bulk","double_panna","double_panna_bulk","triple_panna","sp","dp","tp","sp_common","dp_common","pana_family"]);
+const TWO_DIGIT_PANA_GAMES = new Set(["two_digit_pana"]);
 const MOTOR_GAMES = new Set(["sp_motor","dp_motor"]);
 const SP_DP_TP_GAMES = new Set(["sp_dp_tp"]);
 const HALF_SANGAM_GAMES = new Set(["half_sangam","half_sangam_a","half_sangam_b"]);
@@ -66,7 +67,7 @@ const inputHelpByGame = {
   dp_motor: { label: "DP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
   sp_motor: { label: "SP Motor", placeholder: "Unique digits e.g. 1234567890 (1-10, no repeat)", allowList: false },
   sp_dp_tp: { label: "SP DP TP - Single Digit", placeholder: "Enter single digit 0-9", allowList: false },
-  two_digit_pana: { label: "Two Digit Pana", placeholder: "123, 456", allowList: true },
+  two_digit_pana: { label: "Two Digit Pana - Only 2 Digits", placeholder: "12, 32, 34", allowList: true },
   sp_common: { label: "SP Common", placeholder: "123, 147", allowList: true },
   odd_even: { label: "Odd Even", placeholder: "12, 34", allowList: true },
   dp_common: { label: "DP Common", placeholder: "112, 224", allowList: true },
@@ -112,6 +113,7 @@ function validateDigitFrontend(game_type, digit) {
     if (!/^\d$/.test(clean)) throw new Error("SP DP TP: Enter only one digit 0-9");
     return;
   }
+  if (TWO_DIGIT_PANA_GAMES.has(game_type) && entries.some((e) => !/^\d{2}$/.test(e))) throw new Error("Two Digit Pana: Enter exactly 2 digits like 12, 32, 34");
   if (PANNA_GAMES.has(game_type) && entries.some((e) => !/^\d{3}$/.test(e))) throw new Error("Panna entries must be exactly 3 digits.");
   if (HALF_SANGAM_GAMES.has(game_type) && !/^\d{3}-\d$/.test(digit)) throw new Error("Half Sangam must be in format 123-4");
   if (game_type === "full_sangam" && !/^\d{3}-\d{3}$/.test(digit)) throw new Error("Full Sangam must be in format 123-456");
@@ -369,6 +371,15 @@ export default function MatkaGame() {
                     <input placeholder="Single digit 0-9 only" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black text-center text-lg font-bold focus:border-[#FF8C00] focus:outline-none" />
                     <div className="text-[11px] text-gray-500 mt-1">Only one digit (0-9). Choose SP/DP/TP above - can select multiple</div>
                   </div>
+                </>
+              ) : TWO_DIGIT_PANA_GAMES.has(gameType) ? (
+                <>
+                  <input placeholder="12, 32, 34" value={digit} onChange={(e) => {
+                    // Allow only digits, comma, space and ensure each token max 2 digits
+                    const val = e.target.value.replace(/[^\d,\s]/g, "");
+                    setDigit(val);
+                  }} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+                  <div className="text-[11px] text-gray-500 mt-1">Only 2 digits per entry, e.g. 12, 32, 34 - separated by comma</div>
                 </>
               ) : (
                 <>
