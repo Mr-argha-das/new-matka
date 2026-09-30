@@ -155,9 +155,8 @@ const AdminOnly = () => {
 
 const App = () => {
   return (
-    <section className="theme-page">
-      <div className="theme-shell fixed top-0 left-0 right-0 bottom-0 z-0" />
-      <div className="fixed top-0 left-0 right-0 bottom-0 bg-white/20" />
+    <section className="theme-page bg-white min-h-screen">
+      <div className="fixed top-0 left-0 right-0 bottom-0 z-0 bg-white" />
       <Routes>
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<LoginPage />} />

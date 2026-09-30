@@ -5,7 +5,6 @@ import { isMarketPlayable } from "../../utils/marketTime";
 
 export default function MarketList({ markets }) {
   const [now, setNow] = useState(() => new Date());
-
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 30000);
     return () => window.clearInterval(timer);
@@ -15,91 +14,49 @@ export default function MarketList({ markets }) {
     <div className="space-y-3">
       {markets.map((mkt) => {
         const marketPlayable = isMarketPlayable(mkt, now);
-
         return (
-          <div
-            key={mkt.id}
-            className="theme-panel w-full rounded-[26px] backdrop-blur-2xl transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(9,78,36,0.14)]"
-          >
-            <div className="rounded-[26px] p-4 text-slate-900">
+          <div key={mkt.id} className="w-full rounded-[16px] bg-white border border-gray-200 shadow-sm hover:shadow-md transition">
+            <div className="p-4">
               <div className="flex justify-between items-center mb-2">
-                <div className="flex items-center gap-1">
-                  <h2 className="text-base font-semibold uppercase tracking-wide">
-                    {mkt.name}
-                  </h2>
-                  <Info
-                    size={18}
-                    className="rounded-full bg-emerald-100 text-emerald-700"
-                  />
+                <div className="flex items-center gap-2">
+                  <h2 className="text-[15px] font-bold uppercase tracking-wide text-black">{mkt.name}</h2>
+                  <Info size={16} className="rounded-full bg-orange-100 text-[#FF8C00] p-0.5" />
                 </div>
-
-                <span
-                  className={`text-xs font-semibold ${
-                    marketPlayable ? "text-emerald-600" : "text-red-500"
-                  }`}
-                >
-                  {marketPlayable ? "Market Running" : "Market Closed"}
+                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${marketPlayable ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
+                  {marketPlayable ? "Running" : "Closed"}
                 </span>
               </div>
 
-              {/* RESULT */}
-              <div className="mb-3 border-b border-dashed border-emerald-500/20"></div>
+              <div className="my-2 border-b border-dashed border-gray-300"></div>
 
-              <div className="flex justify-between items-center text-xs text-slate-500">
-                <div>
-                  <h3 className="mb-2 text-2xl font-extrabold tracking-wider text-emerald-700">
-                    <span>
-                      {mkt.open_panna}-{mkt.open_digit}
-                    </span>
-                    <span>
-                      {mkt.close_digit}-{mkt.close_panna}
-                    </span>
+              <div className="flex justify-between items-center">
+                <div className="flex-1">
+                  <h3 className="mb-2 text-[20px] font-extrabold tracking-wider text-[#FF8C00]">
+                    <span>{mkt.open_panna}-{mkt.open_digit}</span>
+                    <span className="mx-1 text-gray-400">|</span>
+                    <span>{mkt.close_digit}-{mkt.close_panna}</span>
                   </h3>
-
-                  <div className="flex gap-7">
-                    <p>
-                      <span className="text-slate-500">Open Time:</span>
-                      <span className="block text-slate-900 font-medium">
-                        {mkt.openTime}
-                      </span>
-                    </p>
-
-                    <p>
-                      <span className="text-slate-500">Close Time:</span>
-                      <span className="block text-slate-900 font-medium">
-                        {mkt.closeTime}
-                      </span>
-                    </p>
+                  <div className="flex gap-6 text-[11px]">
+                    <p><span className="text-gray-500">Open:</span><span className="block font-bold text-black">{mkt.openTime}</span></p>
+                    <p><span className="text-gray-500">Close:</span><span className="block font-bold text-black">{mkt.closeTime}</span></p>
                   </div>
                 </div>
 
-                <a href={`/charts/${mkt.id}`} className="text-amber-500 transition hover:text-amber-600">
-                  <FaChartLine size={26} />
-                </a>
-
-                <div className="flex flex-col items-center gap-1">
-                  <a
-                    href={marketPlayable ? `/play/${mkt.id}` : undefined}
-                    aria-disabled={!marketPlayable}
-                    onClick={(e) => {
-                      if (!marketPlayable) e.preventDefault();
-                    }}
-                    className={`flex h-10 w-10 items-center justify-center rounded-full border-2 ${
-                      marketPlayable
-                        ? "border-emerald-500 bg-emerald-100 shadow-[0_8px_18px_rgba(22,163,74,0.16)]"
-                        : "border-red-300 bg-red-50 cursor-not-allowed opacity-70"
-                    }`}
-                  >
-                    <Play
-                      className={
-                        marketPlayable ? "text-emerald-600" : "text-red-400"
-                      }
-                      size={18}
-                    />
+                <div className="flex items-center gap-3 ml-3">
+                  <a href={`/charts/${mkt.id}`} className="text-gray-400 hover:text-[#FF8C00] transition">
+                    <FaChartLine size={22} />
                   </a>
-                  <span className={`text-[14px] font-semibold ${marketPlayable ? "text-slate-700" : "text-red-500"}`}>
-                    {marketPlayable ? "Play" : "Closed"}
-                  </span>
+                  <div className="flex flex-col items-center gap-1">
+                    <a
+                      href={marketPlayable ? `/play/${mkt.id}` : undefined}
+                      aria-disabled={!marketPlayable}
+                      onClick={(e) => { if (!marketPlayable) e.preventDefault(); }}
+                      className={`flex h-11 w-11 items-center justify-center rounded-full shadow-md transition ${marketPlayable ? "bg-gradient-to-br from-[#FF9800] to-[#F57C00] text-white hover:scale-105" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
+                    >
+                      <Play size={18} fill="white" />
+                    </a>
+                    <span className={`text-[12px] font-bold ${marketPlayable ? "text-black" : "text-gray-400"}`}>{marketPlayable ? "Play" : "Closed"}</span>
+                  </div>
                 </div>
               </div>
             </div>
