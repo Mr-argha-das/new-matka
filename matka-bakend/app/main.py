@@ -52,6 +52,7 @@ app.add_middleware(
         "https://sridevimatka.live",
         "https://game.sridevimatka.live",
     ],
+    allow_origin_regex=r"https://.*\.e2b\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
