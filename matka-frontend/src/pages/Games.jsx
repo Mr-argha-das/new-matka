@@ -110,7 +110,7 @@ export default function Games() {
             onClick={(e) => { if (!marketPlayable) e.preventDefault(); }}
             className={`flex flex-col items-center justify-center rounded-[16px] px-3 py-5 text-center transition-all duration-200 ${marketPlayable ? "bg-[#E8F1FF] hover:bg-[#D6E6FF] hover:shadow-md hover:-translate-y-0.5" : "bg-gray-200 opacity-60 cursor-not-allowed"}`}
           >
-            <div className="flex h-[64px] w-[64px] items-center justify-center rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-[#0D3FB2]">
+            <div className="flex h-[64px] w-[64px] items-center justify-center rounded-[18px] bg-gradient-to-br from-[#2E7BF6] to-[#1565D8] shadow-[0_4px_12px_rgba(21,101,216,0.35)] text-white">
               {game.icon}
             </div>
             <p className="mt-3 text-[14px] font-bold leading-tight text-black">

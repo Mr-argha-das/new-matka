@@ -154,7 +154,7 @@ export default function JackpotDigitSelect() {
               href={`/jackpot/${marketId}/${createSlug(game.name)}`}
               className="flex flex-col justify-center items-center backdrop-blur-2xl rounded-xl py-6 shadow-2xl hover:bg-gray-50/5 transition-all duration-200 hover:scale-[1.03] border border-gray-50/15 "
             >
-              <div className="bg-[#5a0572] rounded-full p-4 mb-2 shadow-lg">
+              <div className="bg-gradient-to-br from-[#2E7BF6] to-[#1565D8] rounded-[18px] p-4 mb-2 shadow-[0_4px_12px_rgba(21,101,216,0.35)] text-white">
                 {game.icon}
               </div>
               <p className="text-white text-sm font-bold text-center">
@@ -172,7 +172,7 @@ export default function JackpotDigitSelect() {
               href={`/jackpot/${marketId}/${createSlug(game.name)}`}
               className="flex flex-col w-40  justify-center items-center backdrop-blur-2xl rounded-xl py-6 shadow-2xl hover:bg-gray-50/5 transition-all duration-200 hover:scale-[1.03] border border-gray-50/15 "
             >
-              <div className="bg-[#5a0572] rounded-full p-4 mb-2 shadow-lg">
+              <div className="bg-gradient-to-br from-[#2E7BF6] to-[#1565D8] rounded-[18px] p-4 mb-2 shadow-[0_4px_12px_rgba(21,101,216,0.35)] text-white">
                 {game.icon}
               </div>
               <p className="text-white text-sm font-bold text-center">

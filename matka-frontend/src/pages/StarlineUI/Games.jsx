@@ -56,7 +56,7 @@ export default function Games() {
       <div className="grid grid-cols-2 gap-3 p-3 pb-20 bg-white">
         {allGames.map((game, index) => (
           <a key={index} href={`/game/${marketId}/${createSlug(game.name)}`} className="flex flex-col justify-center items-center rounded-[16px] bg-[#E8F1FF] hover:bg-[#D6E6FF] py-5 transition hover:shadow-md hover:-translate-y-0.5">
-            <div className="bg-white rounded-full p-4 mb-3 shadow-md text-[#0D3FB2]">{game.icon}</div>
+            <div className="bg-gradient-to-br from-[#2E7BF6] to-[#1565D8] rounded-[18px] p-4 mb-3 shadow-[0_4px_12px_rgba(21,101,216,0.35)] text-white">{game.icon}</div>
             <p className="text-black text-[13px] font-bold text-center">{game.name}</p>
           </a>
         ))}
