@@ -119,7 +119,7 @@ export default function Login() {
           <img
             src={logo}
             alt="sridevimatka"
-            className="h-24 w-24 rounded-[24px] object-cover shadow-[0_0_28px_rgba(22,163,74,0.18)]"
+            className="h-24 w-24 rounded-[24px] object-cover shadow-[0_0_28px_rgba(21,101,216,0.25)]"
           />
         </div>
         <p className="text-center text-slate-500 text-sm tracking-[0.18em] uppercase">
@@ -191,7 +191,7 @@ export default function Login() {
           <a
             href={`https://wa.me/${SUPPORT_PHONE}`}
             // href="https://wa.me/917726035987"
-            className="text-amber-600 underline underline-offset-3"
+            className="text-[#1565D8] font-semibold underline underline-offset-3"
             target="_blank"
             rel="noreferrer"
           >

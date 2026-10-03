@@ -126,7 +126,7 @@ export default function SignupPage() {
           <img
             src={logo}
             alt="sridevimatka"
-            className="h-24 w-24 rounded-[24px] object-cover shadow-[0_0_28px_rgba(22,163,74,0.18)]"
+            className="h-24 w-24 rounded-[24px] object-cover shadow-[0_0_28px_rgba(21,101,216,0.25)]"
           />
         </div>
         <p className="text-center text-slate-500 text-sm tracking-[0.18em] uppercase">
