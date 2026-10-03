@@ -279,3 +279,19 @@ class RateChart(Document):
 
 class DevloperAccess(Document):
     value = BooleanField(default=True)
+
+
+class UserIdea(Document):
+    user = ReferenceField(User, required=True)
+    text = StringField(required=True)
+    created_at = DateTimeField(default=datetime.datetime.utcnow)
+    meta = {"collection": "user_ideas", "ordering": ["-created_at"]}
+
+
+class UserNotification(Document):
+    user = ReferenceField(User, required=True)
+    title = StringField(default="Notification")
+    message = StringField(required=True)
+    is_read = BooleanField(default=False)
+    created_at = DateTimeField(default=datetime.datetime.utcnow)
+    meta = {"collection": "user_notifications", "ordering": ["-created_at"]}

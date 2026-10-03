@@ -146,6 +146,7 @@ import {
   Notebook,
   Wallet2,
   LogOut,
+  Lightbulb,
 } from "lucide-react";
 import { MdMoney } from "react-icons/md";
 import { SiMarketo } from "react-icons/si";
@@ -217,6 +218,16 @@ const Sidebar = ({ open }) => {
         { name: "Winning History", link: "/admin/winning-history" },
         { name: "Deposite History", link: "/admin/deposite-history" },
       ],
+    },
+    {
+      name: "User Ideas",
+      link: "/admin/user-ideas",
+      icon: <Lightbulb size={18} />,
+    },
+    {
+      name: "Send Notification",
+      link: "/admin/send-notification",
+      icon: <Bell size={18} />,
     },
     {
       name: "QR Manager",

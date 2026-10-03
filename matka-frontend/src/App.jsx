@@ -83,6 +83,10 @@ import { getUserById } from "./components/layout/fetchUser";
 import ReferralPage from "./pages/reffer";
 import TodayBidHistory from "./components/Admin/TodayBidHistory";
 import GMarketChart from "./pages/JackpotUI/GMarketChart";
+import UserIdea from "./pages/UserIdea";
+import NotificationsPage from "./pages/NotificationsPage";
+import AdminUserIdeas from "./pages/Admin/UserIdeas";
+import AdminSendNotification from "./pages/Admin/SendNotification";
 
 const useAuthUser = () => {
   const [user, setUser] = useState(undefined);
@@ -197,6 +201,8 @@ const App = () => {
             <Route path="how-to-play" element={<AdminHowToPlay />} />
             <Route path="site-data" element={<AdminSiteData />} />
             <Route path="notifications" element={<AdminNotificationList />} />
+            <Route path="user-ideas" element={<AdminUserIdeas />} />
+            <Route path="send-notification" element={<AdminSendNotification />} />
 
             {/* Report */}
             <Route path="winning-history" element={<WinningReport />} />
@@ -268,6 +274,8 @@ const App = () => {
 
             <Route path="game-rate" element={<GameRatePage />} />
             <Route path="contact-us" element={<ContactUs />} />
+            <Route path="users-idea" element={<UserIdea />} />
+            <Route path="notifications" element={<NotificationsPage />} />
             <Route path="change-password" element={<UpdatePasswordPage />} />
 
             <Route path="jackpot-bid-history" element={<JackpotBidHistory />} />

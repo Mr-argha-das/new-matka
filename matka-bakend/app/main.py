@@ -67,6 +67,7 @@ from app.routes import (
     auth_routes,
     site_data_routes,
     notifications_routes,
+    ideas_notifications_routes,
     main_settings_routes,
     how_to_play_routes,
     admin_routes,
@@ -123,6 +124,7 @@ app.include_router(how_to_play_routes.router)
 app.include_router(site_data_routes.router)
 app.include_router(main_settings_routes.router)
 app.include_router(notifications_routes.router)
+app.include_router(ideas_notifications_routes.router)
 app.include_router(jackpot.router)
 app.include_router(v1_user_routes.router)
 app.include_router(v1_game_mange.router)

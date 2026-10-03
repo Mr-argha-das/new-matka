@@ -1,6 +1,6 @@
 // AppHeader.jsx - Orange theme like screenshot
 import React, { useState, useEffect } from "react";
-import { Menu, Wallet2Icon } from "lucide-react";
+import { Menu, Wallet2Icon, Bell } from "lucide-react";
 import { API_URL } from "../../config";
 import logo from "../../assets/logo.png";
 
@@ -13,6 +13,21 @@ const getAuthToken = () => {
 export default function AppHeader({ setSidebar }) {
   const [balance, setBalance] = useState("...");
   const [loading, setLoading] = useState(true);
+  const [unread, setUnread] = useState(0);
+
+  const fetchUnread = async () => {
+    const token = getAuthToken();
+    if (!token) return;
+    try {
+      const response = await fetch(`${API_BASE_URL}/user/notifications`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUnread(data.unread || 0);
+      }
+    } catch {}
+  };
 
   const fetchWalletBalance = async () => {
     setLoading(true);
@@ -45,7 +60,11 @@ export default function AppHeader({ setSidebar }) {
 
   useEffect(() => {
     fetchWalletBalance();
-    const intervalId = setInterval(fetchWalletBalance, 60000);
+    fetchUnread();
+    const intervalId = setInterval(() => {
+      fetchWalletBalance();
+      fetchUnread();
+    }, 60000);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -65,6 +84,14 @@ export default function AppHeader({ setSidebar }) {
           </h1>
         </div>
         <div className="flex items-center gap-3">
+          <a href="/notifications" className="relative rounded-full bg-white/20 p-2 text-white hover:bg-white/30 transition">
+            <Bell size={20} />
+            {unread > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white border-2 border-white">
+                {unread > 9 ? "9+" : unread}
+              </span>
+            )}
+          </a>
           <button className="flex items-center gap-2 rounded-full bg-white/20 px-3 py-1.5 text-sm font-bold text-white shadow-sm hover:bg-white/30 transition">
             <Wallet2Icon size={18} />
             {loading ? (
