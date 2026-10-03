@@ -220,6 +220,20 @@ const Sidebar = ({ open }) => {
       ],
     },
     {
+      name: "Starline",
+      icon: <Star size={18} />,
+      dropdown: true,
+      children: [
+        { name: "Starline Markets", link: "/admin/starline" },
+        { name: "Declare Result", link: "/admin/starline-declare-result" },
+      ],
+    },
+    {
+      name: "Jackpot",
+      link: "/admin/jackpot",
+      icon: <Target size={18} />,
+    },
+    {
       name: "User Ideas",
       link: "/admin/user-ideas",
       icon: <Lightbulb size={18} />,
