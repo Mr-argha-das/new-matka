@@ -78,7 +78,7 @@ export default function Games() {
   return (
     <div className="max-w-md mx-auto flex min-h-screen flex-col bg-white font-sans">
       {/* Orange Header like screenshot */}
-      <div className="w-full bg-[#FF9800] flex items-center px-3 py-3 shadow-md">
+      <div className="w-full bg-[#2E7BF6] flex items-center px-3 py-3 shadow-md">
         <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-white/20 transition text-white">
           <ArrowLeft size={24} className="text-white" />
         </button>
@@ -88,7 +88,7 @@ export default function Games() {
       </div>
 
       {/* Market Info - light gray */}
-      <div className="bg-[#F5F5F5] border-b border-gray-200 px-4 py-2.5 flex justify-between text-[12px]">
+      <div className="bg-[#F0F6FF] border-b border-gray-200 px-4 py-2.5 flex justify-between text-[12px]">
         <span className="flex flex-col"><span className="text-gray-500 font-medium">Open Time:</span><span className="font-bold text-black">{market.open_time}</span></span>
         <span className="flex flex-col"><span className="text-gray-500 font-medium">Close Time:</span><span className="font-bold text-black">{market.close_time}</span></span>
         <span className="flex flex-col"><span className="text-gray-500 font-medium">Status:</span><span className={`font-bold ${marketPlayable ? "text-green-600" : "text-red-600"}`}>{marketPlayable ? "Running" : "Closed"}</span></span>
@@ -108,9 +108,9 @@ export default function Games() {
             href={marketPlayable ? `/game/${marketId}/${createSlug(game.name)}` : undefined}
             aria-disabled={!marketPlayable}
             onClick={(e) => { if (!marketPlayable) e.preventDefault(); }}
-            className={`flex flex-col items-center justify-center rounded-[16px] px-3 py-5 text-center transition-all duration-200 ${marketPlayable ? "bg-[#E0E0E0] hover:bg-[#D5D5D5] hover:shadow-md hover:-translate-y-0.5" : "bg-gray-200 opacity-60 cursor-not-allowed"}`}
+            className={`flex flex-col items-center justify-center rounded-[16px] px-3 py-5 text-center transition-all duration-200 ${marketPlayable ? "bg-[#E8F1FF] hover:bg-[#D6E6FF] hover:shadow-md hover:-translate-y-0.5" : "bg-gray-200 opacity-60 cursor-not-allowed"}`}
           >
-            <div className="flex h-[64px] w-[64px] items-center justify-center rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-[#00A651]">
+            <div className="flex h-[64px] w-[64px] items-center justify-center rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] text-[#0D3FB2]">
               {game.icon}
             </div>
             <p className="mt-3 text-[14px] font-bold leading-tight text-black">

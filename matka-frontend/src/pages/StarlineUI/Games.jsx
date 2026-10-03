@@ -44,19 +44,19 @@ export default function Games() {
 
   return (
     <div className="max-w-md mx-auto flex flex-col font-sans bg-white min-h-screen">
-      <div className="w-full bg-[#FF9800] flex items-center px-3 py-3 shadow-md">
+      <div className="w-full bg-[#2E7BF6] flex items-center px-3 py-3 shadow-md">
         <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-white/20 text-white"><ArrowLeft size={24} /></button>
         <h2 className="flex-1 text-center text-[18px] font-bold text-white uppercase pr-10">{market?.name}</h2>
       </div>
-      <div className="bg-[#F5F5F5] border-b border-gray-200 px-4 py-2.5 flex justify-between text-[12px]">
+      <div className="bg-[#F0F6FF] border-b border-gray-200 px-4 py-2.5 flex justify-between text-[12px]">
         <span className="flex flex-col"><span className="text-gray-500">Open:</span><span className="font-bold text-black">{market.open_time}</span></span>
         <span className="flex flex-col"><span className="text-gray-500">Close:</span><span className="font-bold text-black">{market.close_time}</span></span>
         <span className={`font-bold ${market.status ? "text-green-600" : "text-red-600"}`}>{market.status ? "Running" : "Closed"}</span>
       </div>
       <div className="grid grid-cols-2 gap-3 p-3 pb-20 bg-white">
         {allGames.map((game, index) => (
-          <a key={index} href={`/game/${marketId}/${createSlug(game.name)}`} className="flex flex-col justify-center items-center rounded-[16px] bg-[#E0E0E0] hover:bg-[#D5D5D5] py-5 transition hover:shadow-md hover:-translate-y-0.5">
-            <div className="bg-white rounded-full p-4 mb-3 shadow-md text-[#00A651]">{game.icon}</div>
+          <a key={index} href={`/game/${marketId}/${createSlug(game.name)}`} className="flex flex-col justify-center items-center rounded-[16px] bg-[#E8F1FF] hover:bg-[#D6E6FF] py-5 transition hover:shadow-md hover:-translate-y-0.5">
+            <div className="bg-white rounded-full p-4 mb-3 shadow-md text-[#0D3FB2]">{game.icon}</div>
             <p className="text-black text-[13px] font-bold text-center">{game.name}</p>
           </a>
         ))}

@@ -34,7 +34,7 @@ export const TRIPLE_PANNA_LIST = [
 
 export const getPannaListByGameType = (gameType) => {
   if (["single_panna", "single_panna_bulk", "sp"].includes(gameType)) {
-    return { list: SINGLE_PANNA_LIST, label: "Single Panna", count: 100, color: "#ff9800" };
+    return { list: SINGLE_PANNA_LIST, label: "Single Panna", count: 100, color: "#2E7BF6" };
   }
   if (["double_panna", "double_panna_bulk", "dp"].includes(gameType)) {
     return { list: DOUBLE_PANNA_LIST, label: "Double Panna", count: 83, color: "#7ee000" };

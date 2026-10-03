@@ -126,7 +126,7 @@ function validateDigitFrontend(game_type, digit) {
 const Message = ({ type, text }) => {
   if (!text) return null;
   return (
-    <div className={`p-3 mx-3 rounded-lg mb-4 flex items-center gap-3 text-sm ${type === "success" ? "bg-green-50 border border-green-200 text-green-700" : type === "error" ? "bg-red-50 border border-red-200 text-red-600" : "bg-orange-50 border border-orange-200 text-orange-700"}`}>
+    <div className={`p-3 mx-3 rounded-lg mb-4 flex items-center gap-3 text-sm ${type === "success" ? "bg-green-50 border border-green-200 text-green-700" : type === "error" ? "bg-red-50 border border-red-200 text-red-600" : "bg-blue-50 border border-blue-200 text-blue-700"}`}>
       {type === "success" && <CheckCircle size={18} />} {type === "error" && <XCircle size={18} />} {type === "info" && <Loader className="animate-spin" size={18} />} {text}
     </div>
   );
@@ -163,9 +163,9 @@ const PannaSuggestions = ({ pannaMeta, digit, setDigit, gameType }) => {
   return (
     <div className="mt-2">
       <div className="text-[11px] text-gray-500 mb-1.5 px-1">Suggestions for "{currentToken}" - {filtered.length} found:</div>
-      <div className="flex flex-wrap gap-2 p-2.5 rounded-xl bg-[#F5F5F5] border border-gray-200">
+      <div className="flex flex-wrap gap-2 p-2.5 rounded-xl bg-[#F0F6FF] border border-gray-200">
         {filtered.map((panna) => (
-          <button key={panna} type="button" onClick={() => handleSelect(panna)} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white border border-gray-200 hover:bg-[#FF9800] hover:text-white hover:border-[#FF9800] text-black transition">{panna}</button>
+          <button key={panna} type="button" onClick={() => handleSelect(panna)} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white border border-gray-200 hover:bg-[#2E7BF6] hover:text-white hover:border-[#2E7BF6] text-black transition">{panna}</button>
         ))}
       </div>
     </div>
@@ -179,7 +179,7 @@ const MotorSuggestions = ({ digit, setDigit }) => {
   return (
     <div className="mt-2">
       <div className="text-[11px] text-gray-500 mb-1.5 px-1">{digits.length}/10 Unique: {digits.join("") || "none"} - No repeat.</div>
-      <div className="flex flex-wrap gap-2 p-2.5 rounded-xl bg-[#F5F5F5] border border-gray-200">
+      <div className="flex flex-wrap gap-2 p-2.5 rounded-xl bg-[#F0F6FF] border border-gray-200">
         {remaining.slice(0,10).map((d) => (
           <button key={d} type="button" onClick={() => {
             if (digits.length >= 10) return;
@@ -187,7 +187,7 @@ const MotorSuggestions = ({ digit, setDigit }) => {
               const cleaned = prev.replace(/[^0-9]/g, "");
               return [...new Set((cleaned + d).split(""))].join("").slice(0,10);
             });
-          }} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white border border-gray-200 hover:bg-[#00A651] hover:text-white text-black transition">{d}</button>
+          }} className="px-3 py-1.5 rounded-full text-sm font-mono bg-white border border-gray-200 hover:bg-[#0D3FB2] hover:text-white text-black transition">{d}</button>
         ))}
         <button type="button" onClick={() => setDigit("")} className="px-3 py-1.5 rounded-full text-xs bg-red-50 border border-red-200 text-red-600 hover:bg-red-100">Clear</button>
       </div>
@@ -197,19 +197,19 @@ const MotorSuggestions = ({ digit, setDigit }) => {
 
 const SpDpTpSelector = ({ selected, setSelected }) => {
   const options = [
-    { id: "sp", label: "SP", desc: "Single Pana", color: "bg-orange-500" },
+    { id: "sp", label: "SP", desc: "Single Pana", color: "bg-blue-500" },
     { id: "dp", label: "DP", desc: "Double Pana", color: "bg-green-500" },
     { id: "tp", label: "TP", desc: "Triple Pana", color: "bg-yellow-500" },
   ];
   const toggle = (id) => setSelected(prev => ({ ...prev, [id]: !prev[id] }));
   const selectedList = Object.keys(selected).filter(k => selected[k]);
   return (
-    <div className="mt-3 p-3 rounded-xl bg-[#F5F5F5] border border-gray-200">
+    <div className="mt-3 p-3 rounded-xl bg-[#F0F6FF] border border-gray-200">
       <div className="text-sm font-bold text-black mb-2">Choose Pana Type (Checkbox):</div>
       <div className="grid grid-cols-3 gap-2">
         {options.map(opt => (
-          <label key={opt.id} className={`relative flex flex-col items-center gap-1 p-3 rounded-xl border cursor-pointer transition ${selected[opt.id] ? "bg-[#FFF3E0] border-[#FF9800] text-black" : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"}`}>
-            <input type="checkbox" checked={selected[opt.id]} onChange={() => toggle(opt.id)} className="absolute top-2 right-2 accent-[#FF8C00]" />
+          <label key={opt.id} className={`relative flex flex-col items-center gap-1 p-3 rounded-xl border cursor-pointer transition ${selected[opt.id] ? "bg-[#E8F1FF] border-[#2E7BF6] text-black" : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"}`}>
+            <input type="checkbox" checked={selected[opt.id]} onChange={() => toggle(opt.id)} className="absolute top-2 right-2 accent-[#1565D8]" />
             <div className={`h-8 w-8 rounded-full ${opt.color} flex items-center justify-center font-bold text-sm text-white`}>{opt.label}</div>
             <span className="text-xs font-bold">{opt.label}</span>
             <span className="text-[10px]">{opt.desc}</span>
@@ -232,7 +232,7 @@ const SpCommonDigitButtons = ({ onDigitClick, points }) => {
             key={d}
             type="button"
             onClick={() => onDigitClick(d)}
-            className="h-[56px] rounded-[14px] bg-[#E0E0E0] hover:bg-[#FF9800] hover:text-white active:scale-95 text-black font-bold text-[20px] shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-[#FF9800]"
+            className="h-[56px] rounded-[14px] bg-[#E8F1FF] hover:bg-[#2E7BF6] hover:text-white active:scale-95 text-black font-bold text-[20px] shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center border border-gray-200 hover:border-[#2E7BF6]"
           >
             {d}
           </button>
@@ -250,15 +250,15 @@ const OddEvenSelector = ({ selected, setSelected }) => {
     <div className="mt-3">
       <div className="text-sm font-bold text-black mb-3">Choose Odd or Even (Radio):</div>
       <div className="grid grid-cols-2 gap-4">
-        <label className={`relative flex flex-col items-center gap-2 p-5 rounded-[16px] border-2 cursor-pointer transition-all ${selected === "odd" ? "bg-[#FFF3E0] border-[#FF9800] shadow-md" : "bg-[#E0E0E0] border-gray-200 hover:bg-[#D5D5D5]"}`}>
-          <input type="radio" name="odd_even" value="odd" checked={selected === "odd"} onChange={() => setSelected("odd")} className="absolute top-3 right-3 accent-[#FF8C00] w-5 h-5" />
-          <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold text-lg ${selected === "odd" ? "bg-[#FF9800] text-white" : "bg-white text-black"}`}>O</div>
+        <label className={`relative flex flex-col items-center gap-2 p-5 rounded-[16px] border-2 cursor-pointer transition-all ${selected === "odd" ? "bg-[#E8F1FF] border-[#2E7BF6] shadow-md" : "bg-[#E8F1FF] border-gray-200 hover:bg-[#D6E6FF]"}`}>
+          <input type="radio" name="odd_even" value="odd" checked={selected === "odd"} onChange={() => setSelected("odd")} className="absolute top-3 right-3 accent-[#1565D8] w-5 h-5" />
+          <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold text-lg ${selected === "odd" ? "bg-[#2E7BF6] text-white" : "bg-white text-black"}`}>O</div>
           <span className="text-[16px] font-bold text-black">ODD</span>
           <span className="text-[11px] text-gray-600">1,3,5,7,9</span>
         </label>
-        <label className={`relative flex flex-col items-center gap-2 p-5 rounded-[16px] border-2 cursor-pointer transition-all ${selected === "even" ? "bg-[#E8F5E9] border-[#00A651] shadow-md" : "bg-[#E0E0E0] border-gray-200 hover:bg-[#D5D5D5]"}`}>
-          <input type="radio" name="odd_even" value="even" checked={selected === "even"} onChange={() => setSelected("even")} className="absolute top-3 right-3 accent-[#00A651] w-5 h-5" />
-          <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold text-lg ${selected === "even" ? "bg-[#00A651] text-white" : "bg-white text-black"}`}>E</div>
+        <label className={`relative flex flex-col items-center gap-2 p-5 rounded-[16px] border-2 cursor-pointer transition-all ${selected === "even" ? "bg-[#E0F3FF] border-[#0D3FB2] shadow-md" : "bg-[#E8F1FF] border-gray-200 hover:bg-[#D6E6FF]"}`}>
+          <input type="radio" name="odd_even" value="even" checked={selected === "even"} onChange={() => setSelected("even")} className="absolute top-3 right-3 accent-[#0D3FB2] w-5 h-5" />
+          <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold text-lg ${selected === "even" ? "bg-[#0D3FB2] text-white" : "bg-white text-black"}`}>E</div>
           <span className="text-[16px] font-bold text-black">EVEN</span>
           <span className="text-[11px] text-gray-600">0,2,4,6,8</span>
         </label>
@@ -382,11 +382,11 @@ export default function MatkaGame() {
 
   return (
     <div className="max-w-md mx-auto min-h-screen bg-white text-black pb-10">
-      <div className="w-full bg-[#FF9800] flex items-center px-3 py-3 shadow-md">
+      <div className="w-full bg-[#2E7BF6] flex items-center px-3 py-3 shadow-md">
         <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-white/20 text-white"><ArrowLeft size={22} /></button>
         <h2 className="flex-1 text-center text-[16px] font-bold text-white uppercase pr-10">{market.name} — {displayGame}</h2>
       </div>
-      <div className="bg-[#F5F5F5] border-b border-gray-200 px-3 py-2.5 flex justify-between text-[12px]">
+      <div className="bg-[#F0F6FF] border-b border-gray-200 px-3 py-2.5 flex justify-between text-[12px]">
         <span className="flex flex-col"><span className="text-gray-500">Open:</span><span className="font-bold text-black">{market.open_time}</span></span>
         <span className="flex flex-col"><span className="text-gray-500">Close:</span><span className="font-bold text-black">{market.close_time}</span></span>
         <span className={`font-bold ${marketPlayable ? "text-green-600" : "text-red-600"}`}>{marketPlayable ? "Running" : "Closed"}</span>
@@ -394,57 +394,57 @@ export default function MatkaGame() {
       <Message type={msg?.type} text={msg?.text} />
       <form onSubmit={placeBid} className="bg-white p-4 mx-3 mt-4 rounded-[16px] border border-gray-200 shadow-sm">
         <div className="mb-3 text-sm text-black">
-          <label className="mr-4"><input type="radio" value="open" checked={session === "open"} onChange={() => setSession("open")} className="accent-[#FF8C00] mr-1.5" />Open</label>
-          <label><input type="radio" value="close" checked={session === "close"} onChange={() => setSession("close")} className="accent-[#FF8C00] mr-1.5" />Close</label>
+          <label className="mr-4"><input type="radio" value="open" checked={session === "open"} onChange={() => setSession("open")} className="accent-[#1565D8] mr-1.5" />Open</label>
+          <label><input type="radio" value="close" checked={session === "close"} onChange={() => setSession("close")} className="accent-[#1565D8] mr-1.5" />Close</label>
         </div>
         <div className="mb-4">
           <label className="block text-sm font-bold text-black mb-1.5">{inputHelp.label}</label>
           {HALF_SANGAM_GAMES.has(gameType) && (
             <>
               <div className="grid grid-cols-2 gap-2 mb-2">
-                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
-                <input placeholder="Close Digit" value={closeDigit} onChange={(e) => setCloseDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
+                <input placeholder="Close Digit" value={closeDigit} onChange={(e) => setCloseDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
               </div>
               <div className="grid grid-cols-2 gap-2 mb-2">
-                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
-                <input placeholder="Open Digit" value={openDigit} onChange={(e) => setOpenDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
+                <input placeholder="Open Digit" value={openDigit} onChange={(e) => setOpenDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
               </div>
-              <input placeholder="OR Combined (123-4)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+              <input placeholder="OR Combined (123-4)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
             </>
           )}
           {gameType === "full_sangam" && (
             <>
               <div className="grid grid-cols-2 gap-2 mb-2">
-                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
-                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+                <input placeholder="Open Panna" value={openPanna} onChange={(e) => setOpenPanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
+                <input placeholder="Close Panna" value={closePanna} onChange={(e) => setClosePanna(e.target.value.replace(/\D/g, "").slice(0,3))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
               </div>
-              <input placeholder="OR Combined (123-456)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+              <input placeholder="OR Combined (123-456)" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d-]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
             </>
           )}
           {!HALF_SANGAM_GAMES.has(gameType) && gameType !== "full_sangam" && (
             <>
               {MOTOR_GAMES.has(gameType) ? (
                 <>
-                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => handleMotorInput(e.target.value)} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => handleMotorInput(e.target.value)} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
                   <MotorSuggestions digit={digit} setDigit={setDigit} />
                 </>
               ) : SP_DP_TP_GAMES.has(gameType) ? (
                 <>
                   <SpDpTpSelector selected={spDpTpSelected} setSelected={setSpDpTpSelected} />
                   <div className="mt-3">
-                    <input placeholder="Single digit 0-9 only" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black text-center text-lg font-bold focus:border-[#FF8C00] focus:outline-none" />
+                    <input placeholder="Single digit 0-9 only" value={digit} onChange={(e) => setDigit(e.target.value.replace(/\D/g, "").slice(0,1))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black text-center text-lg font-bold focus:border-[#1565D8] focus:outline-none" />
                     <div className="text-[11px] text-gray-500 mt-1">Only one digit (0-9). Choose SP/DP/TP above - can select multiple</div>
                   </div>
                 </>
               ) : TWO_DIGIT_PANA_GAMES.has(gameType) ? (
                 <>
-                  <input placeholder="12, 32, 34" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d,\s]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+                  <input placeholder="12, 32, 34" value={digit} onChange={(e) => setDigit(e.target.value.replace(/[^\d,\s]/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
                   <div className="text-[11px] text-gray-500 mt-1">Only 2 digits per entry, e.g. 12, 32, 34 - separated by comma</div>
                 </>
               ) : ODD_EVEN_GAMES.has(gameType) ? (
                 <>
-                  <div className="mb-2 text-[12px] text-gray-600 bg-[#FFF3E0] border border-orange-200 rounded-lg p-2.5">
-                    <span className="font-bold text-[#E65100]">Odd Even:</span> Sirf Points field hoga aur 2 radio button Odd/Even - ek choose karo, points add karo, bid place ho jayegi
+                  <div className="mb-2 text-[12px] text-gray-600 bg-[#E8F1FF] border border-blue-200 rounded-lg p-2.5">
+                    <span className="font-bold text-[#0A3796]">Odd Even:</span> Sirf Points field hoga aur 2 radio button Odd/Even - ek choose karo, points add karo, bid place ho jayegi
                   </div>
                   <OddEvenSelector selected={oddEvenSelected} setSelected={setOddEvenSelected} />
                 </>
@@ -452,16 +452,16 @@ export default function MatkaGame() {
                 <>
                   <div className="mb-3">
                     <label className="block text-sm font-bold text-black mb-1.5">Points</label>
-                    <input placeholder="Enter Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none text-center text-lg font-bold" />
+                    <input placeholder="Enter Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none text-center text-lg font-bold" />
                   </div>
-                  <div className="mb-2 text-[12px] text-gray-600 bg-[#FFF3E0] border border-orange-200 rounded-lg p-2.5">
-                    <span className="font-bold text-[#E65100]">SP/DP Common:</span> Points enter karo, phir niche 0-9 me se kisi ek digit pe click karo - bid lag jayegi.
+                  <div className="mb-2 text-[12px] text-gray-600 bg-[#E8F1FF] border border-blue-200 rounded-lg p-2.5">
+                    <span className="font-bold text-[#0A3796]">SP/DP Common:</span> Points enter karo, phir niche 0-9 me se kisi ek digit pe click karo - bid lag jayegi.
                   </div>
                   <SpCommonDigitButtons onDigitClick={handleSpCommonDigitClick} points={points} />
                 </>
               ) : (
                 <>
-                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+                  <input placeholder={inputHelp.placeholder} value={digit} onChange={(e) => setDigit(e.target.value.replace(inputHelp.allowList ? /[^\d,\s]/g : /\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
                   {pannaMeta && <PannaSuggestions pannaMeta={pannaMeta} digit={digit} setDigit={setDigit} gameType={gameType} />}
                 </>
               )}
@@ -472,9 +472,9 @@ export default function MatkaGame() {
           <>
             <div className="mb-4">
               <label className="block text-sm font-bold text-black mb-1.5">Points</label>
-              <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#FF8C00] focus:outline-none" />
+              <input placeholder="Points" value={points} onChange={(e) => setPoints(e.target.value.replace(/\D/g, ""))} className="p-2.5 bg-white rounded-xl border border-gray-300 w-full text-black focus:border-[#1565D8] focus:outline-none" />
             </div>
-            <button disabled={!marketPlayable} className={`w-full py-3 rounded-xl font-bold text-white shadow-md transition ${marketPlayable ? "bg-gradient-to-r from-[#FF9800] to-[#F57C00] hover:shadow-lg" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
+            <button disabled={!marketPlayable} className={`w-full py-3 rounded-xl font-bold text-white shadow-md transition ${marketPlayable ? "bg-gradient-to-r from-[#2E7BF6] to-[#0D3FB2] hover:shadow-lg" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}>{marketPlayable ? "Place Bid" : "Market Closed"}</button>
           </>
         )}
         {SP_COMMON_GAMES.has(gameType) && (

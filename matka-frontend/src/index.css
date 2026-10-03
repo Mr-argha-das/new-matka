@@ -9,12 +9,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --theme-bg: #ffffff;
-  --theme-orange: #FF8C00;
-  --theme-orange-dark: #F57C00;
-  --theme-orange-light: #FFA726;
-  --theme-card-gray: #E0E0E0;
-  --theme-card-gray-hover: #D5D5D5;
-  --theme-icon-green: #00A651;
+  --theme-blue: #1565D8;
+  --theme-orange: #1565D8;
+  --theme-blue-dark: #0D3FB2;
+  --theme-orange-dark: #0D3FB2;
+  --theme-blue-light: #5B9BF8;
+  --theme-orange-light: #5B9BF8;
+  --theme-card-gray: #E8F1FF;
+  --theme-card-gray-hover: #D6E6FF;
+  --theme-icon-green: #0D3FB2;
   --theme-icon-green-dark: #059669;
   --theme-text: #000000;
   --theme-muted: #6B7280;
@@ -52,18 +55,18 @@ button {
   background: #ffffff;
 }
 
-/* Orange Header - Like screenshot */
+/* Royal Blue Header - premium gradient */
 .theme-orange-header {
-  background: linear-gradient(135deg, #FF9800 0%, #FF8C00 100%);
+  background: linear-gradient(135deg, #2E7BF6 0%, #0D3FB2 100%);
   color: #fff;
-  box-shadow: 0 2px 10px rgba(255,140,0,0.3);
+  box-shadow: 0 2px 10px rgba(13,63,178,0.30);
 }
 
 .theme-card {
   background: #ffffff;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #DBEAFE;
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(13,63,178,0.08);
 }
 
 .theme-panel {
@@ -72,20 +75,19 @@ button {
   border-radius: 16px;
 }
 
-/* Gray Game Cards like screenshot */
+/* Light Blue Game Cards */
 .game-card-gray {
-  background: #D9D9D9;
-  background: #E2E2E2;
+  background: #E8F1FF;
   border-radius: 16px;
   border: none;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(13,63,178,0.10);
   transition: all 0.2s ease;
 }
 
 .game-card-gray:hover {
-  background: #D5D5D5;
+  background: #D6E6FF;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(13,63,178,0.16);
 }
 
 .game-card-icon-circle {
@@ -96,15 +98,15 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(13,63,178,0.14);
 }
 
 .game-card-icon-green {
-  color: #00A651;
+  color: #0D3FB2;
 }
 
 .theme-green-bar {
-  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  background: linear-gradient(135deg, #2E7BF6 0%, #0D3FB2 100%);
   color: #fff;
 }
 
@@ -117,9 +119,9 @@ button {
 
 .theme-button {
   border-radius: 12px;
-  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  background: linear-gradient(135deg, #2E7BF6 0%, #0D3FB2 100%);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(255,140,0,0.3);
+  box-shadow: 0 4px 12px rgba(13,63,178,0.30);
 }
 
 /* Bottom Nav - Light theme */
@@ -142,17 +144,17 @@ button {
 }
 
 .theme-input:focus {
-  border-color: #FF8C00;
-  box-shadow: 0 0 0 3px rgba(255,140,0,0.15);
+  border-color: #1565D8;
+  box-shadow: 0 0 0 3px rgba(21,101,216,0.18);
   outline: none;
 }
 
 /* Market cards light */
 .market-card-light {
   background: #ffffff;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #DBEAFE;
   border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(13,63,178,0.08);
 }
 
 /* Light overrides for old dark classes */
@@ -174,7 +176,7 @@ button {
   color: #6B7280;
 }
 
-/* Keep orange header text white */
+/* Keep blue header text white */
 .theme-orange-header .text-white,
 .theme-orange-header * {
   color: #fff !important;

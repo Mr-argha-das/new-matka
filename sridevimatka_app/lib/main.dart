@@ -9,7 +9,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF0B7A39),
+      statusBarColor: Color(0xFF0D3FB2),
       statusBarIconBrightness: Brightness.light,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -27,7 +27,7 @@ class SrideviMatkaApp extends StatelessWidget {
       title: appName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF16A34A)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1565D8)),
         scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
@@ -129,7 +129,7 @@ class _WebAppScreenState extends State<WebAppScreen> {
                     value: _progress / 100,
                     minHeight: 3,
                     backgroundColor: Colors.white,
-                    color: const Color(0xFF16A34A),
+                    color: const Color(0xFF1565D8),
                   ),
                 ),
             ],
@@ -166,7 +166,7 @@ class _LoadingOverlay extends StatelessWidget {
             width: 28,
             child: CircularProgressIndicator(
               strokeWidth: 3,
-              color: Color(0xFF16A34A),
+              color: Color(0xFF1565D8),
             ),
           ),
         ],
@@ -204,7 +204,7 @@ class _ErrorOverlay extends StatelessWidget {
             message,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Color(0xFF0F2819),
+              color: Color(0xFF0A1F44),
               fontSize: 15,
               height: 1.4,
               fontWeight: FontWeight.w600,
@@ -216,7 +216,7 @@ class _ErrorOverlay extends StatelessWidget {
             icon: const Icon(Icons.refresh),
             label: const Text('Retry'),
             style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFF16A34A),
+              backgroundColor: const Color(0xFF1565D8),
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
             ),

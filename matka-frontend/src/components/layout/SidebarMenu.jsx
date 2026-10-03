@@ -90,7 +90,7 @@ export default function SidebarMenu({ sidebar, setSidebar }) {
           >
             <X size={20} />
           </button>
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl font-bold text-[#FF8C00] shadow-lg">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl font-bold text-[#1565D8] shadow-lg">
             {username?.[0]?.toUpperCase()}
           </div>
           <h3 className="mt-3 text-lg font-bold capitalize text-white">{username}</h3>
@@ -108,9 +108,9 @@ export default function SidebarMenu({ sidebar, setSidebar }) {
                 <Component
                   key={index}
                   {...props}
-                  className={`flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition ${isLogout ? "bg-red-50 text-red-600 hover:bg-red-100" : "bg-gray-100 text-black hover:bg-[#FFE0B2] hover:text-[#E65100]"}`}
+                  className={`flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition ${isLogout ? "bg-red-50 text-red-600 hover:bg-red-100" : "bg-gray-100 text-black hover:bg-[#D6E6FF] hover:text-[#0A3796]"}`}
                 >
-                  <div className={`${isLogout ? "text-red-500" : "text-[#00A651]"}`}>{item.icon}</div>
+                  <div className={`${isLogout ? "text-red-500" : "text-[#0D3FB2]"}`}>{item.icon}</div>
                   <span className="text-sm font-semibold">{item.label}</span>
                 </Component>
               );

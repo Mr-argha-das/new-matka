@@ -20,7 +20,7 @@ export default function MarketList({ markets }) {
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
                   <h2 className="text-[15px] font-bold uppercase tracking-wide text-black">{mkt.name}</h2>
-                  <Info size={16} className="rounded-full bg-orange-100 text-[#FF8C00] p-0.5" />
+                  <Info size={16} className="rounded-full bg-blue-100 text-[#1565D8] p-0.5" />
                 </div>
                 <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${marketPlayable ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
                   {marketPlayable ? "Running" : "Closed"}
@@ -31,7 +31,7 @@ export default function MarketList({ markets }) {
 
               <div className="flex justify-between items-center">
                 <div className="flex-1">
-                  <h3 className="mb-2 text-[20px] font-extrabold tracking-wider text-[#FF8C00]">
+                  <h3 className="mb-2 text-[20px] font-extrabold tracking-wider text-[#1565D8]">
                     <span>{mkt.open_panna}-{mkt.open_digit}</span>
                     <span className="mx-1 text-gray-400">|</span>
                     <span>{mkt.close_digit}-{mkt.close_panna}</span>
@@ -43,7 +43,7 @@ export default function MarketList({ markets }) {
                 </div>
 
                 <div className="flex items-center gap-3 ml-3">
-                  <a href={`/charts/${mkt.id}`} className="text-gray-400 hover:text-[#FF8C00] transition">
+                  <a href={`/charts/${mkt.id}`} className="text-gray-400 hover:text-[#1565D8] transition">
                     <FaChartLine size={22} />
                   </a>
                   <div className="flex flex-col items-center gap-1">
@@ -51,7 +51,7 @@ export default function MarketList({ markets }) {
                       href={marketPlayable ? `/play/${mkt.id}` : undefined}
                       aria-disabled={!marketPlayable}
                       onClick={(e) => { if (!marketPlayable) e.preventDefault(); }}
-                      className={`flex h-11 w-11 items-center justify-center rounded-full shadow-md transition ${marketPlayable ? "bg-gradient-to-br from-[#FF9800] to-[#F57C00] text-white hover:scale-105" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
+                      className={`flex h-11 w-11 items-center justify-center rounded-full shadow-md transition ${marketPlayable ? "bg-gradient-to-br from-[#2E7BF6] to-[#0D3FB2] text-white hover:scale-105" : "bg-gray-200 text-gray-400 cursor-not-allowed"}`}
                     >
                       <Play size={18} fill="white" />
                     </a>
