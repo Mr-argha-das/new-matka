@@ -84,11 +84,11 @@ export default function Dashboard() {
       <div className="flex flex-col max-w-md mx-auto min-h-screen bg-white">
         {/* Top Action Bar - White with blue buttons */}
         <div className="bg-white px-4 py-3 border-b border-gray-100">
-          <div className="flex justify-between items-center">
-            <a href="/add-points" className="flex items-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2 text-sm font-bold text-black transition">
+          <div className="grid grid-cols-2 gap-3 items-center">
+            <a href="/add-points" className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
               <Wallet size={18} className="text-[#0D3FB2]" /> Add Funds
             </a>
-            <a href="/withdrawal-request" className="flex items-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2 text-sm font-bold text-black transition">
+            <a href="/withdrawal-request" className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
               <WalletCards size={18} className="text-[#0D3FB2]" /> Withdraw
             </a>
           </div>
@@ -101,11 +101,11 @@ export default function Dashboard() {
             </div>
           )}
 
-          <div className="flex gap-3 w-full justify-between mt-3">
-            <a href={`/starline`} className="flex items-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2 text-sm font-bold text-black transition">
+          <div className="grid grid-cols-2 gap-3 w-full mt-3">
+            <a href={`/starline`} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
               <Star size={18} className="text-[#FBBF24]" fill="#FBBF24" /> Starline
             </a>
-            <a href={`https://wa.me/${SUPPORT_PHONE}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2 text-sm font-bold text-black transition">
+            <a href={`https://wa.me/${SUPPORT_PHONE}`} target="_blank" rel="noopener noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
               <BsWhatsapp size={18} className="text-[#25D366]" /> Whatsapp
             </a>
           </div>
