@@ -295,3 +295,25 @@ button {
 .to-purple-900:not(.admin-shell *) {
   --tw-gradient-to: #0D3FB2;
 }
+
+/* ================================================================
+   text-white must STAY WHITE on blue / gradient backgrounds
+   (the global .text-white{color:inherit} override above was making
+   icons/text black inside blue buttons & game icon squircles)
+   ================================================================ */
+.bg-gradient-to-br.text-white,
+.bg-gradient-to-bl.text-white,
+.bg-gradient-to-r.text-white,
+.bg-gradient-to-l.text-white,
+.bg-gradient-to-b.text-white,
+.bg-gradient-to-t.text-white,
+[class*="bg-["].text-white,
+.bg-gradient-to-br .text-white,
+.bg-gradient-to-bl .text-white,
+.bg-gradient-to-r .text-white,
+.bg-gradient-to-l .text-white,
+.bg-gradient-to-b .text-white,
+.bg-gradient-to-t .text-white,
+[class*="bg-["] .text-white {
+  color: #fff;
+}
