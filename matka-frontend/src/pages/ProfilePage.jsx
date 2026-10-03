@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ArrowLeft, DollarSign, HistoryIcon, Pencil, Save } from "lucide-react";
+import { ArrowLeft, DollarSign, HistoryIcon, Pencil, Save, LogOut } from "lucide-react";
 import { API_URL } from "../config";
 import UpiPayment from "../components/layout/upi";
 
@@ -17,6 +17,12 @@ export default function ProfilePage() {
   const [msg, setMsg] = useState("");
 
   const token = localStorage.getItem("accessToken");
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    window.location.href = "/login";
+  };
 
   function parseJwt(token) {
     try {
@@ -199,6 +205,14 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* Logout Button */}
+      <button
+        onClick={handleLogout}
+        className="w-[90%] max-w-md mt-6 mb-24 flex items-center justify-center gap-2 rounded-2xl bg-red-50 border border-red-200 py-3.5 font-bold text-red-600 hover:bg-red-100 transition"
+      >
+        <LogOut size={19} /> Logout
+      </button>
 
       {/* <UpiPayment /> */}
     </div>
