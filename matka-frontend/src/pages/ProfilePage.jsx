@@ -87,14 +87,14 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="text-white min-h-screen flex justify-center items-center">
+      <div className="text-gray-600 bg-white min-h-screen flex justify-center items-center">
         Loading Profile...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen mx-auto max-w-md flex flex-col items-center">
+    <div className="min-h-screen mx-auto max-w-md flex flex-col items-center bg-white">
       {/* Header */}
       <div className="w-full relative bg-gradient-to-b from-black to-black/0 py-2 flex items-center justify-between">
         <button
@@ -117,7 +117,7 @@ export default function ProfilePage() {
 
         <button
           onClick={() => (editMode ? updateProfile() : setEditMode(true))}
-          className="absolute top-4 right-4 flex items-center text-sm text-gray-200 hover:text-purple-500"
+          className="absolute top-4 right-4 flex items-center text-sm font-semibold text-[#1565D8] hover:text-[#0D3FB2]"
         >
           {editMode ? (
             <>
@@ -132,19 +132,19 @@ export default function ProfilePage() {
 
         {/* Avatar */}
         <div className="flex flex-col items-center">
-          <div className="w-24 h-24 bg-purple-600 border text-white flex items-center justify-center text-4xl font-bold rounded-full shadow-md mb-4">
+          <div className="w-24 h-24 bg-gradient-to-br from-[#2E7BF6] to-[#0D3FB2] border-2 border-white text-white flex items-center justify-center text-4xl font-bold rounded-full shadow-[0_4px_14px_rgba(13,63,178,0.35)] mb-4">
             {user.username.charAt(0).toUpperCase()}
           </div>
         </div>
 
         {msg && (
-          <p className="text-center text-green-400 font-medium mb-3">{msg}</p>
+          <p className="text-center text-green-600 font-medium mb-3">{msg}</p>
         )}
 
         <div className="space-y-4 mt-4">
           {/* Username */}
           <div>
-            <label className="block text-gray-200 text-sm font-medium mb-1">
+            <label className="block text-gray-500 text-sm font-medium mb-1">
               Username
             </label>
 
@@ -153,10 +153,10 @@ export default function ProfilePage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-2 bg-black/40 text-white rounded-md border outline-none"
+                className="w-full p-2 bg-white text-[#0A1F44] rounded-md border border-gray-300 focus:border-[#1565D8] outline-none"
               />
             ) : (
-              <p className="text-gray-200 font-semibold border-b pb-1">
+              <p className="text-[#0A1F44] font-semibold border-b border-gray-200 pb-1">
                 {user.username}
               </p>
             )}
@@ -164,7 +164,7 @@ export default function ProfilePage() {
 
           {/* Mobile */}
           <div>
-            <label className="block text-gray-200 text-sm font-medium mb-1">
+            <label className="block text-gray-500 text-sm font-medium mb-1">
               Mobile
             </label>
 
@@ -173,10 +173,10 @@ export default function ProfilePage() {
                 type="text"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
-                className="w-full p-2 bg-black/40 text-white rounded-md border outline-none"
+                className="w-full p-2 bg-white text-[#0A1F44] rounded-md border border-gray-300 focus:border-[#1565D8] outline-none"
               />
             ) : (
-              <p className="text-gray-200 font-semibold border-b pb-1">
+              <p className="text-[#0A1F44] font-semibold border-b border-gray-200 pb-1">
                 {user.mobile}
               </p>
             )}
@@ -184,10 +184,10 @@ export default function ProfilePage() {
 
           {/* Created At */}
           <div>
-            <label className="block text-gray-200 text-sm font-medium mb-1">
+            <label className="block text-gray-500 text-sm font-medium mb-1">
               Joined On
             </label>
-            <p className="text-gray-200 font-semibold border-b pb-1">
+            <p className="text-[#0A1F44] font-semibold border-b border-gray-200 pb-1">
               {new Date(user.created_at?.$date ?? user.created_at)
                 .toLocaleDateString("en-GB", {
                   day: "2-digit",

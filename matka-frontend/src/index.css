@@ -1,6 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light;
@@ -201,4 +206,92 @@ button {
 
 .animate-fadeIn {
   animation: fadeInOut 12s ease forwards;
+}
+
+/* ================================================================
+   Legacy dark-theme classes -> Royal Blue light theme
+   (client pages only - admin panel .admin-shell is excluded)
+   ================================================================ */
+
+/* Black gradient page headers -> royal blue gradient with white text */
+.from-black:not(.admin-shell *) {
+  --tw-gradient-from: #2E7BF6;
+}
+.to-black\/0:not(.admin-shell *) {
+  --tw-gradient-to: #0D3FB2;
+}
+.bg-gradient-to-b.from-black:not(.admin-shell *),
+.bg-gradient-to-b.from-black:not(.admin-shell *) * {
+  color: #fff !important;
+}
+
+/* Translucent dark cards -> white cards with soft blue shadow */
+.bg-white\/10:not(.admin-shell *),
+.bg-white\/5:not(.admin-shell *) {
+  background: #ffffff !important;
+  border: 1px solid #DBEAFE;
+  box-shadow: 0 2px 10px rgba(13, 63, 178, 0.08);
+}
+
+/* Dark inputs -> light inputs */
+.bg-black\/40:not(.admin-shell *),
+.bg-black\/20:not(.admin-shell *) {
+  background-color: #ffffff !important;
+  color: #0A1F44 !important;
+  border-color: #D1D5DB !important;
+}
+
+/* Light gray text (made for dark bg) -> readable dark navy/gray */
+.text-gray-100:not(.admin-shell *),
+.text-gray-200:not(.admin-shell *) {
+  color: #1F2937 !important;
+}
+.text-gray-300:not(.admin-shell *) {
+  color: #4B5563 !important;
+}
+
+/* Status text colors tuned for white background */
+.text-green-300:not(.admin-shell *),
+.text-green-400:not(.admin-shell *) {
+  color: #059669 !important;
+}
+.text-red-300:not(.admin-shell *),
+.text-red-400:not(.admin-shell *) {
+  color: #DC2626 !important;
+}
+.text-yellow-300:not(.admin-shell *),
+.text-yellow-400:not(.admin-shell *) {
+  color: #CA8A04 !important;
+}
+
+/* Purple accents -> royal blue */
+.bg-purple-600:not(.admin-shell *),
+.bg-purple-700:not(.admin-shell *) {
+  background: linear-gradient(135deg, #2E7BF6 0%, #0D3FB2 100%) !important;
+  color: #fff !important;
+}
+.hover\:bg-purple-800:not(.admin-shell *):hover {
+  background: #0D3FB2 !important;
+  color: #fff !important;
+}
+.text-purple-300:not(.admin-shell *),
+.text-purple-400:not(.admin-shell *),
+.text-purple-500:not(.admin-shell *) {
+  color: #1565D8 !important;
+}
+.hover\:text-purple-500:not(.admin-shell *):hover {
+  color: #0D3FB2 !important;
+}
+.border-purple-500:not(.admin-shell *),
+.border-purple-700:not(.admin-shell *),
+.border-purple-900:not(.admin-shell *) {
+  border-color: #93C5FD !important;
+}
+.from-purple-600:not(.admin-shell *),
+.from-purple-700:not(.admin-shell *) {
+  --tw-gradient-from: #2E7BF6;
+}
+.to-purple-800:not(.admin-shell *),
+.to-purple-900:not(.admin-shell *) {
+  --tw-gradient-to: #0D3FB2;
 }
