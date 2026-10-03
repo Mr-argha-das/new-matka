@@ -55,21 +55,21 @@ export default function SidebarMenu({ sidebar, setSidebar }) {
   };
 
   const menuItems = [
-    { icon: <User size={18} />, label: "My Profile", link: "/profile" },
-    { icon: <Wallet size={18} />, label: "Wallet", link: "/wallet" },
-    { icon: <Clock size={18} />, label: "My Bids", link: "/my-bids" },
-    { icon: <DollarSign size={18} />, label: "Add Points", link: "/add-points" },
-    { icon: <Star size={18} />, label: "Starline", link: "/starline" },
-    { icon: <SiMarketo size={18} />, label: "Galidesawar", link: "/golidesawar" },
-    { icon: <Play size={18} />, label: "Withdrawal Funds", link: "/withdrawal-request" },
-    { icon: <Clock size={18} />, label: "Bid History", link: "/bid-history" },
-    { icon: <Trophy size={18} />, label: "Win History", link: "/win-history" },
-    { icon: <Gamepad2 size={18} />, label: "Game Rate", link: "/game-rate" },
-    { icon: <Phone size={18} />, label: "Contact Us", link: "/contact-us" },
-    { icon: <Star size={18} />, label: "Refer & Earn", link: "/referrals" },
-    { icon: <Lock size={18} />, label: "Change Password", link: "/change-password" },
-    { icon: <Play size={18} />, label: "How To Play", link: "/how-to-play" },
-    { icon: <LogOut size={18} />, label: "Logout", onClick: handleLogout, isLogout: true },
+    { icon: <User size={20} />, label: "My Profile", link: "/profile" },
+    { icon: <Wallet size={20} />, label: "Wallet", link: "/wallet" },
+    { icon: <Clock size={20} />, label: "My Bids", link: "/my-bids" },
+    { icon: <DollarSign size={20} />, label: "Add Points", link: "/add-points" },
+    { icon: <Star size={20} />, label: "Starline", link: "/starline" },
+    { icon: <SiMarketo size={20} />, label: "Galidesawar", link: "/golidesawar" },
+    { icon: <Play size={20} />, label: "Withdrawal Funds", link: "/withdrawal-request" },
+    { icon: <Clock size={20} />, label: "Bid History", link: "/bid-history" },
+    { icon: <Trophy size={20} />, label: "Win History", link: "/win-history" },
+    { icon: <Gamepad2 size={20} />, label: "Game Rate", link: "/game-rate" },
+    { icon: <Phone size={20} />, label: "Contact Us", link: "/contact-us" },
+    { icon: <Star size={20} />, label: "Refer & Earn", link: "/referrals" },
+    { icon: <Lock size={20} />, label: "Change Password", link: "/change-password" },
+    { icon: <Play size={20} />, label: "How To Play", link: "/how-to-play" },
+    { icon: <LogOut size={20} />, label: "Logout", onClick: handleLogout, isLogout: true },
   ];
 
   return (
@@ -97,7 +97,7 @@ export default function SidebarMenu({ sidebar, setSidebar }) {
           <p className="text-sm text-white/90">{mobile}</p>
         </div>
 
-        <div className="flex h-[calc(100%-130px)] flex-col gap-1.5 overflow-y-auto bg-white p-3 pt-4">
+        <div className="flex h-[calc(100%-130px)] flex-col overflow-y-auto bg-white px-4 pt-2">
           {menuItems
             .filter((item) => !item.isLogout || accessToken)
             .map((item, index) => {
@@ -108,10 +108,10 @@ export default function SidebarMenu({ sidebar, setSidebar }) {
                 <Component
                   key={index}
                   {...props}
-                  className={`flex cursor-pointer items-center gap-3 rounded-xl px-4 py-3 transition ${isLogout ? "bg-red-50 text-red-600 hover:bg-red-100" : "bg-gray-100 text-black hover:bg-[#D6E6FF] hover:text-[#0A3796]"}`}
+                  className={`flex cursor-pointer items-center gap-4 border-b border-gray-200 px-1 py-[15px] transition hover:bg-[#F2F7FF] ${isLogout ? "text-red-600" : "text-[#1F2937]"}`}
                 >
-                  <div className={`${isLogout ? "text-red-500" : "text-[#0D3FB2]"}`}>{item.icon}</div>
-                  <span className="text-sm font-semibold">{item.label}</span>
+                  <div className={`${isLogout ? "text-red-500" : "text-[#374151]"}`}>{item.icon}</div>
+                  <span className="text-[15px] font-medium">{item.label}</span>
                 </Component>
               );
             })}
