@@ -1,22 +1,24 @@
 """
-Import a full panel chart (open panna / jodi / close panna) from
-sattamatka.email style record pages into a market's Result history.
+Import a full panel chart (open panna / jodi / close panna) from various
+matka chart websites into a market's Result history.
+
+Supported formats (auto-detected):
+  A) Weekly rows, triplet cells:   | 19/12/2022 to 25/12/2022 | 2<br>3<br>4 | 91 | 1<br>2<br>8 | ...
+     (sattamatka.email, matkaji.net, sattamatka.sale, sattakalyanmatka.net,
+      khabar.bet, madhurbazar.com — dd/mm/yyyy, d/m/yy, dd-mm-yyyy sab chalega)
+  B) Weekly rows, single cell per day with 8 digits:  | 2026-09-28 To 2026-10-04 | 23947368 | ...
+     (sara777.in, matkafunapk.com)
+  C) Daily rows under month headings:  ## October 2026 ... | Sun, 04 Oct | 230 | 55 | 140 |
+     (kalyanbazar.co.in)
 
 Usage (run on the server, from the matka-bakend folder):
 
     cd /var/www/new-matka/matka-bakend
-    python3 scripts/import_panel_chart.py \
-        --market "RAJAN MORNING" \
-        --url "https://sattamatka.email/record/raja-rani-morning-panel-chart" \
-        --dry-run          # pehle preview dekho
+    source env/bin/activate
+    python3 scripts/import_panel_chart.py --market "RAJAN MORNING" \
+        --url "https://sattamatka.email/record/raja-rani-morning-panel-chart" --dry-run
 
-    # sab sahi dikhe to --dry-run hata ke dobara chalao:
-    python3 scripts/import_panel_chart.py \
-        --market "RAJAN MORNING" \
-        --url "https://sattamatka.email/record/raja-rani-morning-panel-chart"
-
-Existing results (same market + same date) are skipped, so it is safe
-to re-run (e.g. weekly) to pull in new rows.
+Existing results (same market + same date) are skipped, so re-running is safe.
 """
 
 import argparse
@@ -28,42 +30,80 @@ from html.parser import HTMLParser
 
 sys.path.insert(0, ".")  # allow "app" imports when run from matka-bakend/
 
-from mongoengine import connect  # noqa: E402
-from app.config import settings  # noqa: E402
-from app.models import Market, Result  # noqa: E402
-
 
 # ----------------------------------------------------------------------
-# HTML TABLE PARSER (stdlib only - no bs4 needed)
+# HTML PARSER: collects table rows AND headings, in document order
 # ----------------------------------------------------------------------
-class TableParser(HTMLParser):
+class DocParser(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.rows = []          # list of rows; each row = list of cell texts
+        self.items = []          # ("heading", text) | ("row", [cells])
         self._row = None
         self._cell = None
+        self._heading = None
 
     def handle_starttag(self, tag, attrs):
         if tag == "tr":
             self._row = []
         elif tag in ("td", "th") and self._row is not None:
             self._cell = []
+        elif tag in ("h1", "h2", "h3", "h4", "h5"):
+            self._heading = []
 
     def handle_endtag(self, tag):
         if tag in ("td", "th") and self._cell is not None:
-            self._row.append("".join(self._cell).strip())
+            self._row.append(" ".join(self._cell).strip())
             self._cell = None
         elif tag == "tr" and self._row is not None:
             if self._row:
-                self.rows.append(self._row)
+                self.items.append(("row", self._row))
             self._row = None
+        elif tag in ("h1", "h2", "h3", "h4", "h5") and self._heading is not None:
+            self.items.append(("heading", " ".join(self._heading).strip()))
+            self._heading = None
 
     def handle_data(self, data):
         if self._cell is not None:
             self._cell.append(data.strip())
+        elif self._heading is not None:
+            self._heading.append(data.strip())
 
 
-DATE_RE = re.compile(r"(\d{2}/\d{2}/\d{4})")
+MONTHS = {
+    "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6, "june": 6,
+    "jul": 7, "july": 7, "aug": 8, "sep": 9, "sept": 9, "oct": 10,
+    "nov": 11, "dec": 12,
+}
+
+ISO_DATE_RE = re.compile(r"(\d{4})-(\d{1,2})-(\d{1,2})")
+DMY_DATE_RE = re.compile(r"(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})")
+
+
+def digits(cell):
+    """Keep digits only. '2 3 4' -> '234'. '**'/'✪'/'—' -> ''."""
+    return re.sub(r"\D", "", cell or "")
+
+
+def parse_any_date(text):
+    """First date found in text: yyyy-mm-dd OR dd/mm/yyyy OR d-m-yy etc."""
+    m = ISO_DATE_RE.search(text)
+    if m:
+        y, mo, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        return _safe_date(y, mo, d)
+    m = DMY_DATE_RE.search(text)
+    if m:
+        d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        if y < 100:
+            y += 2000
+        return _safe_date(y, mo, d)
+    return None
+
+
+def _safe_date(y, mo, d):
+    try:
+        return datetime(y, mo, d)
+    except ValueError:
+        return None
 
 
 def fetch_html(url):
@@ -81,39 +121,116 @@ def fetch_html(url):
         return resp.read().decode("utf-8", errors="ignore")
 
 
-def clean_num(cell):
-    """Keep digits only. '2 3 4' / '2\n3\n4' -> '234'. '**' -> ''."""
-    return re.sub(r"\D", "", cell)
+def parse_weekly_row(start, cells):
+    """Weekly row -> list of (date, open, jodi, close). Handles triplet cells,
+    8-digit single cells, star/✪ gaps."""
+    out = []
+
+    # Row mode: if 2+ cells contain exactly 8 digits -> single-cell-per-day mode
+    eight = sum(1 for c in cells if len(digits(c)) == 8)
+    single_mode = eight >= 2
+
+    if single_mode:
+        day = 0
+        for c in cells:
+            if day > 6:
+                break
+            dg = digits(c)
+            if len(dg) == 8:
+                out.append((start + timedelta(days=day), dg[:3], dg[3:5], dg[5:8]))
+            day += 1
+        return out
+
+    # Triplet mode
+    p, day = 0, 0
+    n = len(cells)
+    while p < n and day <= 6:
+        c0 = digits(cells[p])
+        c1 = digits(cells[p + 1]) if p + 1 < n else ""
+        c2 = digits(cells[p + 2]) if p + 2 < n else ""
+
+        if len(c0) == 3 and len(c1) == 2 and len(c2) == 3:
+            out.append((start + timedelta(days=day), c0, c1, c2))
+            p += 3
+            day += 1
+            continue
+
+        # junk cell(s): star triplet (***, **, ***) or single ✪ marker
+        if c0 == "":
+            n1 = digits(cells[p + 1]) if p + 1 < n else ""
+            n2 = digits(cells[p + 2]) if p + 2 < n else ""
+            n3 = digits(cells[p + 3]) if p + 3 < n else ""
+            # single junk cell followed by a valid triplet -> consume 1
+            if len(n1) == 3 and len(n2) == 2 and len(n3) == 3:
+                p += 1
+            else:
+                p += 3
+            day += 1
+            continue
+
+        # unrecognized/partial result -> skip this day
+        p += 3
+        day += 1
+
+    return out
+
+
+def parse_daily_row(cells, year):
+    """Daily row like ['Sun, 04 Oct', '230', '55', '140'] -> one entry or None."""
+    if len(cells) < 4:
+        return None
+    o, j, c = digits(cells[1]), digits(cells[2]), digits(cells[3])
+    if len(o) != 3 or len(j) != 2 or len(c) != 3:
+        return None
+    m = re.search(r"(\d{1,2})\s*([A-Za-z]+)", cells[0])
+    if not m:
+        return None
+    day = int(m.group(1))
+    mon = MONTHS.get(m.group(2).lower()[:4]) or MONTHS.get(m.group(2).lower()[:3])
+    if not mon:
+        return None
+    dt = _safe_date(year or datetime.now().year, mon, day)
+    if not dt:
+        return None
+    return (dt, o, j, c)
 
 
 def parse_chart(html):
-    """Yield (date, open_panna, jodi, close_panna) for every played day."""
-    parser = TableParser()
+    parser = DocParser()
     parser.feed(html)
 
     entries = []
-    for row in parser.rows:
-        if not row:
+    current_year = None
+
+    for kind, data in parser.items:
+        if kind == "heading":
+            ym = re.search(r"(20\d{2})", data)
+            if ym:
+                current_year = int(ym.group(1))
             continue
-        dates = DATE_RE.findall(row[0])
-        if not dates:
-            continue  # header or junk row
 
-        start = datetime.strptime(dates[0], "%d/%m/%Y")
-        cells = row[1:]
+        cells = data
+        if not cells:
+            continue
 
-        # cells come in groups of 3 per day: open panna, jodi, close panna
-        for day_idx in range(min(7, len(cells) // 3)):
-            o = clean_num(cells[day_idx * 3])
-            j = clean_num(cells[day_idx * 3 + 1])
-            c = clean_num(cells[day_idx * 3 + 2])
+        start = parse_any_date(cells[0])
+        if start:
+            entries.extend(parse_weekly_row(start, cells[1:]))
+        else:
+            e = parse_daily_row(cells, current_year)
+            if e:
+                entries.append(e)
 
-            if len(o) != 3 or len(j) != 2 or len(c) != 3:
-                continue  # '**' = no result that day
-
-            entries.append((start + timedelta(days=day_idx), o, j, c))
-
-    return entries
+    # de-dupe by date (keep first occurrence)
+    seen, unique = set(), []
+    for e in entries:
+        key = e[0].date()
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(e)
+    unique.sort(key=lambda x: x[0])
+    return unique
 
 
 def main():
@@ -124,12 +241,17 @@ def main():
     args = ap.parse_args()
 
     print(f"Fetching: {args.url}")
-    html = fetch_html(args.url)
+    try:
+        html = fetch_html(args.url)
+    except Exception as e:
+        print(f"!! URL open nahi hua: {e}")
+        sys.exit(1)
+
     entries = parse_chart(html)
     print(f"Parsed {len(entries)} day-results from chart")
 
     if not entries:
-        print("!! Kuch parse nahi hua. Page ka structure badla ho sakta hai.")
+        print("!! Kuch parse nahi hua. Ye URL/format supported nahi hai — mujhe batao.")
         sys.exit(1)
 
     print("Sample (first 3):")
@@ -140,14 +262,17 @@ def main():
         print(f"   {d.date()}  {o}-{j}-{c}")
 
     if args.dry_run:
-        print("\n--dry-run: DB me kuch save NahI kiya. Sab sahi lage to --dry-run hata ke chalao.")
+        print("\n--dry-run: DB me kuch save NAHI kiya. Sab sahi lage to --dry-run hata ke chalao.")
         return
+
+    from mongoengine import connect
+    from app.config import settings
+    from app.models import Market, Result
 
     connect(host=settings.MONGO_URI)
 
     market = Market.objects(name__iexact=args.market.strip()).first()
     if not market:
-        # try contains match as fallback
         market = Market.objects(name__icontains=args.market.strip()).first()
     if not market:
         print(f"!! Market '{args.market}' nahi mila. Admin me market ka exact naam check karo.")
@@ -179,7 +304,6 @@ def main():
         added += 1
 
     print(f"\nDONE ✅  Added: {added}  |  Skipped (already existed): {skipped}")
-    print("Ab site par us market ke chart me pura record dikhega.")
 
 
 if __name__ == "__main__":
