@@ -96,12 +96,14 @@ export default function AdminSiteData() {
 
       <div className="grid  lg:grid-cols-2 md:grid-cols-2 gap-4 my-4 mb-8">
         <div>
-          <label className="font-medium text-sm">Dashboard Notification</label>
+          <label className="font-medium text-sm">
+            Home Page Marquee (buttons ke beech chalne wali line)
+          </label>
           <input
             name="dashboard_notification_line"
             value={siteData.dashboard_notification_line}
             onChange={handleChange}
-            placeholder="Dashboard Notification Line"
+            placeholder="Home page par chalne wala marquee text"
             className="w-full mt-1 px-3 py-2 border border-gray-50/15 rounded"
           />
         </div>
