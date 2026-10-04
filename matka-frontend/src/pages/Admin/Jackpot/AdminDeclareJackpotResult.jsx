@@ -44,15 +44,15 @@ export default function AdminDeclareJackpotResult() {
     if (!selectedSlot || !panna) {
       setMessage({
         type: "error",
-        text: "Please select slot and enter panna.",
+        text: "Please select slot and enter jodi.",
       });
       return;
     }
 
-    if (panna.length !== 3 || isNaN(panna)) {
+    if (panna.length !== 2 || isNaN(panna)) {
       setMessage({
         type: "error",
-        text: "Panna must be 3 digits (e.g., 123).",
+        text: "Jodi must be 2 digits (00-99).",
       });
       return;
     }
@@ -83,7 +83,7 @@ export default function AdminDeclareJackpotResult() {
         {/* HEADER */}
         <div className="bg-gradient-to-r from-[#2E7BF6] to-[#0D3FB2] p-4">
           <h1 className="text-lg font-bold text-white">Declare Jackpot Result</h1>
-          <p className="text-xs text-blue-100 mt-0.5">Select slot and enter the winning panna</p>
+          <p className="text-xs text-blue-100 mt-0.5">Select slot and enter the winning jodi (2 digits)</p>
         </div>
 
         <div className="p-5 space-y-4">
@@ -109,15 +109,15 @@ export default function AdminDeclareJackpotResult() {
           {/* PANNA INPUT */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Enter Panna (3 digits)
+              Enter Jodi (2 digits)
             </label>
             <input
               type="text"
               inputMode="numeric"
-              maxLength="3"
+              maxLength="2"
               value={panna}
               onChange={(e) => setPanna(e.target.value.replace(/[^0-9]/g, ""))}
-              placeholder="e.g., 123"
+              placeholder="e.g., 45"
               className="w-full p-3 rounded-lg bg-white text-gray-900 placeholder-gray-400 border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold tracking-widest"
             />
           </div>

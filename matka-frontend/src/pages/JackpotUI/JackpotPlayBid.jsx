@@ -37,13 +37,12 @@ export default function JackpotPlayBid() {
     }
   };
 
+  const maxDigits =
+    apiGameName === "single_digit" ? 1 : apiGameName === "jodi" ? 2 : 3;
+
   const handleDigitChange = (value) => {
     const clean = value.replace(/\D/g, "");
-    if (apiGameName === "single_digit") {
-      if (clean.length <= 1) setDigit(clean);
-    } else {
-      if (clean.length <= 3) setDigit(clean);
-    }
+    if (clean.length <= maxDigits) setDigit(clean);
   };
 
   const fetchResult = async () => {
@@ -176,13 +175,15 @@ export default function JackpotPlayBid() {
           placeholder={
             apiGameName === "single_digit"
               ? "Enter Digit (0-9)"
+              : apiGameName === "jodi"
+              ? "Enter Jodi (00-99)"
               : "Enter Panna (3 digits)"
           }
           value={digit}
           disabled={!isLive}
           onChange={(e) => handleDigitChange(e.target.value)}
           className="w-full p-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-400 mb-3 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100"
-          maxLength={apiGameName === "single_digit" ? 1 : 3}
+          maxLength={maxDigits}
         />
         <input
           type="number"

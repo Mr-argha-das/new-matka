@@ -25,6 +25,9 @@ GAME_RATES = {
     "triple_panna": 600,
 }
 
+# Jackpot JODI rate: 10 ka 1000
+JODI_RATE = 100
+
 # ======================================================
 #              HELPER FUNCTIONS
 # ======================================================
@@ -67,6 +70,24 @@ def settle(slot_id, panna):
         if win:
             amount = b.points * GAME_RATES[b.game_type]
             Wallet.objects(user_id=b.user_id).update(inc__balance=amount)
+
+
+def jackpot_result_display(result):
+    if not result:
+        return "**"
+    if result.open_panna and len(result.open_panna) == 2:
+        return result.open_panna
+    return f"{result.open_panna}-{result.open_digit}"
+
+
+def settle_jackpot_jodi(slot_id, jodi):
+    """Settle jackpot jodi bids: exact 2-digit match pays JODI_RATE."""
+    bids = Bid.objects(market_id=slot_id, session="jackpot", game_type="jodi")
+    for b in bids:
+        if b.digit == jodi:
+            Wallet.objects(user_id=b.user_id).update(
+                inc__balance=b.points * JODI_RATE
+            )
 
 
 # ======================================================
@@ -331,10 +352,7 @@ def jackpot_list():
         # ⭐ Get latest result
         result = Result.objects(market_id=str(s.id)).order_by("-date").first()
 
-        if result:
-            final_result = f"{result.open_panna}-{result.open_digit}"
-        else:
-            final_result = "XXX-X"
+        final_result = jackpot_result_display(result)
 
         response.append({
             "id": str(s.id),
@@ -369,7 +387,7 @@ def get_jackpot_by_id(slot_id: str):
 
     result = Result.objects(market_id=str(slot.id)).order_by("-date").first()
 
-    final_result = f"{result.open_panna}-{result.open_digit}" if result else "XXX-X"
+    final_result = jackpot_result_display(result)
 
     return {
         "id": str(slot.id),
@@ -387,10 +405,13 @@ def get_jackpot_by_id(slot_id: str):
 def jackpot_bid(slot_id: str, game_type: str, digit: str, points: int,
                 user=Depends(get_current_user)):
 
-    if game_type not in ALLOWED_GAMES:
+    if game_type == "jodi":
+        if not digit.isdigit() or len(digit) != 2:
+            raise HTTPException(400, "Jodi must be 2 digits (00-99)")
+    elif game_type in ALLOWED_GAMES:
+        validate_digit(game_type, digit)
+    else:
         raise HTTPException(400, "Invalid Game Type")
-
-    validate_digit(game_type, digit)
 
     slot = JackpotSlot.objects(id=slot_id).first()
     if not slot:
@@ -472,22 +493,30 @@ def jackpot_winning_history(user=Depends(get_current_user)):
 
     return winning
 
-# ⭐ Declare Result
+# ⭐ Declare Result (JODI - 2 digits)
 @router.post("/jackpot/result/declare")
 def jackpot_result(body: ResultDeclareRequest):
+
+    value = str(body.panna).strip()
+
+    if not value.isdigit() or len(value) not in (2, 3):
+        raise HTTPException(400, "Jackpot result must be a 2-digit jodi (00-99)")
 
     now = datetime.utcnow().strftime("%Y-%m-%d")
 
     Result(
         market_id=body.slot_id,
         date=now,
-        open_digit=body.panna[-1],
-        close_digit=body.panna[-1],
-        open_panna=body.panna,
-        close_panna=body.panna,
+        open_digit=value[-1],
+        close_digit=value[-1],
+        open_panna=value,
+        close_panna=value,
     ).save()
 
-    settle(body.slot_id, body.panna)
+    if len(value) == 2:
+        settle_jackpot_jodi(body.slot_id, value)
+    else:
+        settle(body.slot_id, value)
 
     return {"msg": "Jackpot Result Declared"}
 
