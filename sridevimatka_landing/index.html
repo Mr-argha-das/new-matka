@@ -153,6 +153,20 @@
     }
     .btn-download-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #1273e680; }
     .btn-download-nav svg { width: 16px; height: 16px; }
+    .btn-play-web {
+      background: #fff;
+      color: var(--color-primary-600);
+      border: 2px solid var(--color-primary-600);
+      padding: 0.55rem 1.3rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn-play-web:hover { background: var(--color-primary-50); transform: translateY(-1px); }
 
     /* ===== HERO ===== */
     .hero {
@@ -1066,6 +1080,8 @@
     }
     @media (max-width: 600px) {
       .footer-grid { grid-template-columns: 1fr; }
+      .btn-play-web, .btn-download-nav { padding: 0.5rem 0.85rem; font-size: 0.78rem; }
+      .btn-play-web svg, .btn-download-nav svg { width: 13px; height: 13px; }
       .stats-row { flex-direction: column; gap: 1rem; }
       .hero-features { gap: 1.25rem; }
     }
@@ -1087,10 +1103,16 @@
       <li><a href="#about">About Us</a></li>
       <li><a href="#howto">How To Play</a></li>
     </ul>
+    <div style="display:flex;align-items:center;gap:0.6rem;">
+    <a href="https://game.sridevimatka9.live/" class="btn-play-web" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M8 5v14l11-7z"/></svg>
+      Play on Web
+    </a>
     <a href="app/sridevimatka.apk" class="btn-download-nav" download>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       Download APK
     </a>
+    </div>
   </div>
 </nav>
 
@@ -1112,9 +1134,9 @@ Application</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
             Download APK
           </a>
-          <a href="#download" class="btn-outline-white">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-            Get the App
+          <a href="https://game.sridevimatka9.live/" class="btn-outline-white" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Play on Web
           </a>
         </div>
         <div class="hero-features">
@@ -1262,7 +1284,7 @@ Application</span>
         </div>
         <div class="market-actions">
           <a href="#" class="btn-chart">📊 Chart</a>
-          <a href="#download" class="btn-play">▶ Play</a>
+          <a href="https://game.sridevimatka9.live/" class="btn-play" target="_blank" rel="noopener">▶ Play</a>
         </div>
       </div>
     </div>
@@ -1279,7 +1301,7 @@ Application</span>
         </div>
         <div class="market-actions">
           <a href="#" class="btn-chart">📊 Chart</a>
-          <a href="#download" class="btn-play">▶ Play</a>
+          <a href="https://game.sridevimatka9.live/" class="btn-play" target="_blank" rel="noopener">▶ Play</a>
         </div>
       </div>
     </div>
@@ -1296,7 +1318,7 @@ Application</span>
         </div>
         <div class="market-actions">
           <a href="#" class="btn-chart">📊 Chart</a>
-          <a href="#download" class="btn-play">▶ Play</a>
+          <a href="https://game.sridevimatka9.live/" class="btn-play" target="_blank" rel="noopener">▶ Play</a>
         </div>
       </div>
     </div>
@@ -1383,6 +1405,10 @@ Application</span>
           <a href="app/sridevimatka.apk" class="btn-yellow" download>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
             Download APK Now
+          </a>
+          <a href="https://game.sridevimatka9.live/" class="btn-outline-white" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Play on Web
           </a>
           <span class="safe-text">🛡️ 100% Safe & Virus Free</span>
         </div>
@@ -1517,6 +1543,7 @@ Application</span>
           <li><a href="#markets">Today's Markets</a></li>
           <li><a href="#charts">Charts</a></li>
           <li><a href="#download">Download App</a></li>
+          <li><a href="https://game.sridevimatka9.live/" target="_blank" rel="noopener">Play on Web</a></li>
         </ul>
       </div>
       <div>
