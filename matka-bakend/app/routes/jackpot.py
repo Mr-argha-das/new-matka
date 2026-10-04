@@ -29,6 +29,16 @@ GAME_RATES = {
 #              HELPER FUNCTIONS
 # ======================================================
 
+def parse_time_safe(value):
+    """Parse '10:00 AM' or '14:30' style times without crashing."""
+    for fmt in ("%I:%M %p", "%H:%M", "%I:%M%p"):
+        try:
+            return datetime.strptime(str(value).strip(), fmt).time()
+        except (ValueError, TypeError):
+            continue
+    return None
+
+
 def validate_digit(game, digit):
     if game == "single_digit":
         if not digit.isdigit() or len(digit) != 1:
@@ -100,10 +110,13 @@ def starline_list():
 
     for s in StarlineSlot.objects:
 
-        start = datetime.strptime(s.start_time, "%I:%M %p").time()
-        end   = datetime.strptime(s.end_time, "%I:%M %p").time()
+        start = parse_time_safe(s.start_time)
+        end   = parse_time_safe(s.end_time)
 
-        status = "Market Running" if start <= now <= end else "Market Closed"
+        if start and end:
+            status = "Market Running" if start <= now <= end else "Market Closed"
+        else:
+            status = "Market Closed"
 
         # ⭐ Get latest result
         result = Result.objects(market_id=str(s.id)).order_by("-date").first()
@@ -136,10 +149,13 @@ def get_starline_by_id(slot_id: str):
 
     now = datetime.now().time()
 
-    start = datetime.strptime(slot.start_time, "%I:%M %p").time()
-    end   = datetime.strptime(slot.end_time, "%I:%M %p").time()
+    start = parse_time_safe(slot.start_time)
+    end   = parse_time_safe(slot.end_time)
 
-    status = "Market Running" if start <= now <= end else "Market Closed"
+    if start and end:
+        status = "Market Running" if start <= now <= end else "Market Closed"
+    else:
+        status = "Market Closed"
 
     result = Result.objects(market_id=str(slot.id)).order_by("-date").first()
 
@@ -304,10 +320,13 @@ def jackpot_list():
 
     for s in JackpotSlot.objects:
 
-        start = datetime.strptime(s.start_time, "%I:%M %p").time()
-        end   = datetime.strptime(s.end_time, "%I:%M %p").time()
+        start = parse_time_safe(s.start_time)
+        end   = parse_time_safe(s.end_time)
 
-        status = "Market Running" if start <= now <= end else "Market Closed"
+        if start and end:
+            status = "Market Running" if start <= now <= end else "Market Closed"
+        else:
+            status = "Market Closed"
 
         # ⭐ Get latest result
         result = Result.objects(market_id=str(s.id)).order_by("-date").first()
@@ -340,10 +359,13 @@ def get_jackpot_by_id(slot_id: str):
 
     now = datetime.now().time()
 
-    start = datetime.strptime(slot.start_time, "%I:%M %p").time()
-    end   = datetime.strptime(slot.end_time, "%I:%M %p").time()
+    start = parse_time_safe(slot.start_time)
+    end   = parse_time_safe(slot.end_time)
 
-    status = "Market Running" if start <= now <= end else "Market Closed"
+    if start and end:
+        status = "Market Running" if start <= now <= end else "Market Closed"
+    else:
+        status = "Market Closed"
 
     result = Result.objects(market_id=str(slot.id)).order_by("-date").first()
 

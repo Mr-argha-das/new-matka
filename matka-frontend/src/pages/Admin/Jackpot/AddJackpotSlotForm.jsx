@@ -2,6 +2,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import { API_URL } from "../../../config";
 
+// Convert "14:30" (24h from <input type="time">) to "02:30 PM" (backend format)
+const to12Hour = (t) => {
+  if (!t) return t;
+  const [h, m] = t.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${String(h12).padStart(2, "0")}:${String(m).padStart(2, "0")} ${ampm}`;
+};
+
 const API_BASE = `${API_URL}/starline_jackpot`;
 
 const AddSlotForm = ({ onSlotAdded }) => {
@@ -26,30 +35,20 @@ const AddSlotForm = ({ onSlotAdded }) => {
     setMessage("");
 
     try {
-      const response = await axios.post(`${API_BASE}/jackpot/add`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // API uses start_time and end_time, so we map the keys
-        body: JSON.stringify({
-          name: formData.name,
-          start_time: formData.start_time,
-          end_time: formData.end_time,
-        }),
+      const res = await axios.post(`${API_BASE}/jackpot/add`, {
+        name: formData.name,
+        start_time: to12Hour(formData.start_time),
+        end_time: to12Hour(formData.end_time),
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
-        setMessage(`✅ Success! Slot Added (ID: ${result.slot_id})`);
-        setFormData({ name: "", start_time: "", end_time: "" }); // Reset form
-        onSlotAdded(); // Trigger refresh on the main page
-      } else {
-        setMessage(`❌ Error: ${result.msg || "Failed to add slot."}`);
-      }
+      setMessage(`✅ Success! Slot Added (ID: ${res.data.slot_id})`);
+      setFormData({ name: "", start_time: "", end_time: "" }); // Reset form
+      onSlotAdded(); // Trigger refresh on the main page
     } catch (error) {
       console.error("Error adding slot:", error);
-      setMessage("❌ An unexpected network error occurred.");
+      setMessage(
+        `❌ Error: ${error.response?.data?.detail || "Failed to add slot."}`
+      );
     } finally {
       setIsSubmitting(false);
     }

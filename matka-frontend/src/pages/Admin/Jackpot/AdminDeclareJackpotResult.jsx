@@ -59,15 +59,12 @@ export default function AdminDeclareJackpotResult() {
 
     try {
       const res = await axios.post(
-        `${API_BASE}/starline/result/declare`,
-        {},
+        `${API_BASE}/jackpot/result/declare`,
         {
-          params: {
-            slot_id: selectedSlot,
-            panna: panna,
-          },
-          ...authHeader,
-        }
+          slot_id: selectedSlot,
+          panna: panna,
+        },
+        authHeader
       );
 
       setMessage({ type: "success", text: res.data.msg });
