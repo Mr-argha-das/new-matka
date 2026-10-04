@@ -93,13 +93,12 @@ export default function Dashboard() {
             </a>
           </div>
 
-          {site?.dashboard_notification_line && (
-            <div className="mt-3 w-full overflow-hidden rounded-full bg-[#E8F1FF] border border-blue-200 p-2 text-center">
-              <p className="text-sm text-[#0A3796] font-medium animate-marquee whitespace-nowrap">
-                {site?.dashboard_notification_line}
-              </p>
-            </div>
-          )}
+          <div className="mt-3 w-full overflow-hidden rounded-full bg-[#E8F1FF] border border-blue-200 p-2 text-center">
+            <p className="text-sm text-[#0A3796] font-medium animate-marquee whitespace-nowrap">
+              {site?.dashboard_notification_line ||
+                "✨ Welcome to Sridevimatka — India's most trusted online matka platform! Fast withdrawal • Best rates • 24x7 support ✨"}
+            </p>
+          </div>
 
           <div className="grid grid-cols-3 gap-3 w-full mt-3">
             <a href={`/starline`} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
