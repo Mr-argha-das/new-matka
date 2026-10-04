@@ -109,8 +109,8 @@ const AdminJackpot = () => {
 
   // ====== DECLARE RESULT (Correct JSON API) ======
   const declareResult = async () => {
-    if (!panna || panna.length !== 3) {
-      alert("Panna must be exactly 3 digits!");
+    if (!panna || panna.length !== 2) {
+      alert("Jodi must be exactly 2 digits (00-99)!");
       return;
     }
 
@@ -355,35 +355,37 @@ const AdminJackpot = () => {
       {/* ===== DECLARE RESULT MODAL ===== */}
       {showModal && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="bg-gray-900 p-6 rounded-xl w-80 text-white shadow-xl border border-gray-700">
-            <h2 className="text-lg font-bold text-center">
+          <div className="bg-white p-6 rounded-xl w-80 text-gray-900 shadow-xl border border-gray-200">
+            <h2 className="text-lg font-bold text-center text-gray-900">
               Declare Jackpot Result
             </h2>
-            <p className="text-center text-sm text-purple-300 mt-1">
+            <p className="text-center text-sm text-[#1565D8] font-semibold mt-1">
               Slot: {selectedSlot?.name}
             </p>
 
-            <label className="block mt-4 mb-1 text-sm">
-              Enter Panna (3 digits)
+            <label className="block mt-4 mb-1 text-sm font-semibold text-gray-700">
+              Enter Jodi (2 digits)
             </label>
             <input
-              maxLength={3}
+              maxLength={2}
+              inputMode="numeric"
+              placeholder="e.g., 45"
               value={panna}
               onChange={(e) => setPanna(e.target.value.replace(/\D/g, ""))}
-              className="w-full p-2 bg-black/40 border border-gray-600 rounded-md text-white"
+              className="w-full p-3 bg-white border border-gray-300 rounded-md text-gray-900 text-lg font-bold tracking-widest outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
 
             <button
               onClick={declareResult}
               disabled={declaring}
-              className="w-full mt-4 py-2 bg-purple-600 rounded-md font-semibold"
+              className="w-full mt-4 py-2 bg-gradient-to-r from-[#2E7BF6] to-[#0D3FB2] text-white rounded-md font-semibold disabled:opacity-50"
             >
               {declaring ? "Declaring..." : "Declare Result"}
             </button>
 
             <button
               onClick={() => setShowModal(false)}
-              className="w-full mt-2 py-2 bg-red-700 rounded-md"
+              className="w-full mt-2 py-2 bg-red-100 text-red-600 font-semibold rounded-md hover:bg-red-200"
             >
               Cancel
             </button>
