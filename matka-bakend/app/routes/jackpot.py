@@ -31,25 +31,34 @@ JODI_RATE = 100
 
 
 def get_starline_rate(game_type):
-    """Admin-managed starline rate from RateChart (multiplier _x), with fallback."""
+    """Admin-managed starline rate: win/bid ratio (_2/_1), fallback _x, then defaults."""
     chart = RateChart.objects().first()
     if chart:
-        field_map = {
-            "single_digit": "starline_single_digit_x",
-            "single_panna": "starline_single_pana_x",
-            "double_panna": "starline_double_pana_x",
-            "triple_panna": "starline_tripple_pana_x",
+        base_map = {
+            "single_digit": "starline_single_digit",
+            "single_panna": "starline_single_pana",
+            "double_panna": "starline_double_pana",
+            "triple_panna": "starline_tripple_pana",
         }
-        val = getattr(chart, field_map.get(game_type, ""), 0) or 0
+        base = base_map.get(game_type, "")
+        one = getattr(chart, f"{base}_1", 0) or 0
+        two = getattr(chart, f"{base}_2", 0) or 0
+        if one > 0 and two > 0:
+            return two / one
+        val = getattr(chart, f"{base}_x", 0) or 0
         if val > 0:
             return val
     return GAME_RATES.get(game_type, 0)
 
 
 def get_jackpot_jodi_rate():
-    """Admin-managed jackpot jodi multiplier from RateChart, with fallback."""
+    """Admin-managed jackpot jodi rate: win/bid ratio (_2/_1), fallback _x, then default."""
     chart = RateChart.objects().first()
     if chart:
+        one = getattr(chart, "jackpot_jodi_1", 0) or 0
+        two = getattr(chart, "jackpot_jodi_2", 0) or 0
+        if one > 0 and two > 0:
+            return two / one
         val = getattr(chart, "jackpot_jodi_x", 0) or 0
         if val > 0:
             return val
@@ -95,7 +104,7 @@ def settle(slot_id, panna):
                 win = True
 
         if win:
-            amount = b.points * get_starline_rate(b.game_type)
+            amount = round(b.points * get_starline_rate(b.game_type), 2)
             Wallet.objects(user_id=b.user_id).update(inc__balance=amount)
 
 
@@ -114,7 +123,7 @@ def settle_jackpot_jodi(slot_id, jodi):
     for b in bids:
         if b.digit == jodi:
             Wallet.objects(user_id=b.user_id).update(
-                inc__balance=b.points * rate
+                inc__balance=round(b.points * rate, 2)
             )
 
 

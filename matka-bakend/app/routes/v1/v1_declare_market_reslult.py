@@ -43,6 +43,16 @@ class ResultDeclare(BaseModel):
 import uuid
 from datetime import datetime
 
+def effective_rate(chart, base):
+    """Multiplier derived from admin-set bid/win amounts (_1/_2).
+    Falls back to the legacy _x multiplier if _1/_2 not set."""
+    one = getattr(chart, f"{base}_1", 0) or 0
+    two = getattr(chart, f"{base}_2", 0) or 0
+    if one > 0 and two > 0:
+        return two / one
+    return getattr(chart, f"{base}_x", 0) or 0
+
+
 def settle_results(market_id: str, result_obj: Result, session: str):
 
     chart = RateChart.objects().first()
@@ -51,13 +61,13 @@ def settle_results(market_id: str, result_obj: Result, session: str):
         return
 
     RATE_MAP = {
-        "single": chart.single_digit_x,
-        "jodi": chart.jodi_digit_x,
-        "single_panna": chart.single_pana_x,
-        "double_panna": chart.double_pana_x,
-        "triple_panna": chart.tripple_pana_x,
-        "half_sangam": chart.half_sangam_x,
-        "full_sangam": chart.full_sangam_x,
+        "single": effective_rate(chart, "single_digit"),
+        "jodi": effective_rate(chart, "jodi_digit"),
+        "single_panna": effective_rate(chart, "single_pana"),
+        "double_panna": effective_rate(chart, "double_pana"),
+        "triple_panna": effective_rate(chart, "tripple_pana"),
+        "half_sangam": effective_rate(chart, "half_sangam"),
+        "full_sangam": effective_rate(chart, "full_sangam"),
     }
     RATE_MAP.update({
         "single_bulk": RATE_MAP["single"],
@@ -117,7 +127,7 @@ def settle_results(market_id: str, result_obj: Result, session: str):
         # ---------------- PAYOUT ----------------
         if win:
             rate = RATE_MAP.get(bid.game_type, RATE_MAP.get(rate_key(bid.game_type), 0))
-            amount = bid.points * rate
+            amount = round(bid.points * rate, 2)
 
             wallet = Wallet.objects(user_id=bid.user_id).first()
             if wallet:
@@ -266,13 +276,13 @@ def win_history(user=Depends(get_current_user)):
         raise HTTPException(status_code=500, detail="Rate chart not found")
 
     RATE_MAP = {
-        "single": chart.single_digit_x,
-        "jodi": chart.jodi_digit_x,
-        "single_panna": chart.single_pana_x,
-        "double_panna": chart.double_pana_x,
-        "triple_panna": chart.tripple_pana_x,
-        "half_sangam": chart.half_sangam_x,
-        "full_sangam": chart.full_sangam_x,
+        "single": effective_rate(chart, "single_digit"),
+        "jodi": effective_rate(chart, "jodi_digit"),
+        "single_panna": effective_rate(chart, "single_pana"),
+        "double_panna": effective_rate(chart, "double_pana"),
+        "triple_panna": effective_rate(chart, "tripple_pana"),
+        "half_sangam": effective_rate(chart, "half_sangam"),
+        "full_sangam": effective_rate(chart, "full_sangam"),
     }
 
     bids = Bid.objects(user_id=str(user.id))
@@ -303,7 +313,7 @@ def win_history(user=Depends(get_current_user)):
             continue
 
         rate = RATE_MAP.get(bid.game_type, RATE_MAP.get(rate_key(bid.game_type), 0))
-        win_amount = bid.points * rate
+        win_amount = round(bid.points * rate, 2)
 
         # Fetch exact transaction (Win type only recommended)
         tx = Transaction.objects(

@@ -248,9 +248,24 @@ export default function GameRates() {
 
   return (
     <div className="p-3">
-      <h2 className="text-2xl font-bold mb-6">Game Rate Chart</h2>
+      <h2 className="text-2xl font-bold mb-2">Game Rate Chart</h2>
+      <p className="text-sm mb-6 opacity-80">
+        Payout = (Win Amount ÷ Bid Amount) × user ke points. Example: Bid 10,
+        Win 950 → user 100 lagaye to 9500 milega. Multiplier (X) column ab
+        optional hai — Bid/Win amounts hi final rate decide karte hain.
+      </p>
 
       <div className="grid grid-cols-3 md:grid-cols-3 gap-3">
+        <div className="font-bold text-sm border-b pb-2">
+          BID AMOUNT (kitne pe)
+        </div>
+        <div className="font-bold text-sm border-b pb-2 opacity-60">
+          MULTIPLIER X (optional)
+        </div>
+        <div className="font-bold text-sm border-b pb-2">
+          WIN AMOUNT (kitna milega)
+        </div>
+
         {/* RATE (_1) */}
         <div className="space-y-4">
           {Object.keys(form)
