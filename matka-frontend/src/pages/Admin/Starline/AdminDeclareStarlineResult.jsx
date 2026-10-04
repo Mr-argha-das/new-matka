@@ -78,72 +78,77 @@ export default function AdminDeclareStarlineResult() {
   };
 
   return (
-    <div className="max-w-md mx-auto text-white min-h-screen pb-20">
-      {/* HEADER */}
-      <div className="flex items-center gap-3 p-4 ">
-        <h1 className="text-lg font-bold">Declare Starline Result</h1>
-      </div>
-
-      {/* SLOT DROPDOWN */}
-      <div className="p-4">
-        <label className="text-sm text-gray-300">Select Slot</label>
-        <select
-          value={selectedSlot}
-          onChange={(e) => setSelectedSlot(e.target.value)}
-          className="w-full p-3 mt-1 rounded-lg  text-white outline-none border border-white"
-        >
-          <option value="">-- Select Starline Slot --</option>
-
-          {slots.map((slot) => (
-            <option key={slot.id} value={slot.id}>
-              {slot.name} ({slot.start_time} - {slot.end_time})
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* PANNA INPUT */}
-      <div className="p-4">
-        <label className="text-sm text-gray-300">Enter Panna (3 digits)</label>
-        <input
-          type="text"
-          maxLength="3"
-          value={panna}
-          onChange={(e) => setPanna(e.target.value)}
-          placeholder="e.g., 123"
-          className="w-full p-3 mt-1 rounded-lg  text-white outline-none border border-white "
-        />
-      </div>
-
-      {/* SUBMIT BUTTON */}
-      <div className="p-4">
-        <button
-          onClick={declareResult}
-          className="w-full border text-white py-3 rounded-lg font-bold  border-white t"
-        >
-          Declare Result
-        </button>
-      </div>
-
-      {/* MESSAGE */}
-      {message && (
-        <div className="px-4">
-          <div
-            className={`flex items-center gap-2 p-3 rounded-lg ${
-              message.type === "success"
-                ? "bg-green-700/30 text-green-400 border border-green-700"
-                : "bg-red-700/30 text-red-400 border border-red-700"
-            }`}
-          >
-            {message.type === "success" ? (
-              <CheckCircle size={20} />
-            ) : (
-              <XCircle size={20} />
-            )}
-            <p>{message.text}</p>
-          </div>
+    <div className="max-w-md mx-auto min-h-screen pb-20 p-4">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+        {/* HEADER */}
+        <div className="bg-gradient-to-r from-[#2E7BF6] to-[#0D3FB2] p-4">
+          <h1 className="text-lg font-bold text-white">Declare Starline Result</h1>
+          <p className="text-xs text-blue-100 mt-0.5">Select slot and enter the winning panna</p>
         </div>
-      )}
+
+        <div className="p-5 space-y-4">
+          {/* SLOT DROPDOWN */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Select Slot
+            </label>
+            <select
+              value={selectedSlot}
+              onChange={(e) => setSelectedSlot(e.target.value)}
+              className="w-full p-3 rounded-lg bg-white text-gray-900 border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">-- Select Starline Slot --</option>
+              {slots.map((slot) => (
+                <option key={slot.id} value={slot.id}>
+                  {slot.name} ({slot.start_time} - {slot.end_time})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* PANNA INPUT */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Enter Panna (3 digits)
+            </label>
+            <input
+              type="text"
+              inputMode="numeric"
+              maxLength="3"
+              value={panna}
+              onChange={(e) => setPanna(e.target.value.replace(/[^0-9]/g, ""))}
+              placeholder="e.g., 123"
+              className="w-full p-3 rounded-lg bg-white text-gray-900 placeholder-gray-400 border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-semibold tracking-widest"
+            />
+          </div>
+
+          {/* SUBMIT BUTTON */}
+          <button
+            onClick={declareResult}
+            className="w-full bg-gradient-to-r from-[#2E7BF6] to-[#0D3FB2] text-white py-3 rounded-lg font-bold shadow-md hover:opacity-90 transition"
+          >
+            Declare Result
+          </button>
+
+          {/* MESSAGE */}
+          {message && (
+            <div
+              className={`flex items-center gap-2 p-3 rounded-lg border ${
+                message.type === "success"
+                  ? "bg-green-50 text-green-700 border-green-300"
+                  : "bg-red-50 text-red-700 border-red-300"
+              }`}
+            >
+              {message.type === "success" ? (
+                <CheckCircle size={20} />
+              ) : (
+                <XCircle size={20} />
+              )}
+              <p className="text-sm font-medium">{message.text}</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
