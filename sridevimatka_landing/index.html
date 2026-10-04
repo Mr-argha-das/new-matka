@@ -1,1098 +1,1552 @@
-
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-    <title>Sridevimatka Game | Play Online Game</title>
-    <meta name="description" content="Sridevimatka Game is a very basic online game where you are required to guess numbers that range between 0 to 9. Anyone can become a master of the Sridevimatka.">
-    <meta name="keywords" content="Sridevimatka Game, Sridevimatka, Sridevimatka result, Kalyan bazar, Reddy Anna result, Sridevimatka, Sridevimatka download" />
-    <meta charset="UTF-8">
-    <meta property="og:title" content="Play Sridevimatka Game">
-    <meta property="og:type" content="Sridevimatka Game">
-    <meta property="og:image" content="assets/img/logo.png">
-    <meta property="og:site_name" content="Sridevimatka">
-    <meta property="og:description" content="Sridevimatka is a very basic online game where you are required to guess numbers that range between 0 to 9. Anyone can become a master of the Sridevimatka." />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/img/logo.png" type="image/png">
-    <link rel="icon" href="assets/img/logo.png" type="image/png">
-    <link href="https://sridevimatka.live/assets/home/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://sridevimatka.live/assets/home/css/style.css">
-    <link rel="stylesheet" href="https://sridevimatka.live/assets/home/css/responsive.css">
-    <style>
-        .float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 60px;
-            right: 10px;
-        }
-        .my-float {
-            margin-top: 22px;
-        }
-        .app-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .app-actions a,
-        .download-actions a {
-            border-radius: 999px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: 800;
-            line-height: 1;
-            text-decoration: none;
-            transition: transform 0.18s ease, box-shadow 0.18s ease;
-        }
-        .download-btn {
-            background: #16a34a;
-            color: #fff !important;
-            box-shadow: 0 10px 24px rgba(22, 163, 74, 0.22);
-        }
-        .play-btn {
-            background: #d59f22;
-            color: #111 !important;
-            box-shadow: 0 10px 24px rgba(213, 159, 34, 0.25);
-        }
-        .app-actions a {
-            min-height: 42px;
-            padding: 12px 18px;
-        }
-        .download-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .download-actions a {
-            min-height: 46px;
-            padding: 13px 18px;
-        }
-        .app-actions a:hover,
-        .download-actions a:hover {
-            transform: translateY(-1px);
-        }
-        .brand-logo {
-            height: 56px;
-            width: 56px;
-            border-radius: 16px;
-            object-fit: cover;
-        }
-        @media (max-width: 991px) {
-            .app-actions {
-                justify-content: flex-start;
-                margin-top: 12px;
-            }
-        }
-    </style>
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sridevimatka - Play Online Matka Safely | Trusted Matka Application</title>
+  <link rel="icon" type="image/png" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary-50: #e8f4fe;
+      --color-primary-100: #c7e4fd;
+      --color-primary-200: #90c9fb;
+      --color-primary-300: #59aef9;
+      --color-primary-400: #2293f7;
+      --color-primary-500: #0b63c6;
+      --color-primary-600: #1273e6;
+      --color-primary-700: #0a52a3;
+      --color-primary-800: #073b75;
+      --color-primary-900: #042547;
+      --color-accent-400: #ffd97a;
+      --color-accent-500: #ffc857;
+      --color-accent-600: #e6a82d;
+      --color-neutral-50: #f7fbff;
+      --color-neutral-100: #eef5fc;
+      --color-neutral-200: #dbe8f4;
+      --color-neutral-300: #b8cedf;
+      --color-neutral-400: #8ba6bc;
+      --color-neutral-500: #617a8e;
+      --color-neutral-600: #455564;
+      --color-neutral-700: #2e3a45;
+      --color-neutral-800: #1a2330;
+      --color-neutral-900: #0d1219;
+      --color-success: #22c55e;
+      --color-warning: #f59e0b;
+      --color-error: #ef4444;
+      --gradient-primary: linear-gradient(135deg, #1273e6 0%, #00a0ff 100%);
+      --gradient-hero: linear-gradient(180deg, #0b63c6 0%, #1273e6 50%, #00a0ff 100%);
+      --shadow-sm: 0 1px 2px #0b63c60d;
+      --shadow-md: 0 4px 12px #0b63c61a;
+      --shadow-lg: 0 8px 24px #0b63c626;
+      --shadow-xl: 0 16px 48px #0b63c633;
+      --shadow-button: 0 4px 14px #1273e659;
+      --shadow-card: 0 4px 20px #0b63c614, 0 1px 3px #0000000a;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
+      --font-heading: "Poppins", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--color-neutral-800);
+      background-color: var(--color-neutral-50);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      height: 72px;
+      display: flex;
+      align-items: center;
+    }
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .logo {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #0a2d5c;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .logo span.yellow { color: #f5c518; }
+    .logo span.blue { color: var(--color-primary-600); }
+    .logo-img {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 8px;
+      box-shadow: 0 2px 8px rgba(11,99,198,0.25);
+    }
+    .footer-logo span.blue { color: var(--color-primary-300); }
+    .footer-logo-img {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      object-fit: cover;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .logo-arrow {
+      display: inline-flex;
+      width: 22px; height: 22px;
+      background: #0a2d5c;
+      border-radius: 4px;
+      align-items: center;
+      justify-content: center;
+      margin-left: 2px;
+    }
+    .logo-arrow svg { width: 14px; height: 14px; fill: #fff; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-neutral-600);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--color-primary-600); }
+    .btn-download-nav {
+      background: var(--gradient-primary);
+      color: #fff;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: var(--shadow-button);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-download-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #1273e680; }
+    .btn-download-nav svg { width: 16px; height: 16px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--gradient-hero);
+      position: relative;
+      overflow: hidden;
+      padding: 3.5rem 0 4rem;
+      min-height: 620px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.06) 0%, transparent 40%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .hero-sub {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+    .hero-btns {
+      justify-content: center;
+    }
+    .hero-features {
+      justify-content: center;
+    }
+    .hero-feat {
+      align-items: center !important;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 3.4rem;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 0.15rem;
+    }
+    .hero h1 .yellow {
+      color: #ffc857;
+      display: block;
+    }
+    .hero-sub {
+      color: rgba(255,255,255,0.85);
+      font-size: 1.05rem;
+      margin: 1.25rem 0 1.75rem;
+      max-width: 420px;
+      line-height: 1.55;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .btn-yellow {
+      background: linear-gradient(135deg, #ffc857, #e6a82d);
+      color: #1a1a1a;
+      padding: 0.85rem 1.6rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: 0 4px 16px rgba(230,168,45,0.4);
+      transition: transform 0.2s;
+    }
+    .btn-yellow:hover { transform: translateY(-2px); }
+    .btn-outline-white {
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      color: #fff;
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      backdrop-filter: blur(4px);
+      transition: background 0.2s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.22); }
+    .hero-features {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-feat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.3rem;
+    }
+    .hero-feat-icon {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.25rem;
+    }
+    .hero-feat-icon svg { width: 18px; height: 18px; stroke: #fff; }
+    .hero-feat strong { color: #fff; font-size: 0.9rem; font-weight: 600; }
+    .hero-feat span { color: rgba(255,255,255,0.65); font-size: 0.78rem; }
+
+    .hero-img-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .hero-img-wrap img.woman {
+      max-height: 520px;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25));
+    }
+    /* Placeholder woman image using CSS art-like shape */
+    .hero-woman-placeholder {
+      width: 380px;
+      height: 500px;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.05) 100%);
+      border-radius: 20px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-woman-placeholder::after {
+      content: '👩‍💼';
+      font-size: 8rem;
+      opacity: 0.3;
+    }
+
+    /* Floating WhatsApp */
+    .wa-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      width: 56px; height: 56px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.08); }
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* ===== RATES SECTION ===== */
+    .rates-section {
+      padding: 5rem 0 4rem;
+      background: var(--color-neutral-50);
+      text-align: center;
+    }
+    .section-badge {
+      display: inline-block;
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 1rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 2.4rem;
+      color: var(--color-neutral-900);
+      margin-bottom: 0.6rem;
+    }
+    .section-title .blue { color: var(--color-primary-600); }
+    .section-sub {
+      color: var(--color-neutral-500);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+    .rates-card {
+      background: #fff;
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .rates-tabs {
+      background: var(--gradient-primary);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .rate-tab {
+      padding: 0.55rem 1.3rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .rate-tab.active {
+      background: #fff;
+      color: var(--color-primary-600);
+    }
+    .rates-body { padding: 1.75rem; }
+    .rates-body h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+    .rates-body .sub { color: var(--color-neutral-500); font-size: 0.85rem; margin-bottom: 1.25rem; }
+    .rates-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    .rate-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-neutral-50);
+      border-radius: var(--radius-xl);
+      padding: 0.9rem 1.1rem;
+      border: 1px solid var(--color-neutral-100);
+    }
+    .rate-item-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .rate-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .rate-icon.blue { background: #e8f4fe; }
+    .rate-icon.purple { background: #f0e8fe; }
+    .rate-icon.teal { background: #e0f7f4; }
+    .rate-icon.green { background: #e6f9ed; }
+    .rate-icon.pink { background: #fde8f0; }
+    .rate-icon.yellow { background: #fef6e0; }
+    .rate-name { font-weight: 600; font-size: 0.95rem; color: var(--color-neutral-900); }
+    .rate-label { font-size: 0.75rem; color: var(--color-neutral-400); }
+    .rate-value {
+      background: var(--color-neutral-900);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    /* ===== MARKETS SECTION ===== */
+    .markets-section {
+      padding: 4rem 0 3rem;
+      background: #f0f6fc;
+      position: relative;
+    }
+    .markets-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, #d0e4f8 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .markets-section .container { position: relative; z-index: 1; }
+    .market-card {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      padding: 1.15rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(11,99,198,0.06);
+      border: 1px solid var(--color-neutral-100);
+      flex-wrap: wrap;
+      gap: 1rem;
+      transition: box-shadow 0.2s;
+    }
+    .market-card:hover { box-shadow: var(--shadow-md); }
+    .market-left h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .status-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-full);
+    }
+    .status-badge.closed { background: #e8eef4; color: var(--color-neutral-500); }
+    .status-badge.live { background: var(--color-success); color: #fff; }
+    .status-badge.upcoming { background: #fef3c7; color: #b45309; }
+    .market-times {
+      font-size: 0.8rem;
+      color: var(--color-neutral-500);
+      margin-top: 0.2rem;
+    }
+    .market-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .market-result {
+      text-align: right;
+    }
+    .market-result .label {
+      font-size: 0.7rem;
+      color: var(--color-neutral-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .market-result .value {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--color-primary-600);
+      letter-spacing: 0.04em;
+    }
+    .market-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .btn-chart {
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--radius-lg);
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--color-primary-50);
+      color: var(--color-primary-600);
+      transition: background 0.2s;
+    }
+    .btn-chart:hover { background: var(--color-primary-100); }
+    .btn-chart.muted {
+      background: var(--color-neutral-100);
+      color: var(--color-neutral-500);
+    }
+    .btn-play {
+      background: var(--color-primary-600);
+      color: #fff;
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-lg);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background 0.2s;
+    }
+    .btn-play:hover { background: var(--color-primary-700); }
+    .view-all {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .view-all a {
+      color: var(--color-primary-600);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .view-all a:hover { text-decoration: underline; }
+
+    /* ===== STARLINE & JACKPOT ===== */
+    .results-grid-section {
+      padding: 2rem 0 4rem;
+      background: #f0f6fc;
+    }
+    .result-block {
+      background: #fff;
+      border-radius: var(--radius-2xl);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-card);
+    }
+    .result-block-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .result-block-header .icon {
+      width: 36px; height: 36px;
+      background: #fef3c7;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .result-block-header h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .result-block-header span {
+      font-size: 0.8rem;
+      color: var(--color-neutral-400);
+    }
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--color-neutral-100);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .time-cell {
+      padding: 1rem 0.75rem;
+      text-align: center;
+      border-right: 1px solid var(--color-neutral-100);
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+    .time-cell:nth-child(4n) { border-right: none; }
+    .time-cell .time {
+      font-size: 0.75rem;
+      color: var(--color-neutral-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      margin-bottom: 0.35rem;
+    }
+    .time-cell .val {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--color-primary-600);
+    }
+    .time-cell .val.muted { color: var(--color-neutral-300); }
+    .btn-view-chart {
+      display: block;
+      width: 100%;
+      background: var(--gradient-primary);
+      color: #fff;
+      padding: 0.85rem;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      transition: opacity 0.2s;
+    }
+    .btn-view-chart:hover { opacity: 0.9; }
+
+    /* ===== DOWNLOAD APP SECTION ===== */
+    .download-section {
+      background: var(--gradient-hero);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .download-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 70% 50%, rgba(255,255,255,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .download-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.15);
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+    }
+    .download-badge .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; }
+    .download-section h2 {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 2.6rem;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .download-section h2 .yellow { color: #ffc857; }
+    .download-section p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      max-width: 440px;
+    }
+    .feature-checks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 2rem;
+    }
+    .feature-check {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.9rem;
+    }
+    .feature-check svg { width: 18px; height: 18px; stroke: #22c55e; flex-shrink: 0; }
+    .download-cta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .safe-text {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .trust-badges {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.8rem;
+    }
+    .trust-badges span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .phone-mockup {
+      background: #1a2330;
+      border-radius: 36px;
+      padding: 12px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+      max-width: 280px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .phone-mockup::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 8px;
+      background: #0d1219;
+      border-radius: 4px;
+    }
+    .phone-screen {
+      background: linear-gradient(180deg, #1273e6, #0b63c6);
+      border-radius: 28px;
+      padding: 2.5rem 1.25rem 1.5rem;
+      min-height: 480px;
+      color: #fff;
+    }
+    .phone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .phone-header .app-name { font-weight: 700; font-size: 1.1rem; }
+    .phone-header .welcome { font-size: 0.75rem; opacity: 0.7; }
+    .wallet-card {
+      background: rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .wallet-card .label { font-size: 0.75rem; opacity: 0.7; }
+    .wallet-card .balance { font-size: 1.6rem; font-weight: 800; }
+    .wallet-card .change { font-size: 0.8rem; color: #86efac; }
+    .phone-btns {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .phone-btns .btn-add {
+      flex: 1;
+      background: #ffc857;
+      color: #1a1a1a;
+      font-weight: 700;
+      padding: 0.65rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .phone-btns .btn-wd {
+      flex: 1;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-weight: 600;
+      padding: 0.65rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .live-results-phone {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 0.85rem;
+    }
+    .live-results-phone .title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .live-results-phone .title .dot {
+      width: 6px; height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
+    .live-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .live-row:last-child { border-bottom: none; }
+    .live-row .res { color: #ffc857; font-weight: 700; }
+
+    /* ===== ABOUT SECTION ===== */
+    .about-section {
+      padding: 5rem 0;
+      background: #fff;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .about-section h2 {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 2.2rem;
+      margin-bottom: 1.25rem;
+      color: var(--color-neutral-900);
+    }
+    .about-section p {
+      color: var(--color-neutral-500);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+    .stats-row {
+      display: flex;
+      gap: 2.5rem;
+      margin: 2rem 0;
+    }
+    .stat-item .num {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 2rem;
+    }
+    .stat-item .num.blue { color: var(--color-primary-600); }
+    .stat-item .num.yellow { color: #e6a82d; }
+    .stat-item .num.green { color: var(--color-success); }
+    .stat-item .lbl {
+      font-size: 0.85rem;
+      color: var(--color-neutral-500);
+    }
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .cert-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: var(--color-neutral-50);
+      border-radius: var(--radius-lg);
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--color-neutral-100);
+    }
+    .cert-item .check {
+      width: 22px; height: 22px;
+      background: #dcfce7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .cert-item .check svg { width: 12px; height: 12px; stroke: #16a34a; }
+    .cert-item .title { font-size: 0.75rem; font-weight: 600; color: var(--color-neutral-400); text-transform: uppercase; letter-spacing: 0.03em; }
+    .cert-item .val { font-size: 0.9rem; font-weight: 600; color: var(--color-neutral-800); }
+    .feature-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .feat-card {
+      background: #fff;
+      border: 1px solid var(--color-neutral-100);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .feat-card .icon {
+      width: 40px; height: 40px;
+      background: var(--color-primary-50);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+    .feat-card h4 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+    }
+    .feat-card p {
+      font-size: 0.82rem;
+      color: var(--color-neutral-500);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #0d1219;
+      color: rgba(255,255,255,0.7);
+      padding: 4rem 0 2rem;
+      position: relative;
+    }
+    .footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 2.5rem;
+    }
+    .footer-logo {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+    .footer-logo span.yellow { color: #f5c518; }
+    .footer-desc {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      max-width: 260px;
+    }
+    .social-links {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+    .social-links a {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .social-links a:hover { background: rgba(255,255,255,0.15); }
+    .social-links svg { width: 16px; height: 16px; fill: #fff; }
+    .footer h4 {
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .footer ul { list-style: none; }
+    .footer ul li { margin-bottom: 0.55rem; }
+    .footer ul a {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .footer ul a:hover { color: #fff; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: rgba(255,255,255,0.7);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-badges {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.75rem;
+    }
+    .footer-disclaimer {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .download-grid, .about-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.4rem; }
+      .nav-links { display: none; }
+      .rates-grid { grid-template-columns: 1fr; }
+      .time-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .feature-cards { grid-template-columns: 1fr; }
+      .feature-checks { grid-template-columns: 1fr; }
+      .market-card { flex-direction: column; align-items: flex-start; }
+      .market-right { width: 100%; justify-content: space-between; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .stats-row { flex-direction: column; gap: 1rem; }
+      .hero-features { gap: 1.25rem; }
+    }
+  </style>
+</head>
 <body>
 
-<!-- header start -->
-<header class="sticky-top">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img src="assets/img/logo.png" alt="Sridevimatka" class="img-fluid brand-logo"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-center flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#charts">Charts</a>
-                        </li>
-                    </ul>
-                    <div class="text-lg-end Dapp app-actions">
-                        <a class="download-btn" href="app/sridevimatka.apk" download>Download App</a>
-                        <a class="play-btn" href="https://game.sridevimatka0.live">Play Now</a>
-                    </div>
-                </div>
-            </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="logo">
+      <img src="assets/img/logo.png" alt="Sridevimatka Logo" class="logo-img">
+      sridevi<span class="blue">matka</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#charts">Charts</a></li>
+      <li><a href="#rates">Rates</a></li>
+      <li><a href="#markets">Markets</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#howto">How To Play</a></li>
+    </ul>
+    <a href="app/sridevimatka.apk" class="btn-download-nav" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Download APK
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span> 100% Trusted & Fair</div>
+        <h1>
+          India's Most
+Trusted
+          <span class="yellow">Matka
+Application</span>
+        </h1>
+        <p class="hero-sub">Play Matka safely with real-time updates and instant payouts. Best Market Rates</p>
+        <div class="hero-btns">
+          <a href="app/sridevimatka.apk" class="btn-yellow" download>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download APK
+          </a>
+          <a href="#download" class="btn-outline-white">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Get the App
+          </a>
         </div>
-    </nav>
-
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '755308453873213');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=755308453873213&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
-
-</header>
-<!-- header end -->
-
-<!-- main start -->
-<main>
-    <div class="download-app x">
-        <div class="container">
-            <div class="download-actions">
-                <a href="app/sridevimatka.apk" download class="download-btn">
-                    <svg viewBox="64 64 896 896" focusable="false" data-icon="android" width="28px" height="28px"
-                         fill="currentColor" aria-hidden="true">
-                        <i style="height: 35px;" class="fa-brands fa-download"></i>
-                    </svg> <strong>Download Now</strong>
-                </a>
-                <a href="https://game.sridevimatka0.live" class="play-btn"><strong>Play Now</strong></a>
+        <div class="hero-features">
+          <div class="hero-feat">
+            <div class="hero-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
+            <strong>100% Secure</strong>
+            <span>Safe Payments</span>
+          </div>
+          <div class="hero-feat">
+            <div class="hero-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <strong>Instant Payouts</strong>
+            <span>Within Minutes</span>
+          </div>
+          <div class="hero-feat">
+            <div class="hero-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+            </div>
+            <strong>Best Rates</strong>
+            <span>Guaranteed</span>
+          </div>
         </div>
+      </div>
+      
     </div>
+  </div>
+</section>
 
-    <div class="slider-img">
-        <div class="container">
-            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="10000">
-                        <img src="https://sridevimatka.live/assets/home/images/bannerimage.jpg" class="d-block w-100 img-fluid" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+<!-- WhatsApp Float -->
+<a href="https://wa.me/" class="wa-float" target="_blank" rel="noopener" title="Chat with Sridevimatka on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- RATES SECTION -->
+<section class="rates-section" id="rates">
+  <div class="container">
+    <span class="section-badge">💰 Best Payout Rates</span>
+    <h2 class="section-title">Market <span class="blue">Rates</span></h2>
+    <p class="section-sub">Highest payout rates in the industry. Win big with every game!</p>
+    <div class="rates-card">
+      <div class="rates-tabs">
+        <span class="rate-tab active">🎯 Main Market</span>
+      </div>
+      <div class="rates-body">
+        <h3>Main Market Rates</h3>
+        <p class="sub">Win rates for main market games</p>
+        <div class="rates-grid">
+          <div class="rate-item">
+            <div class="rate-item-left">
+              <div class="rate-icon blue">🎲</div>
+              <div>
+                <div class="rate-name">Single Digit</div>
+                <div class="rate-label">Win Rate</div>
+              </div>
             </div>
+            <span class="rate-value">10 ka 95</span>
+          </div>
+          <div class="rate-item">
+            <div class="rate-item-left">
+              <div class="rate-icon purple">🔢</div>
+              <div>
+                <div class="rate-name">Jodi Digit</div>
+                <div class="rate-label">Win Rate</div>
+              </div>
+            </div>
+            <span class="rate-value">10 ka 950</span>
+          </div>
+          <div class="rate-item">
+            <div class="rate-item-left">
+              <div class="rate-icon teal">🃏</div>
+              <div>
+                <div class="rate-name">Single Pana</div>
+                <div class="rate-label">Win Rate</div>
+              </div>
+            </div>
+            <span class="rate-value">10 ka 1400</span>
+          </div>
+          <div class="rate-item">
+            <div class="rate-item-left">
+              <div class="rate-icon green">🎴</div>
+              <div>
+                <div class="rate-name">Double Pana</div>
+                <div class="rate-label">Win Rate</div>
+              </div>
+            </div>
+            <span class="rate-value">10 ka 2800</span>
+          </div>
+          <div class="rate-item">
+            <div class="rate-item-left">
+              <div class="rate-icon pink">👑</div>
+              <div>
+                <div class="rate-name">Triple Pana</div>
+                <div class="rate-label">Win Rate</div>
+              </div>
+            </div>
+            <span class="rate-value">10 ka 7000</span>
+          </div>
+          <div class="rate-item">
+            <div class="rate-item-left">
+              <div class="rate-icon yellow">💎</div>
+              <div>
+                <div class="rate-name">Half Sangam</div>
+                <div class="rate-label">Win Rate</div>
+              </div>
+            </div>
+            <span class="rate-value">10 ka 10000</span>
+          </div>
+          <div class="rate-item">
+            <div class="rate-item-left">
+              <div class="rate-icon blue">🏆</div>
+              <div>
+                <div class="rate-name">Full Sangam</div>
+                <div class="rate-label">Win Rate</div>
+              </div>
+            </div>
+            <span class="rate-value">10 ka 100000</span>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETS SECTION -->
+<section class="markets-section" id="markets">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-badge">📊 Live Market Results</span>
+      <h2 class="section-title">Today's <span class="blue">Markets</span></h2>
+      <p class="section-sub">Real-time results from all major matka markets</p>
     </div>
 
-    <!-- Game Rates start -->
-    <div class="game-rate">
-        <div class="container">
-            <h2>Game Rates</h2>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Single Digit (General)</h4><p>1 RS KA 10.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Jodi Digit (General)</h4><p>1 RS KA 100.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Single Pana (General)</h4><p>1 RS KA 150.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Double Pana (General)</h4><p>1 RS KA 300.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Triple Pana (General)</h4><p>1 RS KA 1000.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Half Sangam A (General)</h4><p>1 RS KA 1000.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Half Sangam B (General)</h4><p>1 RS KA 1000.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Full Sangam (General)</h4><p>1 RS KA 10000.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Single Digit (Start line)</h4><p>1 RS KA 10.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Single Pana (Start line)</h4><p>1 RS KA 150.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Double Pana (Start line)</h4><p>1 RS KA 300.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Triple Pana (Start line)</h4><p>1 RS KA 1000.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Jodi (Desawar)</h4><p>1 RS KA 100.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Andar (Desawar)</h4><p>1 RS KA 10.00 Rs</p>
-                    </div></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="box"><div class="item">
-                        <img src="https://sridevimatka.live/assets/home/images/icon.png" alt="img" class="img-fluid">
-                        <h4>Bahar (Desawar)</h4><p>1 RS KA 10.00 Rs</p>
-                    </div></div>
-                </div>
-            </div>
+    <div class="market-card">
+      <div class="market-left">
+        <h3>RAJAN MORNING <span class="status-badge closed">Closed</span></h3>
+        <div class="market-times">⏰ Open: 09:00 AM &nbsp;•&nbsp; Close: 10:00 AM</div>
+      </div>
+      <div class="market-right">
+        <div class="market-result">
+          <div class="label">Result</div>
+          <div class="value">***-**-***</div>
         </div>
-    </div>
-    <!-- Game Rates end -->
-
-    <!-- Available Games start -->
-    <div class="AvailableGames" id="charts">
-        <div class="container">
-            <h2>Available Games</h2>
-            <div class="box">
-                <div class="row">
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">03:00 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">05:00 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/242">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">MILAN DAY</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">03:05 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">05:00 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/243">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">RAJDHANI DAY</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">07:10 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">08:10 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/244">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">SRIDEVI NIGHT</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">09:05 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">11:05 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/245">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">MILAN NIGHT</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">09:34 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">11:40 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/246">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">RAJDHANI NIGHT</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">09:35 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">11:35 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/247">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">KALYAN NIGHT</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">09:55 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">11:57 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/248">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">MAIN BAZAR</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">08:30 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">10:30 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/249">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">MADHUR NIGHT</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">11:30 AM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">12:30 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/250">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">SRIDEVI</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">01:00 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">02:00 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/251">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">TIME BAZAR</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">10:29 AM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">11:30 AM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/252">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">MILAN MORNING</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">10:00 AM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">11:00 AM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/253">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">KARNATAKA DAY</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">09:50 AM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">10:50 AM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/254">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">SRIDEVI MORNING</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">11:30 AM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">12:30 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/256">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">MADHUR MORNING</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">03:30 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">05:30 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/257">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">SUPREME DAY</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">08:45 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">10:45 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/258">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">SUPREME NIGHT</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">01:10 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">02:10 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/259">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">MADHUR DAY</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                        <div class="col-lg-6 col-md-12 wow fadeFromUp">
-                        <div class="service_content_box relative-position">
-                            <div class="d-flex justify-content-between">
-                                <a href="#">
-                                    <img src="https://sridevimatka.live/assets/home/images/open-clock-icon.jpg">04:00 PM<br>
-                                    <img src="https://sridevimatka.live/assets/home/images/close-clock-icon.jpg">06:00 PM                                </a>
-                                <a class="ml-auto" href="https://sridevimatka.live/game-result-chart/260">
-                                    <img src="https://sridevimatka.live/assets/home/images/graph-icon81.png" style="width: 70%;"><br>
-                                </a>
-                                <a href="#" class="ml-auto">
-                                    <img src="https://sridevimatka.live/assets/home/images/message-icon.jpg">29-06-2026                                </a>
-                            </div>
-                            <div class="service_text_box saas2-headline pera-content">
-                                <h3 style="padding: 5px;" class="text-center d-flex justify-content-between align-items-center">
-                                    <span class="mx-auto">KALYAN</span>
-                                    <a href="https://game.sridevimatka0.live" target="_blank">
-                                        <img src="https://sridevimatka.live/assets/home/images/play.png" alt="Play" style="width: 42px; vertical-align: middle;">
-                                    </a>
-                                </h3>
-
-                                
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <p style="font-size:16px;color:blue;">Open Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Jodi Number</p>
-                                        <div class="price-box text-center position-relative">**</div>
-                                    </div>
-                                    <div class="ml-auto">
-                                        <p style="font-size:16px;color:blue;">Close Result</p>
-                                        <div class="price-box text-center position-relative">***</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                                    </div>
-            </div>
+        <div class="market-actions">
+          <a href="#" class="btn-chart">📊 Chart</a>
+          <a href="#download" class="btn-play">▶ Play</a>
         </div>
+      </div>
     </div>
-    <!-- Available Games end -->
 
-    <!-- FAQ start -->
-    <div class="faq">
-        <div class="container">
-            <div class="faq_top text-center">
-                <h2>Frequently asked <strong>questions?</strong></h2>
-            </div>
-            <div class="box">
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item shadow">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                What is Sridevimatka ?
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>Sridevimatka Is A Satta Matka Gaming App Where You Can Play Games And Win Jackpot.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item shadow">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                What are games available on Sridevimatka ?
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>Popular Satta Matka Games Like Kalyan, Sridevi, Milan, Time Bazar, Matka & Rajdhani.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item shadow">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Is Sridevimatka Have Licence ?
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>Yes, Matka International N.V. Have Sub License In Isle Of Man. All Rights That Allows To Operate Software Worldwide.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item shadow">
-                        <h2 class="accordion-header" id="headingOne1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
-                                What Is Minimum Deposit and Withdrawals ?
-                            </button>
-                        </h2>
-                        <div id="collapseOne1" class="accordion-collapse collapse" aria-labelledby="headingOne1" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>In Sridevimatka We Allow 100 Rs/- Deposit and 100 Rs/- Withdrawals.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item shadow">
-                        <h2 class="accordion-header" id="headingTwo1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo1" aria-expanded="false" aria-controls="collapseTwo1">
-                                Why to Choose Sridevimatka Among Other Providers ?
-                            </button>
-                        </h2>
-                        <div id="collapseTwo1" class="accordion-collapse collapse" aria-labelledby="headingTwo1" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p>Sridevimatka Is The Most Trusted Gaming Provider Worldwide.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="market-card">
+      <div class="market-left">
+        <h3>SRIDEVI DAY <span class="status-badge closed">Closed</span></h3>
+        <div class="market-times">⏰ Open: 02:00 PM &nbsp;•&nbsp; Close: 03:00 PM</div>
+      </div>
+      <div class="market-right">
+        <div class="market-result">
+          <div class="label">Result</div>
+          <div class="value">***-**-***</div>
         </div>
-    </div>
-    <!-- FAQ end -->
-
-    <div class="footer-top text-center">
-        <div class="container">
-            <div class="item-top">
-                <a href=""><img src="assets/img/logo.png" alt="img" class="img-fluid"></a>
-            </div>
-            <div class="pluse18">
-                <img src="https://sridevimatka.live/assets/home/images/18plus.svg" alt="img" class="img-fluid">
-                <p>Players need to be 18+ in order to register. Underage gambling is prohibited.</p>
-            </div>
-            <div class="item-brand d-sm-flex justify-content-between">
-                <a href="" class="mb-sm-0 mb-4"><img src="https://sridevimatka.live/assets/home/images/gambleaware.svg" alt="img" class="img-fluid"></a>
-                <a href=""><img src="https://sridevimatka.live/assets/home/images/gamblingtherapy.svg" alt="img" class="img-fluid"></a>
-            </div>
-            <div class="text-item">
-                <p>Our website is operated by Matka International, a company established under the law of Isle of Man, with registered address at 1-10 Ballanoa Meadow IM4-2HT, Isle Of Man, and having its gaming sublicense issued by Isle of Man e-Gaming and all rights to operate the gaming software worldwide.</p>
-            </div>
+        <div class="market-actions">
+          <a href="#" class="btn-chart">📊 Chart</a>
+          <a href="#download" class="btn-play">▶ Play</a>
         </div>
+      </div>
     </div>
 
-    <div class="justify-content-center d-flex justify-content-between">
-        <a href="" target="_blank" class="float">
-            <img style="width:55px;height:55px;" src="https://sridevimatka.live/assets/home/images/telegram-logo.png" class="img-fluid" alt="">
-        </a>
+    <div class="market-card">
+      <div class="market-left">
+        <h3>RAJAN NIGHT <span class="status-badge closed">Closed</span></h3>
+        <div class="market-times">⏰ Open: 09:00 PM &nbsp;•&nbsp; Close: 10:00 PM</div>
+      </div>
+      <div class="market-right">
+        <div class="market-result">
+          <div class="label">Result</div>
+          <div class="value">***-**-***</div>
+        </div>
+        <div class="market-actions">
+          <a href="#" class="btn-chart">📊 Chart</a>
+          <a href="#download" class="btn-play">▶ Play</a>
+        </div>
+      </div>
     </div>
-</main>
-<!-- main end -->
 
-<footer>
-    <div class="container text-center">
-        <p class="mb-0">Copyright ©
-            <script>document.write(new Date().getFullYear());</script>
-            Sridevimatka. All Rights Reserved
-        </p>
+  </div>
+</section>
+
+<!-- STARLINE & JACKPOT RESULTS -->
+<section class="results-grid-section">
+  <div class="container">
+
+    <div class="result-block">
+      <div class="result-block-header">
+        <div class="icon">⭐</div>
+        <div>
+          <h3>Starline Results</h3>
+          <span>Hourly results throughout the day</span>
+        </div>
+      </div>
+      <div class="time-grid">
+        <div class="time-cell"><div class="time">🕐 10:00 AM</div><div class="val muted">***-*</div></div>
+        <div class="time-cell"><div class="time">🕚 11:00 AM</div><div class="val muted">***-*</div></div>
+        <div class="time-cell"><div class="time">🕛 12:00 PM</div><div class="val muted">***-*</div></div>
+        <div class="time-cell"><div class="time">🕐 01:00 PM</div><div class="val muted">***-*</div></div>
+        <div class="time-cell"><div class="time">🕑 02:00 PM</div><div class="val muted">***-*</div></div>
+        <div class="time-cell"><div class="time">🕒 03:00 PM</div><div class="val muted">***-*</div></div>
+        <div class="time-cell"><div class="time">🕓 04:00 PM</div><div class="val muted">***-*</div></div>
+        <div class="time-cell"><div class="time">🕔 05:00 PM</div><div class="val muted">***-*</div></div>
+      </div>
+      <a href="#" class="btn-view-chart">View Starline Chart</a>
     </div>
+
+    <div class="result-block">
+      <div class="result-block-header">
+        <div class="icon">🎰</div>
+        <div>
+          <h3>Jackpot Results</h3>
+          <span>Hourly jackpot draws</span>
+        </div>
+      </div>
+      <div class="time-grid">
+        <div class="time-cell"><div class="time">🕐 10:00 AM</div><div class="val muted">**-**</div></div>
+        <div class="time-cell"><div class="time">🕚 11:00 AM</div><div class="val muted">**-**</div></div>
+        <div class="time-cell"><div class="time">🕛 12:00 PM</div><div class="val muted">**-**</div></div>
+        <div class="time-cell"><div class="time">🕐 01:00 PM</div><div class="val muted">**-**</div></div>
+        <div class="time-cell"><div class="time">🕑 02:00 PM</div><div class="val muted">**-**</div></div>
+        <div class="time-cell"><div class="time">🕒 03:00 PM</div><div class="val muted">**-**</div></div>
+        <div class="time-cell"><div class="time">🕓 04:00 PM</div><div class="val muted">**-**</div></div>
+        <div class="time-cell"><div class="time">🕔 05:00 PM</div><div class="val muted">**-**</div></div>
+      </div>
+      <a href="#" class="btn-view-chart">View Jackpot Chart</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- DOWNLOAD APP SECTION -->
+<section class="download-section" id="download">
+  <div class="container">
+    <div class="download-grid">
+      <div>
+        <div class="download-badge"><span class="dot"></span> Available for Android</div>
+        <h2>Download the <span class="yellow">Sridevimatka App</span> Today!</h2>
+        <p>Get the fastest matka experience on your phone. Live results, instant deposits & withdrawals, and 24x7 support.</p>
+        <div class="feature-checks">
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Live Results & Charts
+          </div>
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Instant Deposit & Withdrawal
+          </div>
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            24x7 Customer Support
+          </div>
+          <div class="feature-check">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Secure & Private
+          </div>
+        </div>
+        <div class="download-cta">
+          <a href="app/sridevimatka.apk" class="btn-yellow" download>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download APK Now
+          </a>
+          <span class="safe-text">🛡️ 100% Safe & Virus Free</span>
+        </div>
+        <div class="trust-badges">
+          <span>⭐ 4.8 Rating</span>
+          <span>⬇️ 1M+ Downloads</span>
+          <span>🔒 SSL Secured</span>
+        </div>
+      </div>
+      <div>
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <div>
+                <div class="app-name">Sridevimatka</div>
+                <div class="welcome">Welcome back!</div>
+              </div>
+              <div style="width:32px;height:32px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;">👤</div>
+            </div>
+            <div class="wallet-card">
+              <div class="label">Wallet Balance</div>
+              <div class="balance">₹12,500</div>
+              <div class="change">+₹2,400 today</div>
+            </div>
+            <div class="phone-btns">
+              <div class="btn-add">+ Add Cash</div>
+              <div class="btn-wd">Withdraw</div>
+            </div>
+            <div class="live-results-phone">
+              <div class="title"><span class="dot"></span> Live Results</div>
+              <div class="live-row"><span>RAJAN MORNING</span><span class="res">***-**-***</span></div>
+              <div class="live-row"><span>SRIDEVI DAY</span><span class="res">***-**-***</span></div>
+              <div class="live-row"><span>RAJAN NIGHT</span><span class="res">***-**-***</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <span class="section-badge">🏆 Trusted Since 2015</span>
+        <h2>India's Most Trusted Matka Platform</h2>
+        <p>Sridevimatka has been serving lakhs of players across India with a fair, transparent, and secure matka gaming experience. Our platform offers the best rates in the industry with instant payouts.</p>
+        <p>We believe in complete transparency — all results are declared on time, and every transaction is secure and traceable.</p>
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="num blue">10L+</div>
+            <div class="lbl">Happy Players</div>
+          </div>
+          <div class="stat-item">
+            <div class="num yellow">₹50Cr+</div>
+            <div class="lbl">Payouts Done</div>
+          </div>
+          <div class="stat-item">
+            <div class="num green">99.9%</div>
+            <div class="lbl">Uptime</div>
+          </div>
+        </div>
+        <div class="cert-list">
+          <div class="cert-item">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div>
+              <div class="title">Secure Payments</div>
+              <div class="val">UPI, Bank Transfer, Paytm supported</div>
+            </div>
+          </div>
+          <div class="cert-item">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div>
+              <div class="title">Fast Withdrawals</div>
+              <div class="val">Money in your account within minutes</div>
+            </div>
+          </div>
+          <div class="cert-item">
+            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div>
+              <div class="title">24x7 Support</div>
+              <div class="val">WhatsApp & call support always available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-cards">
+        <div class="feat-card">
+          <div class="icon">⚡</div>
+          <h4>Instant Results</h4>
+          <p>Get live market results the moment they are declared. No delays, no refresh needed.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">💸</div>
+          <h4>Best Rates</h4>
+          <p>Highest payout rates in the industry — up to 10 ka 100000 on Full Sangam.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">🔐</div>
+          <h4>100% Secure</h4>
+          <p>Your money and data are protected with bank-grade security and SSL encryption.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">🎧</div>
+          <h4>24x7 Support</h4>
+          <p>Our support team is available round the clock on WhatsApp and phone.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="assets/img/logo.png" alt="Sridevimatka Logo" class="footer-logo-img">sridevi<span class="blue">matka</span></div>
+        <p class="footer-desc">India's most trusted online matka platform. Play responsibly and win big with the best rates in the industry.</p>
+        <div class="social-links">
+          <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg></a>
+          <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#rates">Market Rates</a></li>
+          <li><a href="#markets">Today's Markets</a></li>
+          <li><a href="#charts">Charts</a></li>
+          <li><a href="#download">Download App</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Markets</h4>
+        <ul>
+          <li><a href="#markets">RAJAN MORNING</a></li>
+          <li><a href="#markets">SRIDEVI DAY</a></li>
+          <li><a href="#markets">RAJAN NIGHT</a></li>
+          <li><a href="#markets">Starline</a></li>
+          <li><a href="#markets">Jackpot</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <div class="contact-item">📞 +91 00000 00000</div>
+        <div class="contact-item">💬 WhatsApp Support</div>
+        <div class="contact-item">🕐 24x7 Available</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-badges">
+        <span>🔒 SSL Secured</span>
+        <span>✅ 100% Safe</span>
+        <span>⚡ Instant Payouts</span>
+      </div>
+      <p class="footer-copy">© 2026 Sridevimatka. All rights reserved.</p>
+      <p class="footer-disclaimer">Disclaimer: This website is intended for entertainment purposes only. Participation may be subject to local laws. Please play responsibly. Sridevimatka is not responsible for any financial losses. Users must be 18 years or older.</p>
+    </div>
+  </div>
 </footer>
-
-<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-
 
 </body>
 </html>
