@@ -362,25 +362,25 @@ export default function StarlineMarket() {
           <div className="flex justify-between text-sm">
             <span>Single Digit</span>
             <span>
-              {gameRates?.single_digit_1}–{gameRates?.single_digit_2}
+              {gameRates?.starline_single_digit_1}–{gameRates?.starline_single_digit_2}
             </span>
           </div>
           <div className="flex justify-between text-sm">
             <span>Single Pana</span>
             <span>
-              {gameRates?.single_pana_1}–{gameRates?.single_pana_2}
+              {gameRates?.starline_single_pana_1}–{gameRates?.starline_single_pana_2}
             </span>
           </div>
           <div className="flex justify-between text-sm">
             <span>Double Pana</span>
             <span>
-              {gameRates?.double_pana_1}–{gameRates?.double_pana_2}
+              {gameRates?.starline_double_pana_1}–{gameRates?.starline_double_pana_2}
             </span>
           </div>
           <div className="flex justify-between text-sm">
             <span>Triple Pana</span>
             <span>
-              {gameRates?.tripple_pana_1}–{gameRates?.tripple_pana_2}
+              {gameRates?.starline_tripple_pana_1}–{gameRates?.starline_tripple_pana_2}
             </span>
           </div>
         </div>
