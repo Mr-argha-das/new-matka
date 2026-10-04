@@ -40,9 +40,18 @@ export default function AdminSiteData() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    await axios.post(`${API_BASE}/sitedata/update`, siteData);
-    setLoading(false);
-    alert("siteData updated successfully!");
+    try {
+      await axios.post(`${API_BASE}/sitedata/update`, siteData);
+      alert("siteData updated successfully!");
+    } catch (err) {
+      console.error("SiteData update error:", err);
+      alert(
+        "FAILED to update siteData! " +
+          (err.response?.data?.detail || err.message || "Unknown error")
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
