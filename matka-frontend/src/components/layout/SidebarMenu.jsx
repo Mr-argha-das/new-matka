@@ -61,6 +61,7 @@ export default function SidebarMenu({ sidebar, setSidebar }) {
     { icon: <Clock size={20} />, label: "My Bids", link: "/my-bids" },
     { icon: <DollarSign size={20} />, label: "Add Points", link: "/add-points" },
     { icon: <Star size={20} />, label: "Starline", link: "/starline" },
+    { icon: <Trophy size={20} />, label: "Jackpot", link: "/jackpot-play" },
     { icon: <SiMarketo size={20} />, label: "Galidesawar", link: "/golidesawar" },
     { icon: <Play size={20} />, label: "Withdrawal Funds", link: "/withdrawal-request" },
     { icon: <Clock size={20} />, label: "Bid History", link: "/bid-history" },

@@ -44,6 +44,9 @@ import StarlineWinHistory from "./pages/StarlineUI/StarlineWinHistory";
 
 import AdminJackpot from "./pages/Admin/Jackpot/AdminJackpot";
 import JackpotGame from "./pages/JackpotUI/JackpotGame";
+import JackpotMarkets from "./pages/JackpotUI/JackpotMarkets";
+import JackpotGameSelect from "./pages/JackpotUI/JackpotGameSelect";
+import JackpotPlayBid from "./pages/JackpotUI/JackpotPlayBid";
 import JackpotBidHistory from "./pages/JackpotUI/JackpotBidHistory";
 import JackpotWinHistory from "./pages/JackpotUI/JackpotWinHistory";
 
@@ -282,6 +285,13 @@ const App = () => {
             <Route path="jackpot-win-history" element={<JackpotWinHistory />} />
 
             <Route path="golidesawar" element={<JackpotGame />} />
+
+            <Route path="jackpot-play" element={<JackpotMarkets />} />
+            <Route path="/jackpot-play/:marketId" element={<JackpotGameSelect />} />
+            <Route
+              path="/jackpot-play/:marketId/:gameId"
+              element={<JackpotPlayBid />}
+            />
             <Route path="/king/:marketId" element={<JackpotDigitSelect />} />
             <Route path="/king-win-history" element={<GWinHistory />} />
             <Route path="/king-bids-history" element={<AllUserBids />} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Wallet, WalletCards, Star } from "lucide-react";
+import { Wallet, WalletCards, Star, Trophy } from "lucide-react";
 import { BsWhatsapp } from "react-icons/bs";
 import { API_URL, SUPPORT_PHONE } from "../config";
 import axios from "axios";
@@ -101,9 +101,12 @@ export default function Dashboard() {
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-3 w-full mt-3">
+          <div className="grid grid-cols-3 gap-3 w-full mt-3">
             <a href={`/starline`} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
               <Star size={18} className="text-[#FBBF24]" fill="#FBBF24" /> Starline
+            </a>
+            <a href={`/jackpot-play`} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
+              <Trophy size={18} className="text-[#1565D8]" /> Jackpot
             </a>
             <a href={`https://wa.me/${SUPPORT_PHONE}`} target="_blank" rel="noopener noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
               <BsWhatsapp size={18} className="text-[#25D366]" /> Whatsapp
