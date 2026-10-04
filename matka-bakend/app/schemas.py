@@ -63,6 +63,7 @@ class siteDataSchema(BaseModel):
 
     dashboard_notification_line: str | None = None
     add_fund_notification_line: str | None = None
+    games_page_marquee: str | None = None
 
     upi_id: str | None = None
     upi_gateway_merchant_id: str | None = None

@@ -12,6 +12,7 @@ export default function AdminSiteData() {
     whatsapp_number: "",
     telegram_link: "",
     dashboard_notification_line: "Welcome!",
+    games_page_marquee: "",
     add_fund_notification_line: "Deposit bonus!",
     upi_id: "test@upi",
     upi_gateway_merchant_id: "GATEWAY123",
@@ -112,6 +113,17 @@ export default function AdminSiteData() {
             value={siteData.add_fund_notification_line}
             onChange={handleChange}
             placeholder="Add Fund Notification Line"
+            className="w-full mt-1 px-3 py-2 border border-gray-50/15 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="font-medium text-sm">Games Page Marquee</label>
+          <input
+            name="games_page_marquee"
+            value={siteData.games_page_marquee || ""}
+            onChange={handleChange}
+            placeholder="Games page par chalne wala marquee text"
             className="w-full mt-1 px-3 py-2 border border-gray-50/15 rounded"
           />
         </div>

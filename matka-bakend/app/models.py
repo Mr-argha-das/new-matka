@@ -199,6 +199,7 @@ class siteData(Document):
     # Notification lines
     dashboard_notification_line = StringField(default="")
     add_fund_notification_line = StringField(default="")
+    games_page_marquee = StringField(default="")
 
     # UPI Fields
     upi_id = StringField(default="")

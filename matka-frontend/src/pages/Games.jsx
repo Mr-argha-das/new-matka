@@ -8,6 +8,7 @@ import { isMarketPlayable } from "../utils/marketTime";
 export default function Games() {
   const { marketId } = useParams();
   const [market, setMarket] = useState(null);
+  const [marquee, setMarquee] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [now, setNow] = useState(() => new Date());
@@ -69,6 +70,15 @@ export default function Games() {
     { name: "Jodi Family", icon: <Users size={28} /> },
   ];
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get(`${API_URL}/sitedata/get`);
+        setMarquee(res.data?.games_page_marquee || "");
+      } catch {}
+    })();
+  }, []);
+
   if (isLoading) return <div className="text-center py-20 max-w-md mx-auto min-h-screen bg-white text-black">Loading Market...</div>;
   if (error) return <div className="text-center py-20 max-w-md mx-auto min-h-screen bg-white text-red-600">{error}</div>;
   if (!market) return <div className="text-center py-20 max-w-md mx-auto min-h-screen bg-white text-black">Market Not Found</div>;
@@ -86,6 +96,15 @@ export default function Games() {
           {market?.name}
         </h2>
       </div>
+
+      {/* Admin-set Marquee */}
+      {marquee && (
+        <div className="w-full overflow-hidden bg-[#E8F1FF] border-b border-[#C7DDFF] py-2">
+          <p className="animate-marquee whitespace-nowrap text-[13px] font-semibold text-[#0A3796]">
+            {marquee}
+          </p>
+        </div>
+      )}
 
       {/* Market Info - light gray */}
       <div className="bg-[#F0F6FF] border-b border-gray-200 px-4 py-2.5 flex justify-between text-[12px]">

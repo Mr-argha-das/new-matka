@@ -212,6 +212,13 @@ button {
   animation: fadeInOut 12s ease forwards;
 }
 
+.animate-marquee {
+  display: inline-block;
+  min-width: 100%;
+  animation: marquee 14s linear infinite;
+  will-change: transform;
+}
+
 /* ================================================================
    Legacy dark-theme classes -> Royal Blue light theme
    (client pages only - admin panel .admin-shell is excluded)
