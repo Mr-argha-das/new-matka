@@ -101,14 +101,14 @@ export default function Dashboard() {
           </div>
 
           <div className="grid grid-cols-3 gap-3 w-full mt-3">
-            <a href={`/starline`} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
-              <Star size={18} className="text-[#FBBF24]" fill="#FBBF24" /> Starline
+            <a href={`/starline`} className="flex w-full items-center justify-center gap-1.5 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-2 py-2.5 text-[13px] font-bold text-black transition">
+              <Star size={18} className="text-[#FBBF24] shrink-0" fill="#FBBF24" /> Starline
             </a>
-            <a href={`/jackpot-play`} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
-              <Trophy size={18} className="text-[#1565D8]" /> Jackpot
+            <a href={`/jackpot-play`} className="flex w-full items-center justify-center gap-1.5 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-2 py-2.5 text-[13px] font-bold text-black transition">
+              <Trophy size={18} className="text-[#1565D8] shrink-0" /> Jackpot
             </a>
-            <a href={`https://wa.me/${SUPPORT_PHONE}`} target="_blank" rel="noopener noreferrer" className="flex w-full items-center justify-center gap-2 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-4 py-2.5 text-sm font-bold text-black transition">
-              <BsWhatsapp size={18} className="text-[#25D366]" /> Whatsapp
+            <a href={`https://wa.me/${SUPPORT_PHONE}`} target="_blank" rel="noopener noreferrer" className="flex w-full items-center justify-center gap-1.5 rounded-full bg-[#E8F1FF] hover:bg-[#D6E6FF] px-2 py-2.5 text-[13px] font-bold text-black transition">
+              <BsWhatsapp className="text-[#25D366] shrink-0 w-[18px] h-[18px] min-w-[18px]" /> Whatsapp
             </a>
           </div>
         </div>
