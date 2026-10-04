@@ -175,6 +175,7 @@ export default function GameRates() {
     starline_single_pana_1: 10,
     starline_double_pana_1: 10,
     starline_tripple_pana_1: 10,
+    jackpot_jodi_1: 10,
 
     // -------- MULTIPLIER --------
     single_digit_x: 10,
@@ -190,6 +191,7 @@ export default function GameRates() {
     starline_single_pana_x: 10,
     starline_double_pana_x: 10,
     starline_tripple_pana_x: 10,
+    jackpot_jodi_x: 100,
 
     // -------- WIN (_2) --------
     single_digit_2: 100,
@@ -205,6 +207,7 @@ export default function GameRates() {
     starline_single_pana_2: 1500,
     starline_double_pana_2: 3000,
     starline_tripple_pana_2: 7000,
+    jackpot_jodi_2: 1000,
   });
 
   const fetchRates = async () => {

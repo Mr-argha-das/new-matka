@@ -61,6 +61,26 @@ export default function GameRatePage() {
       label: "Full Sangam",
       rate: `${chart.full_sangam_1}-${chart.full_sangam_2}`,
     },
+    {
+      label: "Starline Single Digit",
+      rate: `${chart.starline_single_digit_1 ?? 10}-${chart.starline_single_digit_2 ?? 100}`,
+    },
+    {
+      label: "Starline Single Panna",
+      rate: `${chart.starline_single_pana_1 ?? 10}-${chart.starline_single_pana_2 ?? 1500}`,
+    },
+    {
+      label: "Starline Double Panna",
+      rate: `${chart.starline_double_pana_1 ?? 10}-${chart.starline_double_pana_2 ?? 3000}`,
+    },
+    {
+      label: "Starline Tripple Panna",
+      rate: `${chart.starline_tripple_pana_1 ?? 10}-${chart.starline_tripple_pana_2 ?? 7000}`,
+    },
+    {
+      label: "Jackpot Jodi",
+      rate: `${chart.jackpot_jodi_1 ?? 10}-${chart.jackpot_jodi_2 ?? 1000}`,
+    },
   ];
 
   return (

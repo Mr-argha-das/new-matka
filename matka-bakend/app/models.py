@@ -278,6 +278,11 @@ class RateChart(Document):
     starline_double_pana_x = IntField(default=0)
     starline_tripple_pana_x = IntField(default=0)
 
+    # Jackpot JODI rates (bid amount / win amount / multiplier)
+    jackpot_jodi_1 = IntField(default=10)
+    jackpot_jodi_2 = IntField(default=1000)
+    jackpot_jodi_x = IntField(default=100)
+
 class DevloperAccess(Document):
     value = BooleanField(default=True)
 

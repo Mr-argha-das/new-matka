@@ -9,6 +9,21 @@ export default function JackpotMarkets() {
   const [slots, setSlots] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [jodiRate, setJodiRate] = useState({ bid: 10, win: 1000 });
+
+  const fetchRates = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/api/admin/rate/`);
+      if (res.data?.jackpot_jodi_1 && res.data?.jackpot_jodi_2) {
+        setJodiRate({
+          bid: res.data.jackpot_jodi_1,
+          win: res.data.jackpot_jodi_2,
+        });
+      }
+    } catch (err) {
+      console.log("Rate fetch error:", err);
+    }
+  };
 
   const fetchSlots = async () => {
     try {
@@ -24,6 +39,7 @@ export default function JackpotMarkets() {
 
   useEffect(() => {
     fetchSlots();
+    fetchRates();
   }, []);
 
   if (loading) {
@@ -74,7 +90,7 @@ export default function JackpotMarkets() {
               JODI
             </span>
             <span className="text-[14px] font-extrabold text-[#1565D8]">
-              10-1000
+              {jodiRate.bid}-{jodiRate.win}
             </span>
           </div>
           <div className="flex-1 border-t border-gray-200"></div>

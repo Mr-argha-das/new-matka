@@ -9,7 +9,7 @@ from bson import ObjectId
 
 from ..models import (
     StarlineSlot, JackpotSlot,
-    Bid, Result, Wallet
+    Bid, Result, Wallet, RateChart
 )
 
 from ..auth import get_current_user, require_admin
@@ -18,6 +18,7 @@ router = APIRouter(prefix="/starline_jackpot", tags=["Starline & Jackpot"])
 
 ALLOWED_GAMES = ["single_digit", "single_panna", "double_panna", "triple_panna"]
 
+# Fallback rates (used only if admin RateChart is missing)
 GAME_RATES = {
     "single_digit": 9,
     "single_panna": 140,
@@ -25,8 +26,34 @@ GAME_RATES = {
     "triple_panna": 600,
 }
 
-# Jackpot JODI rate: 10 ka 1000
+# Fallback Jackpot JODI rate: 10 ka 1000
 JODI_RATE = 100
+
+
+def get_starline_rate(game_type):
+    """Admin-managed starline rate from RateChart (multiplier _x), with fallback."""
+    chart = RateChart.objects().first()
+    if chart:
+        field_map = {
+            "single_digit": "starline_single_digit_x",
+            "single_panna": "starline_single_pana_x",
+            "double_panna": "starline_double_pana_x",
+            "triple_panna": "starline_tripple_pana_x",
+        }
+        val = getattr(chart, field_map.get(game_type, ""), 0) or 0
+        if val > 0:
+            return val
+    return GAME_RATES.get(game_type, 0)
+
+
+def get_jackpot_jodi_rate():
+    """Admin-managed jackpot jodi multiplier from RateChart, with fallback."""
+    chart = RateChart.objects().first()
+    if chart:
+        val = getattr(chart, "jackpot_jodi_x", 0) or 0
+        if val > 0:
+            return val
+    return JODI_RATE
 
 # ======================================================
 #              HELPER FUNCTIONS
@@ -68,7 +95,7 @@ def settle(slot_id, panna):
                 win = True
 
         if win:
-            amount = b.points * GAME_RATES[b.game_type]
+            amount = b.points * get_starline_rate(b.game_type)
             Wallet.objects(user_id=b.user_id).update(inc__balance=amount)
 
 
@@ -81,12 +108,13 @@ def jackpot_result_display(result):
 
 
 def settle_jackpot_jodi(slot_id, jodi):
-    """Settle jackpot jodi bids: exact 2-digit match pays JODI_RATE."""
+    """Settle jackpot jodi bids: exact 2-digit match pays admin-set rate."""
+    rate = get_jackpot_jodi_rate()
     bids = Bid.objects(market_id=slot_id, session="jackpot", game_type="jodi")
     for b in bids:
         if b.digit == jodi:
             Wallet.objects(user_id=b.user_id).update(
-                inc__balance=b.points * JODI_RATE
+                inc__balance=b.points * rate
             )
 
 

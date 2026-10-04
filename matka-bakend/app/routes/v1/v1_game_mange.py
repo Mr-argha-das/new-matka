@@ -72,6 +72,11 @@ class RateChartInput(BaseModel):
     starline_double_pana_x: Optional[int] = None
     starline_tripple_pana_x: Optional[int] = None
 
+    # -------- JACKPOT JODI --------
+    jackpot_jodi_1: Optional[int] = None
+    jackpot_jodi_2: Optional[int] = None
+    jackpot_jodi_x: Optional[int] = None
+
 
 router = APIRouter(prefix="/api/admin", tags=["Game Management"])
 
