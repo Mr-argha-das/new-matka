@@ -13,10 +13,38 @@ export default function NotificationsPage() {
   const fetchNotifications = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${API_URL}/user/notifications`, authHeader);
-      setItems(res.data.notifications || []);
+
+      // 1) personal notifications (admin -> specific user)
+      let personal = [];
+      try {
+        const res = await axios.get(`${API_URL}/user/notifications`, authHeader);
+        personal = res.data.notifications || [];
+      } catch {}
+
+      // 2) general/broadcast notifications (admin Notification List)
+      let general = [];
+      try {
+        const res2 = await axios.get(`${API_URL}/notifications/all`);
+        const seenAt = localStorage.getItem("generalNotifSeenAt") || "";
+        general = (Array.isArray(res2.data) ? res2.data : []).map((n) => ({
+          id: `gen-${n.id}`,
+          title: "Announcement",
+          message: n.title,
+          created_at: n.created_at,
+          is_read: seenAt ? new Date((n.created_at || "").endsWith("Z") ? n.created_at : n.created_at + "Z") <= new Date(seenAt) : false,
+        }));
+      } catch {}
+
+      const all = [...personal, ...general].sort((a, b) => {
+        const da = new Date((a.created_at || "").endsWith("Z") ? a.created_at : (a.created_at || "") + "Z");
+        const db = new Date((b.created_at || "").endsWith("Z") ? b.created_at : (b.created_at || "") + "Z");
+        return db - da;
+      });
+      setItems(all);
+
       // mark all as read after viewing
       axios.post(`${API_URL}/user/notifications/mark-read`, {}, authHeader).catch(() => {});
+      localStorage.setItem("generalNotifSeenAt", new Date().toISOString());
     } catch {} finally {
       setLoading(false);
     }

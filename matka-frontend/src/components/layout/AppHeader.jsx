@@ -18,15 +18,30 @@ export default function AppHeader({ setSidebar }) {
   const fetchUnread = async () => {
     const token = getAuthToken();
     if (!token) return;
+    let count = 0;
     try {
       const response = await fetch(`${API_BASE_URL}/user/notifications`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
         const data = await response.json();
-        setUnread(data.unread || 0);
+        count += data.unread || 0;
       }
     } catch {}
+    // general/broadcast notifications (admin Notification List)
+    try {
+      const res2 = await fetch(`${API_BASE_URL}/notifications/all`);
+      if (res2.ok) {
+        const list = await res2.json();
+        const seenAt = localStorage.getItem("generalNotifSeenAt");
+        const seenDate = seenAt ? new Date(seenAt) : null;
+        (Array.isArray(list) ? list : []).forEach((n) => {
+          const d = new Date((n.created_at || "").endsWith("Z") ? n.created_at : (n.created_at || "") + "Z");
+          if (!seenDate || d > seenDate) count += 1;
+        });
+      }
+    } catch {}
+    setUnread(count);
   };
 
   const fetchWalletBalance = async () => {
