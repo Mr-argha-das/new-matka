@@ -11,7 +11,7 @@ export default function GGameList() {
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
 
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const headers = { Authorization: `Bearer ${token}` };
 
   // safe id extraction

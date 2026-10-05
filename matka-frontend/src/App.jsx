@@ -150,6 +150,10 @@ const UserOnly = () => {
 
 const AdminOnly = () => {
   const user = useAuthUser();
+  const adminToken = localStorage.getItem("adminAccessToken");
+
+  // Dedicated admin session (from /admin/login) → always allowed
+  if (adminToken) return <Outlet />;
 
   if (user === undefined) return <div>Checking...</div>;
   if (!user) return <Navigate to="/login" replace />;
@@ -169,6 +173,9 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Route>
+
+        {/* ADMIN LOGIN (public) */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
 
         {/* ADMIN ROUTES */}
         <Route element={<AdminOnly />}>

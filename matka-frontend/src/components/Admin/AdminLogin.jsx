@@ -10,10 +10,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import logo from "../../assets/logo.png";
-
-// STATIC ADMIN CREDENTIALS
-const ADMIN_MOBILE = "0987654321";
-const ADMIN_PASSWORD = "admin123";
+import { API_URL } from "../../config";
 
 // Spinner
 const LoadingSpinner = () => <Loader2 className="animate-spin h-5 w-5 mr-2" />;
@@ -31,7 +28,7 @@ export default function AdminLoginPage() {
     setTimeout(() => setShake(false), 500);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!mobile || !password) {
       showError("Enter admin mobile & password.");
       return;
@@ -40,24 +37,46 @@ export default function AdminLoginPage() {
     setIsLoading(true);
     setMessage(null);
 
-    setTimeout(() => {
-      if (mobile === ADMIN_MOBILE && password === ADMIN_PASSWORD) {
-        setMessage({ type: "success", text: "Admin Login Successful!" });
+    try {
+      // 1) Real login with the admin account (DB user with role=admin)
+      const res = await fetch(`${API_URL}/auth/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mobile, password }),
+      });
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        showError(d.detail || "Incorrect mobile or password");
+        setIsLoading(false);
+        return;
+      }
+      const data = await res.json();
+      const token = data.access_token;
 
-        localStorage.setItem(
-          "adminToken",
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTFlMjdhYmVhMDUwMjc5ODJmOTc0Y2QiLCJleHAiOjE3NjQ1NzM2ODZ9.QWQEDGKloI3UUxZzti-TnVqSe1Vi_W-WX2Kq8DbxiB4"
-        );
-
-        setTimeout(() => {
-          window.location.href = "/admin";
-        }, 800);
-      } else {
-        showError("Invalid admin credentials!");
+      // 2) Verify this account really has admin rights
+      const check = await fetch(`${API_URL}/api/v1/admin/users`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!check.ok) {
+        showError("Ye account admin nahi hai! Admin wale mobile/password se login karo.");
+        setIsLoading(false);
+        return;
       }
 
+      // 3) Store a DEDICATED admin token (user-app login won't overwrite it)
+      localStorage.setItem("adminAccessToken", token);
+      localStorage.setItem("adminUserId", data.userId || "");
+      localStorage.setItem("adminToken", token); // legacy compat
+
+      setMessage({ type: "success", text: "Admin Login Successful!" });
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 600);
+    } catch {
+      showError("Network error — try again.");
+    } finally {
       setIsLoading(false);
-    }, 900);
+    }
   };
 
   const Message = ({ type, text }) => {

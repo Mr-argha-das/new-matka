@@ -4,7 +4,7 @@ import { API_URL } from "../../../config";
 import { X } from "lucide-react";
 
 export default function AddGameModal({ onClose, refresh }) {
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const headers = { Authorization: `Bearer ${token}` };
 
   const [form, setForm] = useState({

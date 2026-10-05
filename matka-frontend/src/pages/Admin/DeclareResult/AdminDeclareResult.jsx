@@ -18,7 +18,7 @@ export default function AdminDeclareResult() {
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   // GET MARKET NAME
   const fetchMarket = async () => {

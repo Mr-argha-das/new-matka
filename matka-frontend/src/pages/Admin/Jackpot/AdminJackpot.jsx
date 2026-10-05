@@ -17,7 +17,7 @@ const AdminJackpot = () => {
   const [panna, setPanna] = useState("");
   const [declaring, setDeclaring] = useState(false);
 
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   // FULL AM/PM TIME DATA
   const [formData, setFormData] = useState({

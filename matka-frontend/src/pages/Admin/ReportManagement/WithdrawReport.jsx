@@ -13,7 +13,7 @@ export default function WithdrawReport() {
   const [filterDate, setFilterDate] = useState("");
 
   // token from localStorage
-  const token = localStorage.getItem("accessToken") || "";
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken")) || "";
   const authHeader = { Authorization: `Bearer ${token}` };
 
   // fetch data

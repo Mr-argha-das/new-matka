@@ -4,7 +4,7 @@ import { Lightbulb, Trash2, Clock, User as UserIcon } from "lucide-react";
 import { API_URL } from "../../config";
 
 export default function AdminUserIdeas() {
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(true);
 

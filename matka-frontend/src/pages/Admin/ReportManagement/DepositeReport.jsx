@@ -14,7 +14,7 @@ export default function AutoDepositHistory() {
   const [date, setDate] = useState("");
   const [search, setSearch] = useState("");
 
-  const token = localStorage.getItem("accessToken") || "";
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken")) || "";
   const headers = { Authorization: `Bearer ${token}` };
 
   const fetchDeposits = async () => {

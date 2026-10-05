@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { API_URL } from "../../config";
 
-const getToken = () => localStorage.getItem("accessToken");
+const getToken = () => (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
 export default function AdminWithdrawalRequests() {
   const [data, setData] = useState([]);

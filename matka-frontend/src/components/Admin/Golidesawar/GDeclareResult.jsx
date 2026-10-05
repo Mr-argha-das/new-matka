@@ -29,7 +29,7 @@ function getId(obj) {
 function authHeader() {
   return {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      Authorization: `Bearer ${(localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"))}`,
     },
   };
 }

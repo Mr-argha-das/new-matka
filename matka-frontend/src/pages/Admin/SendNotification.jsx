@@ -4,7 +4,7 @@ import { Bell, Send, Trash2, Clock, Search } from "lucide-react";
 import { API_URL } from "../../config";
 
 export default function AdminSendNotification() {
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const authHeader = { headers: { Authorization: `Bearer ${token}` } };
 
   const [users, setUsers] = useState([]);

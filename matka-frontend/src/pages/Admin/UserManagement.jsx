@@ -10,7 +10,7 @@ export default function UserManagement() {
   const [page, setPage] = useState(1);
 
   const limit = 30;
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   // Fetch Users
   const fetchUsers = async () => {

@@ -10,7 +10,7 @@ import {
 import { API_URL } from "../../config";
 
 const API_BASE = `${API_URL}`;
-const getToken = () => localStorage.getItem("accessToken");
+const getToken = () => (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
 export default function AdminDepositRequests() {
   const [pending, setPending] = useState([]);

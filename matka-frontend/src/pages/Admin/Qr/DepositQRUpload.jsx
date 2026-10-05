@@ -13,7 +13,7 @@ export default function DepositQRUpload() {
   const [isReplacing, setIsReplacing] = useState(false);
   const [userId, setUserId] = useState(null);
   console.log(userId);
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   // Decode token once safely
   useEffect(() => {
     if (!token) {

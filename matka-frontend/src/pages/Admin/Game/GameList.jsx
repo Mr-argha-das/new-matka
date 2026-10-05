@@ -10,7 +10,7 @@ export default function GameList() {
   const [openModal, setOpenModal] = useState(false);
   const [editData, setEditData] = useState(null);
   console.log(games);
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const headers = { Authorization: `Bearer ${token}` };
 
   // safe helper to extract ID from API response

@@ -3,7 +3,7 @@ import axios from "axios";
 import { API_URL } from "../../../config"; // adjust path if needed
 
 export default function TodayResultMarketHistory({ refreshFlag }) {
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const headers = { Authorization: `Bearer ${token}` };
 
   const [date, setDate] = useState(() => {

@@ -16,7 +16,7 @@ const AdminStartline = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [panna, setPanna] = useState("");
   const [declaring, setDeclaring] = useState(false);
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   // Add Slot Form State
   const [formData, setFormData] = useState({

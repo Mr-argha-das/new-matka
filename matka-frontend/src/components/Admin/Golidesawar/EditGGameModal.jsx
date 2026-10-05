@@ -40,7 +40,7 @@ const to12Hour = (time) => {
 };
 
 export default function EditGGameModal({ data, onClose, refresh }) {
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const headers = { Authorization: `Bearer ${token}` };
 
   // Convert incoming times to 24h if needed

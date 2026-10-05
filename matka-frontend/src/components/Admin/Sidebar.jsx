@@ -155,9 +155,12 @@ const Sidebar = ({ open }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const handleLogout = () => {
+    localStorage.removeItem("adminAccessToken");
+    localStorage.removeItem("adminUserId");
+    localStorage.removeItem("adminToken");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userId");
-    window.location.href = "/login";
+    window.location.href = "/admin/login";
   };
 
   const toggleDropdown = (index) => {

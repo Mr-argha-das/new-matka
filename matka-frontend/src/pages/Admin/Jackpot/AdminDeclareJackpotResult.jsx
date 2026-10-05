@@ -11,7 +11,7 @@ export default function AdminDeclareJackpotResult() {
   const [panna, setPanna] = useState("");
   const [message, setMessage] = useState(null);
 
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   const authHeader = {
     headers: {

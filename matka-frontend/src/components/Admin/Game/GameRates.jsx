@@ -3,7 +3,7 @@
 // import { API_URL } from "../../../config";
 
 // export default function GameRates() {
-//   const token = localStorage.getItem("accessToken");
+//   const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 //   const headers = { Authorization: `Bearer ${token}` };
 
 //   const [form, setForm] = useState({
@@ -157,7 +157,7 @@ import axios from "axios";
 import { API_URL } from "../../../config";
 
 export default function GameRates() {
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const headers = { Authorization: `Bearer ${token}` };
 
   const [form, setForm] = useState({

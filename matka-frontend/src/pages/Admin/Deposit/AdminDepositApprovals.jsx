@@ -9,7 +9,7 @@ import { API_URL } from "../../../config";
 // POST   /user/failed-deposit-normal   <-- Reject API
 
 const API_BASE = `${API_URL}/user`;
-const getAuthToken = () => localStorage.getItem("accessToken");
+const getAuthToken = () => (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
 export default function AdminDepositApprovals() {
   const [deposits, setDeposits] = useState([]);

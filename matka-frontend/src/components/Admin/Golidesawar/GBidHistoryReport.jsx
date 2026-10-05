@@ -16,7 +16,7 @@ export default function GBidHistoryReport() {
   const [markets, setMarkets] = useState([]); // <-- MARKET LIST
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   // -------------------------------------------------
   // LOAD MARKETS FOR DROPDOWN

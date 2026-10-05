@@ -4,7 +4,7 @@ import { API_URL } from "../../../config";
 import TodayResultMarketHistory from "./TodayMarketResultHistory";
 
 export default function ResultDeclareMarket() {
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
   const headers = { Authorization: `Bearer ${token}` };
 
   const [refreshHistoryFlag, setRefreshHistoryFlag] = useState(0);

@@ -9,7 +9,7 @@ export default function TodayBidHistory() {
   const [error, setError] = useState(null);
   const [totalPoints, setTotalPoints] = useState(0);
 
-  const token = localStorage.getItem("accessToken") || "";
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken")) || "";
   const headers = { Authorization: `Bearer ${token}` };
 
   const fetchTodayBids = async () => {

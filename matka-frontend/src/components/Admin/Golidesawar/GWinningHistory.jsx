@@ -23,7 +23,7 @@ export default function GWinningHistory() {
   const [markets, setMarkets] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   // Load markets for dropdown
   const loadMarkets = async () => {

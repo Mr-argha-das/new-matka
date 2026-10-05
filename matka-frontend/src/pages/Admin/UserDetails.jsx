@@ -33,7 +33,7 @@ export default function UserDetails() {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [updatingPassword, setUpdatingPassword] = useState(false);
 
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   // ================================
   // 📌 FETCH USER DETAILS ACCORDING TO BACKEND

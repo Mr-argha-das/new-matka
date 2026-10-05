@@ -8,7 +8,7 @@ const API_BASE = `${API_URL}/user-deposit-withdrawal`;
 
 const AddMoneyQrTab = () => {
   const fileInputRef = useRef(null);
-  const token = localStorage.getItem("accessToken");
+  const token = (localStorage.getItem("adminAccessToken") || localStorage.getItem("accessToken"));
 
   const [currentQR, setCurrentQR] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
