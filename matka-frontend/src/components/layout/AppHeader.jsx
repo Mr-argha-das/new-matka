@@ -76,17 +76,22 @@ export default function AppHeader({ setSidebar }) {
   useEffect(() => {
     fetchWalletBalance();
     fetchUnread();
-    const intervalId = setInterval(() => {
+    // wallet balance refresh every 60s
+    const walletInterval = setInterval(() => {
       fetchWalletBalance();
-      fetchUnread();
     }, 60000);
+    // LIVE notification count: recall API every 4 seconds (paused when tab hidden)
+    const notifInterval = setInterval(() => {
+      if (!document.hidden) fetchUnread();
+    }, 4000);
     // instant badge refresh: after reading notifications or returning to the tab
     const refresh = () => fetchUnread();
     window.addEventListener("notif-refresh", refresh);
     window.addEventListener("focus", refresh);
     document.addEventListener("visibilitychange", refresh);
     return () => {
-      clearInterval(intervalId);
+      clearInterval(walletInterval);
+      clearInterval(notifInterval);
       window.removeEventListener("notif-refresh", refresh);
       window.removeEventListener("focus", refresh);
       document.removeEventListener("visibilitychange", refresh);
