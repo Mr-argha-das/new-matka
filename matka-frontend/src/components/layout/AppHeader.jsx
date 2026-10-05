@@ -80,7 +80,17 @@ export default function AppHeader({ setSidebar }) {
       fetchWalletBalance();
       fetchUnread();
     }, 60000);
-    return () => clearInterval(intervalId);
+    // instant badge refresh: after reading notifications or returning to the tab
+    const refresh = () => fetchUnread();
+    window.addEventListener("notif-refresh", refresh);
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener("notif-refresh", refresh);
+      window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", refresh);
+    };
   }, []);
 
   return (

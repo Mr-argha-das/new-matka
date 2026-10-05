@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from ..models import Market, Result, Bid, Wallet, User
 from ..auth import get_current_user, require_admin
 from ..game_types import bid_wins, rate_key
+from ..notify import notify_win
 import datetime
 from pydantic import BaseModel
 
@@ -77,6 +78,14 @@ def settle_results(market_id: str, result_obj: Result):
             wallet = Wallet.objects(user_id=bid.user_id).first()
             if wallet:
                 wallet.update(inc__balance=win_amount)
+                # auto win notification to the winner
+                market_doc = Market.objects(id=market_id).first()
+                notify_win(
+                    bid.user_id,
+                    win_amount,
+                    market_doc.name if market_doc else "Market",
+                    f"{bid.game_type} • {bid.digit}",
+                )
 
 
 # -----------------------------------------------------

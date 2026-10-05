@@ -2,6 +2,7 @@ import uuid
 from app.auth import get_current_user, require_admin
 from app.models import Bid, Market, RateChart, Result, Transaction, Wallet
 from app.game_types import bid_wins, rate_key
+from app.notify import notify_win
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 # from ..auth import require_admin
@@ -143,6 +144,15 @@ def settle_results(market_id: str, result_obj: Result, session: str):
                     created_at=datetime.utcnow(),
                     
                 ).save()
+
+                # auto win notification to the winner
+                market_doc = Market.objects(id=market_id).first()
+                notify_win(
+                    bid.user_id,
+                    amount,
+                    market_doc.name if market_doc else "Market",
+                    f"{bid.game_type} • {bid.digit} • {session}",
+                )
 
         # Mark bid as settled (win or lose both)
         bid.update(set__is_settled=True)

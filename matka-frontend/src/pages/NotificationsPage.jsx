@@ -43,8 +43,12 @@ export default function NotificationsPage() {
       setItems(all);
 
       // mark all as read after viewing
-      axios.post(`${API_URL}/user/notifications/mark-read`, {}, authHeader).catch(() => {});
       localStorage.setItem("generalNotifSeenAt", new Date().toISOString());
+      try {
+        await axios.post(`${API_URL}/user/notifications/mark-read`, {}, authHeader);
+      } catch {}
+      // tell the header bell to refresh its count right away
+      window.dispatchEvent(new Event("notif-refresh"));
     } catch {} finally {
       setLoading(false);
     }

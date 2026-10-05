@@ -13,6 +13,7 @@ from ..models import (
 )
 
 from ..auth import get_current_user, require_admin
+from ..notify import notify_win
 
 router = APIRouter(prefix="/starline_jackpot", tags=["Starline & Jackpot"])
 
@@ -92,6 +93,8 @@ def settle(slot_id, panna):
     digit = panna[-1]  # last digit
 
     bids = Bid.objects(market_id=slot_id)
+    slot = StarlineSlot.objects(id=slot_id).first()
+    slot_name = f"Starline {slot.name}" if slot else "Starline"
 
     for b in bids:
         win = False
@@ -106,6 +109,8 @@ def settle(slot_id, panna):
         if win:
             amount = round(b.points * get_starline_rate(b.game_type), 2)
             Wallet.objects(user_id=b.user_id).update(inc__balance=amount)
+            # auto win notification to the winner
+            notify_win(b.user_id, amount, slot_name, f"{b.game_type} • {b.digit}")
 
 
 def jackpot_result_display(result):
@@ -119,12 +124,15 @@ def jackpot_result_display(result):
 def settle_jackpot_jodi(slot_id, jodi):
     """Settle jackpot jodi bids: exact 2-digit match pays admin-set rate."""
     rate = get_jackpot_jodi_rate()
+    slot = JackpotSlot.objects(id=slot_id).first()
+    slot_name = f"Jackpot {slot.name}" if slot else "Jackpot"
     bids = Bid.objects(market_id=slot_id, session="jackpot", game_type="jodi")
     for b in bids:
         if b.digit == jodi:
-            Wallet.objects(user_id=b.user_id).update(
-                inc__balance=round(b.points * rate, 2)
-            )
+            amount = round(b.points * rate, 2)
+            Wallet.objects(user_id=b.user_id).update(inc__balance=amount)
+            # auto win notification to the winner
+            notify_win(b.user_id, amount, slot_name, f"jodi • {b.digit}")
 
 
 # ======================================================
