@@ -130,7 +130,11 @@ export default function ResultDeclareMarket() {
       setRefreshHistoryFlag((prev) => prev + 1);
       fetchHistory();
     } catch (err) {
-      alert(err.response?.data?.detail || "Error declaring result");
+      const d = err.response?.data?.detail;
+      const msg = d
+        ? (typeof d === "string" ? d : JSON.stringify(d))
+        : `${err.message || "Unknown error"} | status: ${err.response?.status ?? "NO RESPONSE (network/CORS)"} | ${JSON.stringify(err.response?.data ?? null)}`;
+      alert("Declare failed → " + msg);
     }
 
     setSubmitting(false);
