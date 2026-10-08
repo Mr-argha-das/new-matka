@@ -35,6 +35,22 @@ connect(host=settings.MONGO_URI)
 app = FastAPI(title="Matka Satka Backend")
 
 
+# ---- DEBUG: print full traceback for any unhandled error & return readable detail ----
+import traceback
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request, exc):
+    print(f"\n===== UNHANDLED ERROR on {request.method} {request.url.path} =====")
+    traceback.print_exc()
+    print("===== END ERROR =====\n")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"{type(exc).__name__}: {exc}"},
+        headers={"Access-Control-Allow-Origin": "*"},
+    )
+
+
 # CORS settings
 
 app.add_middleware(
