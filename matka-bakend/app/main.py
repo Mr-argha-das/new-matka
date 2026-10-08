@@ -34,6 +34,8 @@ connect(host=settings.MONGO_URI)
 # -----------------------------
 app = FastAPI(title="Matka Satka Backend")
 
+print(">>> BACKEND BOOT: version debug-v2 (global error handler + win notifications ACTIVE) <<<")
+
 
 # ---- DEBUG: print full traceback for any unhandled error & return readable detail ----
 import traceback
