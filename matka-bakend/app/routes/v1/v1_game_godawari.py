@@ -431,14 +431,17 @@ def settle_results(market_id: str, result_obj):
                 status="Approved"
             ).save()
 
-            # auto win notification to the winner
-            market_doc = MarketGod.objects(id=market_id).first()
-            notify_win(
-                bid.user_id,
-                amount,
-                market_doc.name if market_doc else "Golidesawar",
-                f"{bid.game_type} • {bid.digit}",
-            )
+            # auto win notification to the winner (never break settlement)
+            try:
+                market_doc = MarketGod.objects(id=market_id).first()
+                notify_win(
+                    bid.user_id,
+                    amount,
+                    market_doc.name if market_doc else "Golidesawar",
+                    f"{bid.game_type} - {bid.digit}",
+                )
+            except Exception as e:
+                print(f"notify block failed: {e}")
 # RESULT LIST
 # -----------------------------
 

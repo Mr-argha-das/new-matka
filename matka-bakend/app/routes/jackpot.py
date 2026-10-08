@@ -109,8 +109,11 @@ def settle(slot_id, panna):
         if win:
             amount = round(b.points * get_starline_rate(b.game_type), 2)
             Wallet.objects(user_id=b.user_id).update(inc__balance=amount)
-            # auto win notification to the winner
-            notify_win(b.user_id, amount, slot_name, f"{b.game_type} • {b.digit}")
+            # auto win notification to the winner (never break settlement)
+            try:
+                notify_win(b.user_id, amount, slot_name, f"{b.game_type} - {b.digit}")
+            except Exception as e:
+                print(f"notify block failed: {e}")
 
 
 def jackpot_result_display(result):
@@ -131,8 +134,11 @@ def settle_jackpot_jodi(slot_id, jodi):
         if b.digit == jodi:
             amount = round(b.points * rate, 2)
             Wallet.objects(user_id=b.user_id).update(inc__balance=amount)
-            # auto win notification to the winner
-            notify_win(b.user_id, amount, slot_name, f"jodi • {b.digit}")
+            # auto win notification to the winner (never break settlement)
+            try:
+                notify_win(b.user_id, amount, slot_name, f"jodi - {b.digit}")
+            except Exception as e:
+                print(f"notify block failed: {e}")
 
 
 # ======================================================
