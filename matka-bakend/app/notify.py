@@ -17,6 +17,7 @@ def notify_user(user_id, title, message):
             message=message,
             created_at=datetime.utcnow(),
         ).save()
+        print(f"[notify] sent to user={user_id} title={title}")
     except Exception as e:
         print(f"notify_user failed: {e}")
 
