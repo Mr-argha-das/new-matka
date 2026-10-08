@@ -45,6 +45,8 @@ class Transaction(Document):
 
     user_id = StringField(required=True)
 
+    bid_id = StringField()  # set for Win payouts (links transaction to the winning bid)
+
     razorpay_order_id = StringField()
 
     razorpay_payment_id = StringField()
